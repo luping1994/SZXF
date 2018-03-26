@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.suntrans.szxf">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name="net.suntrans.szxf.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="bffe005228530f5eccf19a49a37a8d79" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="net.suntrans.szxf.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name="net.suntrans.szxf.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.WelcomeActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="net.suntrans.szxf.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.SceneDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.translate"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AreaDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.Ammeter3Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.DeviceManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.EnvDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.ChangePassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.QuestionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.Ammeter3Activity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AmmeterParameterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.HistroyDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AddSceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.translate" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AddSceneChannelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AddFloorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AddAreaActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="net.suntrans.szxf.activity.AddAreaChannelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="net.suntrans.szxf.activity.YichangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AlertActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme" />
+        <activity
+            android:name="net.suntrans.szxf.activity.SceneTimingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.AddSceneTimeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="net.suntrans.szxf.activity.DeviceDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name="net.suntrans.szxf.activity.ChannelEditActivity" android:screenOrientation="portrait"/>
+        <activity android:name="net.suntrans.szxf.activity.FloorPlanActivity" android:screenOrientation="landscape"/>
+        <activity android:name="net.suntrans.szxf.activity.ZHCurHisActivity" />
+
+        <service android:name="net.suntrans.szxf.MyService" />
+    </application>
+
+</manifest>

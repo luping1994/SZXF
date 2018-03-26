@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#dc4200</color>
+    <color name="colorPrimaryDark">#dc4200</color>
+    <color name="colorAccent">#dc4200</color>
+    <color name="mainTabTextColor">#dc4200</color>
+    <color name="mainTabTextColorGray">#231F20</color>
+    <color name="white">#ffffff</color>
+    <color name="devisionColor">#f2f2f2</color>
+    <color name="textColor">#444444</color>
+    <color name="black">#000000</color>
+    <color name="dialogbg">#af222222</color>
+    <color name="cardview">#fafafa</color>
+    <color name="grey">#808080</color>
+    <color name="blue">#0000ff</color>
+    <color name="subTextColor">#9d9e9e</color>
+    <color name="bg_color">#f5f5f9</color>
+    <color name="scan_sencond_text_color">#5a5a5a</color>
+    <color name="footerbg">#e7e7e7</color>
+    <color name="transparent">#00000000</color>
+    <color name="item_press_false">#ffffff</color>
+    <color name="item_press_true">#f2f3f5</color>
+    <color name="item_press_true_selector">#c9c9c9</color>
+    <color name="secondtextcolor">#c3c3c3</color>
+
+</resources>

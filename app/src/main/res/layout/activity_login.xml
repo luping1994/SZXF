@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/loginForm"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/content"
+        android:orientation="vertical">
+
+        <net.suntrans.szxf.views.EditView
+            android:id="@+id/account"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:hint="请输入账号"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="16dp"
+            android:textSize="@dimen/textNormalSize" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/devisionColor" />
+
+        <net.suntrans.szxf.views.EditView
+            android:digits="@string/abcd123"
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingLeft="16dp"
+            android:textSize="@dimen/textNormalSize" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginForm"
+        android:background="@drawable/bg_user_zhuxiao"
+        android:text="注   销"
+        android:textColor="@color/white"
+        android:textSize="17sp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginTop="6dp"
+            android:background="@null"
+            android:clickable="false"
+            android:text="登  录"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/guangwang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/name1"
+        android:layout_marginBottom="4dp"
+        android:autoLink="all"
+        android:gravity="center"
+        android:text="@string/company_name_CH"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/name1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:text="@string/company_name_EN"
+        android:textSize="12sp" />
+</RelativeLayout>

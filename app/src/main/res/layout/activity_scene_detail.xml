@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="217dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
+
+
+        <!--要扩展到状态栏的空间，必须为AppBarLayout的直接子控件，记得设置app:layout_scrollFlag属性-->
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="fitXY"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+
+
+            <RelativeLayout
+                android:id="@+id/toobar"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <RelativeLayout
+                    android:id="@+id/fanhui"
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:fitsSystemWindows="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/ic_back" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:ellipsize="end"
+                    android:fitsSystemWindows="true"
+                    android:gravity="center"
+                    android:maxLength="8"
+                    android:maxLines="1"
+                    android:text="wucan"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+
+                <ImageView
+                    android:id="@+id/menu"
+                    android:paddingRight="14dp"
+                    android:paddingLeft="14dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/menu" />
+
+            </RelativeLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+        <!--当然在此处还可以添加其他控件，例如CollapsingToolbarLayout-->
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="146dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/content"
+                android:paddingBottom="25dp"
+                android:paddingTop="20dp"
+                android:visibility="invisible">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tips"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/content"
+                android:gravity="center"
+                android:text="没有数据哦" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_user_zhuxiao"
+            android:onClick="excute"
+            android:text="注   销"
+            android:textColor="@color/white"
+            android:textSize="17sp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:layout_marginTop="6dp"
+                android:background="@null"
+                android:clickable="false"
+                android:text="执    行"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
