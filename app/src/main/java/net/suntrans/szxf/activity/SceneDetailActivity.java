@@ -310,7 +310,7 @@ public class SceneDetailActivity extends BasedActivity implements View.OnClickLi
     }
 
     private void getData() {
-        RetrofitHelper.getApi().getSceneChannel(id)
+        api.getSceneChannel(id)
                 .compose(this.<SceneChannelResult>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

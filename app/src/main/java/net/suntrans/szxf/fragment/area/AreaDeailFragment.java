@@ -20,6 +20,7 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.activity.AreaDetailActivity;
+import net.suntrans.szxf.api.Api;
 import net.suntrans.szxf.api.RetrofitHelper;
 import net.suntrans.szxf.bean.AreaDetailEntity;
 import net.suntrans.szxf.bean.ControlEntity;
@@ -97,7 +98,6 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
         house_id = getArguments().getString("id");
         channelType = getArguments().getString("channel_type");
         tips = (TextView) view.findViewById(R.id.tips);
-        LogUtil.i("房间id" + house_id);
     }
 
 
@@ -108,7 +108,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
     }
 
     public void getData() {
-        LogUtil.i(house_id);
+//        LogUtil.i(house_id);
         if (getDataObv == null) {
             getDataObv = RetrofitHelper.getApi().getRoomChannel(house_id)
                     .compose(this.<AreaDetailEntity>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
@@ -139,12 +139,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                 if (result != null) {
                     if (result.code == 200) {
                         datas.clear();
-                        for (int i = 0; i < result.data.lists.size(); i++) {
-                            if (result.data.lists.get(i).channel_type.equals(channelType)) {
-                                datas.add(result.data.lists.get(i));
-                            }
-
-                        }
+                        datas.addAll(result.data);
                         adapter.notifyDataSetChanged();
                     } else if (result.code == 401) {
                         ActivityUtils.showLoginOutDialogFragmentToActivity(getChildFragmentManager(), "Alert");
@@ -218,7 +213,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
 
                                         break;
                                     case 1:
-                                        showChangedNameDialog(datas.get(getAdapterPosition()).channel_id);
+                                        showChangedNameDialog(datas.get(getAdapterPosition()).id);
                                         break;
                                 }
                             }
@@ -245,8 +240,9 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
         }
     }
 
-    List<DeviceEntity.ChannelInfo> datas = new ArrayList<>();
+    List<AreaDetailEntity.AreaDetailData> datas = new ArrayList<>();
     private Observable<ControlEntity> conOb;
+    private Api api = RetrofitHelper.getApi();
 
     private void sendCmd(int position) {
         if (position == -1) {
@@ -262,14 +258,13 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
         dialog.show();
 
         conOb = null;
-        conOb = RetrofitHelper.getApi().switchChannel(datas.get(position).channel_id, datas.get(position).datapoint,
-                datas.get(position).din, datas.get(position).status.equals("1") ? "0" : "1")
+        conOb = api.switchChannel(datas.get(position).din,
+                datas.get(position).status.equals("1") ? "0" : "1", datas.get(position).number)
                 .compose(this.<ControlEntity>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
 
         String order = datas.get(position).status.equals("1") ? "关" : "开";
-        LogUtil.i("发出命令:" + order);
         conOb
                 .subscribe(new BaseSubscriber<ControlEntity>(getActivity()) {
                     @Override
@@ -285,11 +280,8 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                         dialog.dismiss();
                         if (data.code == 200) {
 //                            LogUtil.i(data.data.toString());
-                            for (int i = 0; i < datas.size(); i++) {
-                                if (datas.get(i).channel_id.equals(data.data.id)) {
-                                    datas.get(i).status = String.valueOf(data.data.status);
-                                }
-                            }
+                           UiUtils.showToast(data.msg);
+                           getData();
                         } else if (data.code == 102) {
                             UiUtils.showToast("您没有控制权限");
                         } else {

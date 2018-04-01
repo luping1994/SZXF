@@ -109,11 +109,11 @@ public class AddAreaActivity extends BasedActivity implements DialogInterface.On
                     @Override
                     public void onNext(AreaEntity result) {
                         if (result.code == 200) {
-                            floor = result.data.lists;
+                            floor = result.data;
                             floorNames.clear();
                             floorNames.add(getString(R.string.tx_choose_floor));
                             for (AreaEntity.AreaFloor e :
-                                    result.data.lists) {
+                                    result.data) {
                                 floorNames.add(e.name);
                             }
                             adapter.notifyDataSetChanged();

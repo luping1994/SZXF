@@ -90,7 +90,7 @@ public class AddSceneChannelFragment extends RxFragment implements StateView.OnR
                     public void onNext(AreaEntity areaEntity) {
                         if (areaEntity.code == 200) {
                             datas.clear();
-                            datas.addAll(areaEntity.data.lists);
+                            datas.addAll(areaEntity.data);
                             adapter.notifyDataSetChanged();
                             stateView.showContent();
                         } else if (areaEntity.code == 401) {

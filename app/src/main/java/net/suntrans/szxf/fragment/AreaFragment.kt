@@ -60,7 +60,7 @@ class AreaFragment : BasedFragment() {
         refreshLayout = view.findViewById(R.id.refreshlayout) as ScrollChildSwipeRefreshLayout
         refreshLayout?.setOnRefreshListener { getAreaData(1) }
 
-        datas = ArrayList<AreaEntity.AreaFloor>()
+        datas = ArrayList<AreaEntity.AreaFloor>() as MutableList<AreaEntity.AreaFloor>?
         expandableListView = view!!.findViewById(R.id.recyclerview) as ExpandableListView
         adapter = AreaAdapter(datas, context)
         expandableListView!!.setAdapter(adapter)
@@ -69,7 +69,6 @@ class AreaFragment : BasedFragment() {
         add!!.setOnClickListener { v -> showPopupMenu() }
         expandableListView!!.setOnItemLongClickListener { parent, view, position, id ->
             if (view.getTag(R.id.name) is AreaAdapter.GroupHolder) {
-                println("我被长按了," + view.getTag(R.id.root))
                 deleteFloor(datas!!.get(view.getTag(R.id.root) as Int).id)
             }
 
@@ -80,7 +79,7 @@ class AreaFragment : BasedFragment() {
             intent.putExtra("id", datas!![groupPosition].sub[childPosition].id.toString() + "")
             intent.putExtra("name", datas!![groupPosition].sub[childPosition].name)
             startActivity(intent)
-            activity.overridePendingTransition(android.support.v7.appcompat.R.anim.abc_popup_enter, android.support.v7.appcompat.R.anim.abc_popup_exit)
+//            activity.overridePendingTransition(android.support.v7.appcompat.R.anim.abc_popup_enter, android.support.v7.appcompat.R.anim.abc_popup_exit)
             true
         }
         stateView.setEmptyResource(R.layout.base_empty)
@@ -107,6 +106,7 @@ class AreaFragment : BasedFragment() {
 
                     override fun onError(e: Throwable) {
                         super.onError(e)
+                        e.printStackTrace()
                         if (a == 0) {
                             stateView.showRetry()
                         }
@@ -115,16 +115,15 @@ class AreaFragment : BasedFragment() {
                     }
 
                     override fun onNext(homeSceneResult: AreaEntity?) {
-                        LogUtil.i("房间获取成功！")
                         refreshLayout?.isRefreshing = false
                         if (homeSceneResult != null) {
                             if (homeSceneResult.code == 200) {
-                                if (homeSceneResult.data.lists == null || homeSceneResult.data.lists.size == 0) {
+                                if (homeSceneResult.data == null || homeSceneResult.data.size == 0) {
                                     stateView.showEmpty()
                                     return
                                 }
                                 datas!!.clear()
-                                datas!!.addAll(homeSceneResult.data.lists)
+                                datas!!.addAll(homeSceneResult.data)
                                 adapter!!.notifyDataSetChanged()
                                 expandableListView!!.expandGroup(0, true)
                                 if (a == 0) {

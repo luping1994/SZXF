@@ -137,11 +137,11 @@ public class AreaAdapter extends BaseExpandableListAdapter {
 
         public void setData(final int groupPosition, final int childPosition) {
             mText.setText(datas.get(groupPosition).sub.get(childPosition).name);
-            Glide.with(mContext)
-                    .load(datas.get(groupPosition).sub.get(childPosition).img_url)
-                    .centerCrop()
-                    .crossFade()
-                    .into(mImage);
+//            Glide.with(mContext)
+//                    .load(datas.get(groupPosition).sub.get(childPosition).img_url)
+//                    .centerCrop()
+//                    .crossFade()
+//                    .into(mImage);
 
         }
     }

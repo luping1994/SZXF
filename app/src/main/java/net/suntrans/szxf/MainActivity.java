@@ -89,11 +89,7 @@ public class MainActivity extends BasedActivity {
     private Fragment[] fragments;
 
     private void init() {
-//        fragment1 = (DiningRoomFragment) getSupportFragmentManager().findFragmentByTag("0");
-//        fragment2 = (AreaFragment) getSupportFragmentManager().findFragmentByTag("1");
-//        fragment3 = (EnergyConFragment2) getSupportFragmentManager().findFragmentByTag("2");
-//        fragment4 = (PerCenFragment) getSupportFragmentManager().findFragmentByTag("3");
-//        fragment5 = (EnvHomeFragment) getSupportFragmentManager().findFragmentByTag("4");
+        App.ROLE_ID = App.getSharedPreferences().getInt("role_id",-1);
         AdminHomePageFragment fragment1= null;
         switch (App.ROLE_ID) {
             case LEADER:
@@ -105,7 +101,7 @@ public class MainActivity extends BasedActivity {
                 break;
             default:
                 UiUtils.showToast(getString(R.string.tips_account_error));
-                return;
+                break;
         }
 
 

@@ -92,8 +92,6 @@ public class EnvDetailActivity extends BasedActivity {
     }
 
     private void initView(int position, SensusEntity.SixDetailData data) {
-
-
         TextView nameTx = (TextView) rootLL.getChildAt(position).findViewById(R.id.name);
         TextView evaluateTx = (TextView) rootLL.getChildAt(position).findViewById(R.id.evaluate);
         TextView valueTx = (TextView) rootLL.getChildAt(position).findViewById(R.id.value);

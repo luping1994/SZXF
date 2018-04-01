@@ -5,4 +5,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="eleitem_textmargin">40dp</dimen>
     <dimen name="pouopwindon_offset">134dp</dimen>
+    <dimen name="actionBarTitleSize">20sp</dimen>
+    <dimen name="actionBarSubTitleSize">12sp</dimen>
+    <dimen name="action_bar_size">56dp</dimen>
+    <dimen name="content_textSize">16sp</dimen>
+    <dimen name="grid_expected_size">120dp</dimen>
+    <dimen name="tileTextSize">18sp</dimen>
 </resources>

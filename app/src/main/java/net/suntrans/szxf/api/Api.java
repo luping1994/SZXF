@@ -27,6 +27,13 @@ import net.suntrans.szxf.bean.SensusEntity;
 import net.suntrans.szxf.bean.UpLoadImageMessage;
 import net.suntrans.szxf.bean.UserInfo;
 import net.suntrans.szxf.bean.YichangEntity;
+import net.suntrans.szxf.uiv2.bean.ChannelEntity;
+import net.suntrans.szxf.uiv2.bean.ChannelInfo;
+import net.suntrans.szxf.uiv2.bean.MonitorEntity;
+import net.suntrans.szxf.uiv2.bean.NoticeEntity;
+import net.suntrans.szxf.uiv2.bean.SceneEntityV2;
+import net.suntrans.szxf.uiv2.bean.SceneImage;
+import net.suntrans.szxf.uiv2.bean.SceneItemlEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -67,11 +74,10 @@ public interface Api {
     Observable<SceneChannelResult> getSceneChannel(@Field("id") String id);
 
     @FormUrlEncoded
-    @POST("switch/channel")
-    Observable<ControlEntity> switchChannel(@Field("id") String id,
-                                            @Field("datapoint") String datapoint,
-                                            @Field("din") String din,
-                                            @Field("cmd") String cmd);
+    @POST("switch/slcChannel")
+    Observable<ControlEntity> switchChannel(@Field("din") String id,
+                                            @Field("cmd") String datapoint,
+                                            @Field("number") String din);
 
 
     @POST("home/light")
@@ -82,12 +88,10 @@ public interface Api {
     Observable<ControlEntity> switchScene(@Field("id") String id);
 
 
-    @POST("house/index")
-    Observable<AreaEntity> getHomeHouse();
 
     @FormUrlEncoded
-    @POST("house/area")
-    Observable<AreaDetailEntity> getRoomChannel(@Field("id") String id);
+    @POST("house/houseChannel")
+    Observable<AreaDetailEntity> getRoomChannel(@Field("house_id") String id);
 
     @FormUrlEncoded
     @POST("energy/ammeter3")
@@ -251,4 +255,86 @@ public interface Api {
     @POST("energy/history")
     Observable<HisEntity> getZHCurHis(@FieldMap Map<String, String> map);
 
+
+    //=========================================================================
+    //2018-3-27
+
+
+
+    //用电状态接口
+    @POST("monitor/index")
+    Observable<AreaEntity> loadMonitorIndex();
+
+    @FormUrlEncoded
+    @POST("monitor/channel")
+    Observable<RespondBody<List<MonitorEntity>>> loadMonitorRoomChannel(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("switch/slc/area")
+    Observable<RespondBody<Map<String, String>>> switchSlcArea(@FieldMap Map<String, String> map);
+
+    //消息公告接口
+    @POST("notice/index")
+    Observable<RespondBody<NoticeEntity>> loadNoticeList();
+
+    @FormUrlEncoded
+    @POST("notice/store")
+    Observable<RespondBody> storeNotice(@FieldMap Map<String, String> map);
+
+    @Multipart
+    @POST("notice/upload")
+    Observable<RespondBody<Map<String, String>>> uploadNoticeFile(
+            @Part MultipartBody.Part image);
+
+    //能耗接口
+    @POST("energy/index")
+    Observable<AreaEntity> getEnergyIndexNewApi();
+
+    //场景相关
+    @POST("scene/index")
+    Observable<RespondBody<SceneEntityV2>> getSceneV2();
+
+    @POST("scene/image")
+    Observable<RespondBody<SceneImage>> getSceneDefaultImg();
+
+    @POST("scene/myChannels")
+    Observable<RespondBody<List<ChannelInfo>>> getScebeChooseChannel();
+
+    @FormUrlEncoded
+    @POST("scene/channel")
+    Observable<RespondBody<SceneItemlEntity>> getSceneChannelV2(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("scene/channel/store")
+    Observable<RespondBody> addSceneChannel(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("scene/update")
+    Observable<RespondBody> updateSceneInfo(@FieldMap Map<String, String> map);
+    @FormUrlEncoded
+    @POST("scene/channel/update")
+    Observable<RespondBody> updateSceneChannel(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("scene/delete")
+    Observable<RespondBody> deleteSceneV2(@Field("ids") String id);
+
+    @FormUrlEncoded
+    @POST("scene/channel/delete")
+    Observable<RespondBody> deleteSceneChannel(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("scene/store")
+    Observable<RespondBody> createScene(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("switch/slc/scene")
+    Observable<RespondBody> switchSceneV2(@Field("id") String id);
+
+
+    @POST("houseList")
+    Observable<AreaEntity> getHomeHouse();
+
+    @POST("sensus/sensusList")
+    Observable<AreaEntity> getSensusList();
 }

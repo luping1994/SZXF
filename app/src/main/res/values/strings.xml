@@ -50,5 +50,17 @@
     <string name="LinearLayoutManager">LinearLayoutManager</string>
     <string name="tips_network_is_error">当前网络不可用</string>
     <string name="tips_account_error">Can\'t read role info from remote server!Please check your account!</string>
+    <string name="tip_code_error">代码君出小差了</string>
+    <string name="warning_is_control">是否执行该场景</string>
+    <string name="info_delete_scene">正在删除场景</string>
+    <string name="subtitle_manager">管理</string>
+    <string name="subtitle_finish">完成</string>
+    <string name="warning_not_save">修改的内容未保存是否退出?</string>
+    <string name="open">打开</string>
+    <string name="close">关闭</string>
+    <string name="delete">删除</string>
+    <string name="warning_empty_name">场景名称不能为空</string>
+    <string name="info_saving">保存中...</string>
+    <string name="created_success">创建成功!</string>
 
 </resources>

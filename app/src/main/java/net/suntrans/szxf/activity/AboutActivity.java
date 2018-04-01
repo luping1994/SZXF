@@ -4,15 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import net.suntrans.szxf.BuildConfig;
 import net.suntrans.szxf.R;
 
 /**
  * Created by Looney on 2017/7/24.
  */
-
 public class AboutActivity extends BasedActivity {
+
     private TextView guangwang;
 
     @Override
@@ -40,6 +39,9 @@ public class AboutActivity extends BasedActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+
 
     public void share(String desc) {
 

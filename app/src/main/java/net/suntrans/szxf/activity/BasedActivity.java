@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.api.Api;
+import net.suntrans.szxf.api.RetrofitHelper;
 
 import java.lang.reflect.Field;
 import java.util.LinkedList;
@@ -31,9 +33,10 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class BasedActivity extends RxAppCompatActivity implements SlidingPaneLayout.PanelSlideListener {
 
+    protected Api api = RetrofitHelper.getApi();
     public final static List<BasedActivity> mlist = new LinkedList<>();
 
-    protected CompositeSubscription mCompositeSubscription;
+    protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     public void addSubscription(Observable observable, Subscriber subscriber) {
         if (mCompositeSubscription == null) {
@@ -62,6 +65,15 @@ public class BasedActivity extends RxAppCompatActivity implements SlidingPaneLay
 
     }
 
+
+    @Override
+    public void startActivity(Intent intent, @Nullable Bundle options) {
+        super.startActivity(intent, options);
+
+    }
+
+
+
     @Override
     protected void onDestroy() {
         synchronized (mlist) {
@@ -86,6 +98,7 @@ public class BasedActivity extends RxAppCompatActivity implements SlidingPaneLay
     @Override
     public void finish() {
         super.finish();
+
     }
 
 

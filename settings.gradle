@@ -1,1 +1,1 @@
-include ':app', ':stateview', ':toprightmenu', ':looney'
+include ':app', ':stateview', ':toprightmenu', ':looney', ':matisse'

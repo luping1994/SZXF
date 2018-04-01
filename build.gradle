@@ -10,6 +10,8 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.novoda:bintray-release:0.7.0'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -27,4 +29,17 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    buildToolsVersion = "26.0.2"
+    supportLibVersion = "26.1.0"
+    compileSdkVersion = 26
+    minSdkVersion = 16
+    targetSdkVersion =25
+
+    espressoVersion = '2.2.2'
+    architectureComponentsVersion = "1.0.0-alpha3"
+    rxjavaVersion = "2.1.0"
+    rxandroidVersion = "2.0.1"
 }

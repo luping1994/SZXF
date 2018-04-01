@@ -12,6 +12,7 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.fragment.din.EnvFragment;
+import net.suntrans.szxf.uiv2.fragment.EnvListFragment;
 import net.suntrans.szxf.utils.StatusBarCompat;
 
 /**
@@ -39,7 +40,7 @@ public class EnvHomeFragment extends RxFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        EnvFragment fragment = new EnvFragment();
+        EnvListFragment fragment = new EnvListFragment();
         getChildFragmentManager().beginTransaction().replace(R.id.content,fragment).commit();
     }
 }

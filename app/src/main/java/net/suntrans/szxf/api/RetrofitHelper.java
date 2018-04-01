@@ -12,6 +12,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -91,12 +92,14 @@ public class RetrofitHelper {
             }
         };
 
-
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         if (mOkHttpClient == null) {
             synchronized (RetrofitHelper.class) {
                 if (mOkHttpClient == null) {
                     mOkHttpClient = new OkHttpClient.Builder()
                             .addInterceptor(netInterceptor)
+                            .addInterceptor(logging)
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .build();
                 }

@@ -23,7 +23,7 @@
             android:layout_height="26dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="21dp"
-            android:src="@drawable/icon_dating" />
+            android:src="@drawable/ic_house" />
 
         <LinearLayout
 

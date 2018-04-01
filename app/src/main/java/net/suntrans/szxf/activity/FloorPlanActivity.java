@@ -290,28 +290,28 @@ public class FloorPlanActivity extends BasedActivity {
     private Api api = RetrofitHelper.getApi();
 
     private void sendCmd(String channel_id, String datapoint, String din, String cmd) {
-        api.switchChannel(channel_id, datapoint,
-                din, cmd)
-                .compose(this.<ControlEntity>bindUntilEvent(ActivityEvent.DESTROY))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new BaseSubscriber<ControlEntity>(this) {
-                    @Override
-                    public void onNext(ControlEntity controlEntity) {
-                        UiUtils.showToast(controlEntity.msg);
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                reLoadJS();
-                            }
-                        },1000);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                    }
-                });
+//        api.switchChannel(channel_id, datapoint,
+//                din, cmd)
+//                .compose(this.<ControlEntity>bindUntilEvent(ActivityEvent.DESTROY))
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(new BaseSubscriber<ControlEntity>(this) {
+//                    @Override
+//                    public void onNext(ControlEntity controlEntity) {
+//                        UiUtils.showToast(controlEntity.msg);
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                reLoadJS();
+//                            }
+//                        },1000);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        super.onError(e);
+//                    }
+//                });
     }
 
     private Handler handler = new Handler();

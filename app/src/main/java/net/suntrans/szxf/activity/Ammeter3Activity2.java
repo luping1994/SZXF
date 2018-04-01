@@ -482,7 +482,6 @@ public class Ammeter3Activity2 extends BasedActivity implements OnChartValueSele
 
     private  Ameter3Entity infos = null;
     private void getData(String sno, String date) {
-        LogUtil.i(sno);
         showLoadingState();
         addSubscription(RetrofitHelper.getApi().getAmmeter3Data(sno, date), new BaseSubscriber<Ameter3Entity>(this) {
             @Override

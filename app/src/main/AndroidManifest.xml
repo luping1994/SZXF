@@ -118,6 +118,15 @@
         <activity android:name="net.suntrans.szxf.activity.ChannelEditActivity" android:screenOrientation="portrait"/>
         <activity android:name="net.suntrans.szxf.activity.FloorPlanActivity" android:screenOrientation="landscape"/>
         <activity android:name="net.suntrans.szxf.activity.ZHCurHisActivity" />
+        <activity android:name=".uiv2.activity.EnergyMoniActivity" />
+        <activity android:name=".uiv2.activity.MoniDetailActivity" />
+        <activity android:name=".uiv2.activity.MessageDetailActivity" />
+        <activity android:name=".uiv2.activity.MessageActivity" />
+        <activity android:name=".uiv2.activity.AddMessageActivity" />
+        <activity android:name=".uiv2.activity.EnergyHomeActivity" />
+        <activity android:name=".uiv2.activity.SceneActivity" />
+        <activity android:name=".uiv2.activity.AddSceneActivityV2" />
+        <activity android:name=".uiv2.activity.SceneDetailActivityV2" />
 
         <service android:name="net.suntrans.szxf.MyService" />
     </application>

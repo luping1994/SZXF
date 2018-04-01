@@ -86,4 +86,22 @@
     <style name="TabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
     </style>
+
+
+
+    <style name="transparentDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+
+
+    <!--//dialog的动画-->
+    <style name="dialogWindowAnim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/window_in</item>
+        <item name="android:windowExitAnimation">@anim/windows_out</item>
+    </style>
 </resources>

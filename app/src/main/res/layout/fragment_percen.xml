@@ -64,6 +64,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="305dp"
             android:layout_marginLeft="11dp"
@@ -246,15 +247,16 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:layout_below="@+id/content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:id="@+id/loginOut"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_user_zhuxiao"
+            android:layout_height="45dp"
+            android:background="@drawable/bg_bt_login"
             android:text="注   销"
             android:textColor="@color/white"
-            android:textSize="17sp">
-
+            android:textSize="14sp">
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="51dp"

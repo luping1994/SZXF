@@ -27,6 +27,7 @@ public class DeviceEntity extends RespondBody<DeviceEntity.Data>{
         public String channel_type;
         public String area_name;
         public String permission;
+        public String number;
 
     }
 }

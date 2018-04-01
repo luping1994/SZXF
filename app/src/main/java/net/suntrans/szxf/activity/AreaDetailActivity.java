@@ -114,13 +114,13 @@ public class AreaDetailActivity extends BasedActivity implements View.OnClickLis
     class PagerAdapter extends FragmentPagerAdapter {
         private Fragment[] fragments;
 
-        private final String[] title = new String[]{"照明", "插座"};
+        private final String[] title = new String[]{"照明"};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
             AreaDeailFragment fragment =  AreaDeailFragment.newInstance("1",getIntent().getStringExtra("id"));
-            AreaDeailFragment fragment2 =  AreaDeailFragment.newInstance("2",getIntent().getStringExtra("id"));
-            fragments =new Fragment[]{fragment,fragment2};
+//            AreaDeailFragment fragment2 =  AreaDeailFragment.newInstance("2",getIntent().getStringExtra("id"));
+            fragments =new Fragment[]{fragment};
         }
 
         @Override
