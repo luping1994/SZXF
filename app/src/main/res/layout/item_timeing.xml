@@ -46,7 +46,6 @@
 
         <net.suntrans.szxf.views.SwitchButton
             android:id="@+id/checkbox"
-            style="@style/SwitchButtonStyleMD"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -54,8 +53,6 @@
             android:textColor="@color/white"
             android:textSize="11sp"
             app:kswBackDrawable="@drawable/switch_bottom_white"
-            app:kswTextOff="OFF"
-            app:kswTextOn="ON"
-            app:kswThumbDrawable="@drawable/thumb" />
+            app:kswThumbDrawable="@drawable/switch_top_circle" />
     </RelativeLayout>
 </LinearLayout>

@@ -114,8 +114,9 @@
   public *;
 }
 #我的
-    -keep class net.suntrans.dachu.bean.**{*;}
-    -keep class net.suntrans.dachu.converter.**{*;}
+    -keep class net.suntrans.szxf.bean.**{*;}
+    -keep class net.suntrans.szxf.converter.**{*;}
+    -keep class net.suntrans.szxf.uiv2.bean.**{*;}
     -dontwarn android.support.**
     -keep class **.R$* {
      *;
@@ -127,3 +128,14 @@
 -keep interface com.yalantis.ucrop** { *; }
 
 -dontwarn com.squareup.picasso.**
+
+#jpush
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }

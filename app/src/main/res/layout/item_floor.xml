@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/item_selector"
+    android:gravity="center_vertical"
+    android:id="@+id/name"
+    android:textColor="@color/black"
+    android:drawableTint="#999999"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:drawableRight="@drawable/ic_arrow_right"
+    android:layout_height="45dp">
+
+</TextView>

@@ -11,9 +11,11 @@ import net.suntrans.szxf.activity.Ammeter3Activity2
 import net.suntrans.szxf.api.Api
 import net.suntrans.szxf.api.RetrofitHelper
 import net.suntrans.szxf.bean.AreaEntity
+import net.suntrans.szxf.bean.EnergyEntity
 import net.suntrans.szxf.fragment.base.BasedFragment
 import net.suntrans.szxf.rx.BaseSubscriber
 import net.suntrans.szxf.uiv2.adapter.EnergyListAdapter
+import net.suntrans.szxf.uiv2.bean.EnergyListEntity
 import net.suntrans.szxf.utils.ActivityUtils
 import net.suntrans.szxf.utils.UiUtils
 import net.suntrans.szxf.views.ScrollChildSwipeRefreshLayout
@@ -32,7 +34,7 @@ class EnergyListFragment : BasedFragment() {
         return R.layout.fragment_moni
     }
 
-    private var datas: MutableList<AreaEntity.AreaFloor>? = null
+    private var datas: MutableList<EnergyListEntity.FloorBean>? = null
     private var adapter: EnergyListAdapter? = null
     private var expandableListView: ExpandableListView? = null
     private var add: ImageView? = null
@@ -41,8 +43,9 @@ class EnergyListFragment : BasedFragment() {
 
         refreshLayout = view!!.findViewById(R.id.refreshlayout) as ScrollChildSwipeRefreshLayout
         refreshLayout?.setOnRefreshListener { getAreaData(1) }
+        refreshLayout?.setColorSchemeColors(context.resources.getColor(R.color.colorPrimary))
 
-        datas = ArrayList<AreaEntity.AreaFloor>()
+        datas = ArrayList<EnergyListEntity.FloorBean>()
         expandableListView = view!!.findViewById(R.id.recyclerview) as ExpandableListView
         adapter = EnergyListAdapter(datas, context)
         expandableListView!!.setAdapter(adapter)
@@ -53,7 +56,7 @@ class EnergyListFragment : BasedFragment() {
 
             val intent = Intent()
             intent.setClass(activity, Ammeter3Activity2::class.java)
-            intent.putExtra("sno", datas!![groupPosition].sub[childPosition].sno)
+            intent.putExtra("sno", datas!![groupPosition].sub[childPosition].id)
             intent.putExtra("id", datas!![groupPosition].sub[childPosition].id)
             intent.putExtra("name", datas!![groupPosition].sub[childPosition].name)
             startActivity(intent)
@@ -78,10 +81,10 @@ class EnergyListFragment : BasedFragment() {
           api =   RetrofitHelper.getApi()
         }
         api!!.energyIndexNewApi
-                .compose(this.bindUntilEvent<AreaEntity>(FragmentEvent.DESTROY_VIEW))
+                .compose(this.bindUntilEvent<EnergyListEntity>(FragmentEvent.DESTROY_VIEW))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : BaseSubscriber<AreaEntity>(activity) {
+                .subscribe(object : BaseSubscriber<EnergyListEntity>(activity) {
                     override fun onCompleted() {
 
                     }
@@ -96,16 +99,16 @@ class EnergyListFragment : BasedFragment() {
 
                     }
 
-                    override fun onNext(homeSceneResult: AreaEntity?) {
+                    override fun onNext(homeSceneResult: EnergyListEntity?) {
                         refreshLayout?.isRefreshing = false
                         if (homeSceneResult != null) {
                             if (homeSceneResult.code == 200) {
-                                if (homeSceneResult.data == null || homeSceneResult.data.size == 0) {
+                                if (homeSceneResult.data == null || homeSceneResult.data.floor.size == 0) {
                                     stateView.showEmpty()
                                     return
                                 }
                                 datas!!.clear()
-                                datas!!.addAll(homeSceneResult.data)
+                                datas!!.addAll(homeSceneResult.data.floor)
                                 adapter!!.notifyDataSetChanged()
 //                                expandableListView!!.expandGroup(0, true)
                                 if (a == 0) {

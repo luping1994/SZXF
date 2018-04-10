@@ -44,9 +44,9 @@ class EnergyMoniFragment : BasedFragment() {
 
         datas = ArrayList<AreaEntity.AreaFloor>()
         expandableListView = view!!.findViewById(R.id.recyclerview) as ExpandableListView
+        expandableListView!!.divider = null
         adapter = MoniListAdapter(datas, context)
         expandableListView!!.setAdapter(adapter)
-        expandableListView!!.divider = null
 
 
         expandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->

@@ -38,7 +38,7 @@ public class ParentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return datas.get(groupPosition).lists.size();
+        return datas.get(groupPosition).channels.size();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ParentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return datas.get(groupPosition).lists.get(childPosition);
+        return datas.get(groupPosition).channels.get(childPosition);
     }
 
     @Override
@@ -117,6 +117,12 @@ public class ParentAdapter extends BaseExpandableListAdapter {
         }
 
         public void setData(final int groupPosition) {
+            if (datas == null)
+                return;
+            if (datas.get(groupPosition) == null)
+                return;
+            if (datas.get(groupPosition).channels == null)
+                return;
             mName.setText(datas.get(groupPosition).name);
             state.setChecked(datas.get(groupPosition).isChecked);
             state.setOnClickListener(new View.OnClickListener() {
@@ -124,12 +130,12 @@ public class ParentAdapter extends BaseExpandableListAdapter {
                 public void onClick(View v) {
                     if (state.isChecked()) {
                         boolean hasPerssion = true;
-                        for (int i = 0; i < datas.get(groupPosition).lists.size(); i++) {
-                            if (datas.get(groupPosition).lists.get(i).permission.equals("0")) {
+                        for (int i = 0; i < datas.get(groupPosition).channels.size(); i++) {
+                            if (datas.get(groupPosition).channels.get(i).permission.equals("0")) {
                                 hasPerssion = false;
                                 continue;
                             }
-                            datas.get(groupPosition).lists.get(i).setChecked(true);
+                            datas.get(groupPosition).channels.get(i).setChecked(true);
                         }
                         if (!hasPerssion) {
                             UiUtils.showToast("该区域下部分设备无管理权限无法全选");
@@ -140,12 +146,12 @@ public class ParentAdapter extends BaseExpandableListAdapter {
                         }
                     } else {
                         boolean hasPerssion = true;
-                        for (int i = 0; i < datas.get(groupPosition).lists.size(); i++) {
-                            if (datas.get(groupPosition).lists.get(i).permission.equals("0")) {
+                        for (int i = 0; i < datas.get(groupPosition).channels.size(); i++) {
+                            if (datas.get(groupPosition).channels.get(i).permission.equals("0")) {
                                 hasPerssion = false;
                                 continue;
                             }
-                            datas.get(groupPosition).lists.get(i).setChecked(false);
+                            datas.get(groupPosition).channels.get(i).setChecked(false);
                         }
                         if (!hasPerssion) {
                             UiUtils.showToast("该区域下部分设备无管理权限无法全选");
@@ -158,7 +164,7 @@ public class ParentAdapter extends BaseExpandableListAdapter {
                     notifyDataSetChanged();
                 }
             });
-            count.setText(datas.get(groupPosition).lists.size() + "");
+            count.setText(datas.get(groupPosition).channels.size() + "");
         }
     }
 
@@ -175,25 +181,25 @@ public class ParentAdapter extends BaseExpandableListAdapter {
         }
 
         public void setData(final int groupPosition, final int childPosition) {
-            mText.setText(datas.get(groupPosition).lists.get(childPosition).name);
-            state.setChecked(datas.get(groupPosition).lists.get(childPosition).isChecked());
+            mText.setText(datas.get(groupPosition).channels.get(childPosition).title);
+            state.setChecked(datas.get(groupPosition).channels.get(childPosition).isChecked());
 
             root.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (datas.get(groupPosition).lists.get(childPosition).permission.equals("0")) {
+                    if (datas.get(groupPosition).channels.get(childPosition).permission.equals("0")) {
                         UiUtils.showToast("您没有该设备的管理权限");
-//                        System.out.println(datas.get(groupPosition).lists.get(childPosition).permission);
-                        datas.get(groupPosition).lists.get(childPosition).setChecked(state.isChecked());
+//                        System.out.println(datas.get(groupPosition).channels.get(childPosition).permission);
+                        datas.get(groupPosition).channels.get(childPosition).setChecked(state.isChecked());
                     } else {
-                        datas.get(groupPosition).lists.get(childPosition).setChecked(!state.isChecked());
+                        datas.get(groupPosition).channels.get(childPosition).setChecked(!state.isChecked());
                     }
                     int checkedCount = 0;
-                    for (int i = 0; i < datas.get(groupPosition).lists.size(); i++) {
-                        if (datas.get(groupPosition).lists.get(i).isChecked())
+                    for (int i = 0; i < datas.get(groupPosition).channels.size(); i++) {
+                        if (datas.get(groupPosition).channels.get(i).isChecked())
                             checkedCount++;
                     }
-                    if (checkedCount == datas.get(groupPosition).lists.size()) {
+                    if (checkedCount == datas.get(groupPosition).channels.size()) {
                         datas.get(groupPosition).setChecked(true);
                     } else {
                         datas.get(groupPosition).setChecked(false);

@@ -12,6 +12,6 @@
     <string-array name="channelType">
         <item>照明</item>
         <item>插座</item>
-
+        <item>空调</item>
     </string-array>
 </resources>

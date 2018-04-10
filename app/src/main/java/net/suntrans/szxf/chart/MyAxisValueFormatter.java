@@ -11,12 +11,12 @@ public class MyAxisValueFormatter implements IAxisValueFormatter
     private DecimalFormat mFormat;
 
     public MyAxisValueFormatter() {
-        mFormat = new DecimalFormat("###,###,###,##0");
+        mFormat = new DecimalFormat("###,###,###,##0.00");
     }
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        return mFormat.format(value) + "kW·h";
+        return mFormat.format(value) + "";
     }
 
 //    @Override

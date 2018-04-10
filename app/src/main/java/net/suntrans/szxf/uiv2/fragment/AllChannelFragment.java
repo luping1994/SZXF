@@ -162,7 +162,7 @@ public class AllChannelFragment extends android.support.v4.app.DialogFragment {
             AppCompatCheckBox checkBox = helper.getView(R.id.checkbox);
             checkBox.setChecked(item.checked);
             ImageView imageView = helper.getView(R.id.image);
-            imageView.setImageResource(DeviceType.deviceIcons.get(item.device_type));
+            imageView.setImageResource(DeviceType.deviceIcons.get(item.channel_type));
         }
     }
 

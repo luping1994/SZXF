@@ -19,7 +19,7 @@ public class MonitorEntity {
     public String name;
     public String title;
     public String number;
-    public String channel_type;
+    public int channel_type;
     public String dev_id;
     public String current;
 }

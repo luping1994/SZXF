@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DividerItemDecoration;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -16,11 +15,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import net.suntrans.looney.widgets.LoadingDialog;
+import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.ROLE;
+import net.suntrans.szxf.activity.AddSceneChannelActivity;
 import net.suntrans.szxf.activity.BasedActivity;
+import net.suntrans.szxf.activity.SceneTimingActivity;
 import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.databinding.ActivitySceneDetailV2Binding;
 import net.suntrans.szxf.rx.BaseSubscriber;
+import net.suntrans.szxf.uiv2.adapter.DividerItemDecoration;
 import net.suntrans.szxf.uiv2.bean.ChannelInfo;
 import net.suntrans.szxf.uiv2.bean.SceneItem;
 import net.suntrans.szxf.uiv2.bean.SceneItemlEntity;
@@ -70,8 +74,8 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
         binding.sceneName.setText(sceneName);
         datas = new ArrayList<>();
         adapter = new SceneItemAdapter(R.layout.item_scene_channel, datas);
-        adapter.bindToRecyclerView(binding.recyclerView);
-        adapter.setEmptyView(R.layout.recyclerview_empty_view);
+//        adapter.bindToRecyclerView(binding.recyclerView);
+//        adapter.setEmptyView(R.layout.recyclerview_empty_view);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         binding.back.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +101,15 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
             }
         });
 
+        binding.dingshi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SceneDetailActivityV2.this, SceneTimingActivity.class);
+                intent.putExtra("scene_id", sceneID);
+                startActivity(intent);
+            }
+        });
+
         binding.bgImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,12 +122,21 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
         binding.addDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                allChannelFragment = new AllChannelFragment();
-                allChannelFragment.setOnChannelSelectedListener(SceneDetailActivityV2.this);
-                allChannelFragment.show(getSupportFragmentManager(), "allChannel");
+                if (App.ROLE_ID == ROLE.STAFF){
+                    allChannelFragment = new AllChannelFragment();
+                    allChannelFragment.setOnChannelSelectedListener(SceneDetailActivityV2.this);
+                    allChannelFragment.show(getSupportFragmentManager(), "allChannel");
+                }else {
+                    Intent intent = new Intent(SceneDetailActivityV2.this, AddSceneChannelActivity.class);
+                    intent.putExtra("showType",AddSceneChannelActivity.MODIFY);
+                    intent.putExtra("scene_id", sceneID);
+                    startActivity(intent);
+                }
+
             }
         });
-
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setNestedScrollingEnabled(false);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

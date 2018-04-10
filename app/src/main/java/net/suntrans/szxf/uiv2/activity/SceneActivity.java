@@ -28,7 +28,7 @@ public class SceneActivity extends BasedActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scene);
-        fragment = new SceneV2Fragment();
+        fragment = SceneV2Fragment.newInstance(SceneV2Fragment.GRIDELAYOUT);
         getSupportFragmentManager().beginTransaction().replace(R.id.sceneContent, fragment).commit();
         binding.back.setOnClickListener(new View.OnClickListener() {
             @Override

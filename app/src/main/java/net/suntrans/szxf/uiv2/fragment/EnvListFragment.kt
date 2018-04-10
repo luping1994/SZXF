@@ -7,14 +7,12 @@ import android.widget.ExpandableListView
 import android.widget.ImageView
 import com.trello.rxlifecycle.android.FragmentEvent
 import net.suntrans.szxf.R
-import net.suntrans.szxf.activity.Ammeter3Activity2
 import net.suntrans.szxf.activity.EnvDetailActivity
 import net.suntrans.szxf.api.Api
 import net.suntrans.szxf.api.RetrofitHelper
 import net.suntrans.szxf.bean.AreaEntity
 import net.suntrans.szxf.fragment.base.BasedFragment
 import net.suntrans.szxf.rx.BaseSubscriber
-import net.suntrans.szxf.uiv2.adapter.EnergyListAdapter
 import net.suntrans.szxf.uiv2.adapter.EnvListAdapter
 import net.suntrans.szxf.utils.ActivityUtils
 import net.suntrans.szxf.utils.UiUtils
@@ -30,6 +28,10 @@ import java.util.*
  */
 
 class EnvListFragment : BasedFragment() {
+
+
+
+
     override fun getLayoutRes(): Int {
         return R.layout.fragment_moni
     }
@@ -57,7 +59,7 @@ class EnvListFragment : BasedFragment() {
 
             intent.setClass(activity, EnvDetailActivity::class.java)
             intent.putExtra("sno", datas!![groupPosition].sub[childPosition].sno)
-            intent.putExtra("id", datas!![groupPosition].sub[childPosition].id)
+            intent.putExtra("id", datas!![groupPosition].sub[childPosition].id.toString())
             intent.putExtra("name", datas!![groupPosition].sub[childPosition].name)
             startActivity(intent)
 
@@ -91,7 +93,6 @@ class EnvListFragment : BasedFragment() {
 
                     override fun onError(e: Throwable) {
                         super.onError(e)
-                        e.printStackTrace()
                         if (a == 0) {
                             stateView.showRetry()
                         }

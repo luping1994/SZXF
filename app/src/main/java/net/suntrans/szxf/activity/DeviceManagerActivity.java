@@ -11,12 +11,11 @@ import net.suntrans.szxf.fragment.per.DevicesManagerFragment;
 
 public class DeviceManagerActivity extends BasedActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devicemanager);
-        DevicesManagerFragment fragment = DevicesManagerFragment.newInstance();
+        DevicesManagerFragment fragment =new DevicesManagerFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 

@@ -6,17 +6,49 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="193dp"
+        android:layout_height="226dp"
         android:background="@color/colorPrimary" />
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
         android:gravity="center"
-        android:text="登录"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="20sp" />
+
+    <ImageView
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sz_logo" />
+
+
+    <TextView
+
+        android:id="@+id/name2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="深圳市公安消防局南头中队"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/name3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name2"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="智慧能管和环境监测系统"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:id="@+id/loginForm"
@@ -24,7 +56,7 @@
         android:layout_height="150dp"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="6dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="144dp"
         android:background="@drawable/content"
         android:orientation="vertical">
 
@@ -46,11 +78,11 @@
             android:background="@color/devisionColor" />
 
         <net.suntrans.szxf.views.EditView
-            android:digits="@string/abcd123"
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@null"
+            android:digits="@string/abcd123"
             android:hint="请输入密码"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
@@ -61,11 +93,14 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         android:id="@+id/login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/loginForm"
-        android:background="@drawable/bg_user_zhuxiao"
+        android:background="@drawable/bg_bt_login"
         android:text="注   销"
         android:textColor="@color/white"
         android:textSize="17sp">
@@ -81,6 +116,13 @@
             android:textSize="17sp" />
     </RelativeLayout>
 
+
+    <ImageView
+        android:layout_above="@id/guangwang"
+        android:src="@drawable/logo_h2"
+        android:layout_centerHorizontal="true"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/guangwang"
         android:layout_width="match_parent"

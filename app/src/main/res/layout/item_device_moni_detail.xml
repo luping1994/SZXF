@@ -25,13 +25,14 @@
             />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
+                android:maxLines="1"
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,12 +54,19 @@
         </LinearLayout>
 
         <TextView
+            android:maxLines="1"
+            android:layout_weight="1"
             android:id="@+id/used"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|right"
             android:text="已启用" />
 
     </LinearLayout>
-
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_color"
+        android:layout_marginLeft="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </RelativeLayout>

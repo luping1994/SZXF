@@ -12,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import com.trello.rxlifecycle.android.FragmentEvent
+import net.suntrans.looney.widgets.IosAlertDialog
 import net.suntrans.szxf.R
 import net.suntrans.szxf.activity.AddAreaActivity
 import net.suntrans.szxf.activity.AddFloorActivity
@@ -19,6 +20,7 @@ import net.suntrans.szxf.activity.AreaDetailActivity
 import net.suntrans.szxf.adapter.AreaAdapter
 import net.suntrans.szxf.api.RetrofitHelper
 import net.suntrans.szxf.bean.AreaEntity
+import net.suntrans.szxf.bean.RespondBody
 import net.suntrans.szxf.bean.SampleResult
 import net.suntrans.szxf.fragment.base.BasedFragment
 import net.suntrans.szxf.rx.BaseSubscriber
@@ -26,23 +28,28 @@ import net.suntrans.szxf.utils.ActivityUtils
 import net.suntrans.szxf.utils.LogUtil
 import net.suntrans.szxf.utils.StatusBarCompat
 import net.suntrans.szxf.utils.UiUtils
+import net.suntrans.szxf.views.NestedExpandaleListView
 import net.suntrans.szxf.views.ScrollChildSwipeRefreshLayout
+import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import java.text.ParsePosition
 import java.util.*
 
 /**
  * Created by Looney on 2017/7/20.
  */
 
-class AreaFragment : BasedFragment() {
+class AreaFragment : BasedFragment(), View.OnClickListener {
+
+
     override fun getLayoutRes(): Int {
         return R.layout.fragment_area
     }
 
     private var datas: MutableList<AreaEntity.AreaFloor>? = null
     private var adapter: AreaAdapter? = null
-    private var expandableListView: ExpandableListView? = null
+    private var expandableListView: NestedExpandaleListView? = null
     private var add: ImageView? = null
     private var refreshLayout: ScrollChildSwipeRefreshLayout? = null
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -57,23 +64,116 @@ class AreaFragment : BasedFragment() {
             statusBar.visibility = View.GONE
 
         }
+
+        view.findViewById(R.id.buildingOpen)
+                .setOnClickListener(this)
+
+        view.findViewById(R.id.buildingClose)
+                .setOnClickListener(this)
+        view.findViewById(R.id.officeClose)
+                .setOnClickListener(this)
+        view.findViewById(R.id.officeOpen)
+                .setOnClickListener(this)
+
+        view.findViewById(R.id.susheClose)
+                .setOnClickListener(this)
+
+        view.findViewById(R.id.susheOpen)
+                .setOnClickListener(this)
+
         refreshLayout = view.findViewById(R.id.refreshlayout) as ScrollChildSwipeRefreshLayout
         refreshLayout?.setOnRefreshListener { getAreaData(1) }
-
+        refreshLayout?.setColorSchemeColors(context.resources.getColor(R.color.colorPrimary))
         datas = ArrayList<AreaEntity.AreaFloor>() as MutableList<AreaEntity.AreaFloor>?
-        expandableListView = view!!.findViewById(R.id.recyclerview) as ExpandableListView
+        expandableListView = view!!.findViewById(R.id.recyclerview) as NestedExpandaleListView
         adapter = AreaAdapter(datas, context)
         expandableListView!!.setAdapter(adapter)
         expandableListView!!.divider = null
         add = view!!.findViewById(R.id.add) as ImageView
         add!!.setOnClickListener { v -> showPopupMenu() }
-        expandableListView!!.setOnItemLongClickListener { parent, view, position, id ->
-            if (view.getTag(R.id.name) is AreaAdapter.GroupHolder) {
-                deleteFloor(datas!!.get(view.getTag(R.id.root) as Int).id)
+
+        adapter!!.setOnItemClickListener(object : AreaAdapter.onClickListener {
+            override fun onLongParentClick(parentPosition: Int) {
+
             }
 
-            true
-        }
+            override fun onParentItemClick(id: Int, parentPosition: Int) {
+                var cmd: String = "0"
+                var msg = ""
+                if (id == R.id.close) {
+
+                    cmd = "0"
+                    msg = "是否关闭" + datas!![parentPosition].name.toString() + "所有开关"
+                } else if (id == R.id.open) {
+
+                    cmd = "1"
+                    msg = "是否打开" + datas!![parentPosition].name.toString() + "所有开关"
+
+                }
+
+                IosAlertDialog(activity)
+                        .builder()
+                        .setMsg(msg)
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton(resources.getString(R.string.queding)) {
+                            api.switchArea(datas!![parentPosition].area_id.toString(), cmd)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(object : BaseSubscriber<RespondBody<*>>(activity) {
+
+                                        override fun onNext(t: RespondBody<*>?) {
+                                            super.onNext(t)
+                                            UiUtils.showToast(t!!.msg)
+
+                                        }
+
+                                        override fun onError(e: Throwable?) {
+                                            super.onError(e)
+                                        }
+                                    })
+                        }.show()
+
+
+            }
+
+            override fun onClildItemClick(id: Int, parentPosition: Int, childPosition: Int) {
+                var cmd: String = "0"
+                var msg = ""
+                if (id == R.id.close) {
+
+                    cmd = "0"
+                    msg = "是否关闭" + datas!![parentPosition].sub[childPosition].name.toString() + "所有开关"
+                } else if (id == R.id.open) {
+
+                    cmd = "1"
+                    msg = "是否打开" + datas!![parentPosition].sub[childPosition].name.toString() + "所有开关"
+
+                }
+                IosAlertDialog(activity)
+                        .builder()
+                        .setMsg(msg)
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton(resources.getString(R.string.queding)) {
+                            api.switchHouse(datas!![parentPosition].sub[childPosition].id.toString(), cmd)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(object : BaseSubscriber<RespondBody<*>>(activity) {
+
+                                        override fun onNext(t: RespondBody<*>?) {
+                                            super.onNext(t)
+                                            UiUtils.showToast(t!!.msg)
+
+                                        }
+
+                                        override fun onError(e: Throwable?) {
+                                            super.onError(e)
+                                        }
+                                    })
+                        }.show()
+
+            }
+
+        })
         expandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
             val intent = Intent(activity, AreaDetailActivity::class.java)
             intent.putExtra("id", datas!![groupPosition].sub[childPosition].id.toString() + "")
@@ -90,12 +190,14 @@ class AreaFragment : BasedFragment() {
     }
 
 
+    private val api = RetrofitHelper.getApi()
     private fun getAreaData(a: Int) {
         if (a == 0) {
             stateView.showLoading()
             refreshLayout?.visibility = View.INVISIBLE
         }
-        RetrofitHelper.getApi().homeHouse
+
+        api.homeHouse
                 .compose(this.bindUntilEvent<AreaEntity>(FragmentEvent.DESTROY_VIEW))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -125,7 +227,7 @@ class AreaFragment : BasedFragment() {
                                 datas!!.clear()
                                 datas!!.addAll(homeSceneResult.data)
                                 adapter!!.notifyDataSetChanged()
-                                expandableListView!!.expandGroup(0, true)
+//                                expandableListView!!.expandGroup(0, true)
                                 if (a == 0) {
                                     refreshLayout?.visibility = View.VISIBLE;
                                     stateView.showContent()
@@ -231,4 +333,58 @@ class AreaFragment : BasedFragment() {
     }
 
 
+    override fun onClick(v: View?) {
+        var msg = ""
+        var observable: Observable<RespondBody<*>>?=null
+        when (v!!.id) {
+            R.id.buildingClose -> {
+                msg = "是否关闭整栋楼的开关"
+                observable = api.switchBuilding("0")
+            }
+            R.id.buildingOpen -> {
+                msg = "是否打开整栋楼的开关"
+                observable = api.switchBuilding("1")
+            }
+            R.id.officeOpen -> {
+                msg = "是否打开办公区的开关"
+                observable = api.switchOffice("1", "0")
+            }
+            R.id.officeClose -> {
+                msg = "是否关闭办公区的开关"
+                observable = api.switchOffice("0", "0")
+            }
+
+            R.id.susheOpen -> {
+                msg = "是否打开宿舍区的所有的开关"
+                observable = api.switchOffice("1", "1")
+            }
+
+            R.id.susheClose -> {
+                msg = "是否关闭宿舍区的所有的开关"
+                observable = api.switchOffice("0","1")
+            }
+        }
+
+        IosAlertDialog(activity)
+                .builder()
+                .setMsg(msg)
+                .setNegativeButton("取消", null)
+                .setPositiveButton(resources.getString(R.string.queding)) {
+                    observable!!.
+                            observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(object : BaseSubscriber<RespondBody<*>>(activity) {
+
+                                override fun onNext(t: RespondBody<*>?) {
+                                    super.onNext(t)
+                                    UiUtils.showToast(t!!.msg)
+
+                                }
+
+                                override fun onError(e: Throwable?) {
+                                    super.onError(e)
+                                }
+                            })
+                }.show()
+    }
 }

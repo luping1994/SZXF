@@ -14,7 +14,8 @@
         android:background="@color/colorPrimary"
         android:padding="2dp"
         android:text="正常"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,9 +30,9 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="周杰伦"
+            android:text="--"
             android:textColor="@color/textColor"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,8 +48,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="功率 "
-                    android:textSize="15sp" />
+                    android:text="动态载荷 "
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/power_rate"
@@ -56,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="1000W"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -70,14 +71,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="电流 "
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/current"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3.0A"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
 
@@ -85,10 +86,17 @@
     </LinearLayout>
 
     <ImageView
+        android:tint="#999999"
         android:id="@+id/arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_arrow_right" />
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_color"
+        android:layout_marginLeft="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </RelativeLayout>

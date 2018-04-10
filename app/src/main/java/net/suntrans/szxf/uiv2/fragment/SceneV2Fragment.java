@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,9 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.ROLE;
 import net.suntrans.szxf.activity.AddSceneActivity;
 import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.uiv2.activity.AddSceneActivityV2;
@@ -28,6 +32,7 @@ import net.suntrans.szxf.databinding.FragmentSceneV2Binding;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.uiv2.BasedFragment2;
 import net.suntrans.szxf.utils.UiUtils;
+import net.suntrans.szxf.views.LoadingDialog;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -42,6 +47,17 @@ import rx.schedulers.Schedulers;
 
 public class SceneV2Fragment extends BasedFragment2 {
 
+
+    public static final int LINEARLAYOUT = 0;
+    public static final int GRIDELAYOUT = 1;
+    public static SceneV2Fragment newInstance(int layoutType) {
+
+        Bundle args = new Bundle();
+        args.putInt("layoutType",layoutType);
+        SceneV2Fragment fragment = new SceneV2Fragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public static List<SceneInfo> datas = new CopyOnWriteArrayList<>();
     private FragmentSceneV2Binding binding;
@@ -58,10 +74,34 @@ public class SceneV2Fragment extends BasedFragment2 {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        adapter = new SceneAdapter(R.layout.item_scene_v2, datas, getContext());
-        binding.recyclerView.setAdapter(adapter);
+
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
+
+
+        int layoutType = getArguments().getInt("layoutType");
+        if (layoutType == LINEARLAYOUT) {
+            adapter = new SceneAdapter(R.layout.item_scene_v2_staff, datas, getContext());
+            binding.recyclerView.setAdapter(adapter);
+            binding.recyclerView.setHasFixedSize(true);
+            binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        } else {
+            binding.recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            adapter = new SceneAdapter(R.layout.item_scene_v2, datas, getContext());
+            binding.recyclerView.setAdapter(adapter);
+            View headerView = LayoutInflater.from(getContext()).inflate(R.layout.scene_header_view, null, false);
+            View footerView = LayoutInflater.from(getContext()).inflate(R.layout.item_add_scene, null, false);
+            adapter.setFooterView(footerView);
+            adapter.setHeaderView(headerView);
+            footerView.findViewById(R.id.addScene)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(getActivity(), AddSceneActivityV2.class));
+                        }
+                    });
+        }
+
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
@@ -77,17 +117,7 @@ public class SceneV2Fragment extends BasedFragment2 {
                         .create().show();
             }
         });
-        View headerView = LayoutInflater.from(getContext()).inflate(R.layout.scene_header_view, null, false);
-        View footerView = LayoutInflater.from(getContext()).inflate(R.layout.item_add_scene, null, false);
-        adapter.setFooterView(footerView);
-        adapter.setHeaderView(headerView);
-        footerView.findViewById(R.id.addScene)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), AddSceneActivityV2.class));
-                    }
-                });
+
     }
 
     @Override
@@ -148,11 +178,20 @@ public class SceneV2Fragment extends BasedFragment2 {
 
     boolean sending = false;
 
+    private LoadingDialog dialog;
+
     public void sendOrder(String id) {
         if (sending) {
-            UiUtils.showToast( "请稍后...");
+            UiUtils.showToast("请稍后...");
             return;
         }
+        if (dialog == null) {
+
+            dialog = new LoadingDialog(getActivity());
+            dialog.setWaitText("请稍后...");
+            dialog.setCancelable(false);
+        }
+        dialog.show();
         sending = true;
         mCompositeSubscription.add(api.switchSceneV2(id)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -163,11 +202,15 @@ public class SceneV2Fragment extends BasedFragment2 {
                         UiUtils.showToast(cmdMsg.msg);
                         adapter.notifyDataSetChanged();
                         sending = false;
+                        dialog.dismiss();
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
+                        dialog.dismiss();
+
                         sending = false;
                     }
                 }));

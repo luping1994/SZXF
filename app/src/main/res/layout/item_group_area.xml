@@ -27,13 +27,43 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
+        <TextView
+            android:textSize="12sp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/close"
+            android:id="@+id/open"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/bg_open"
+            android:gravity="center"
+            android:text="全开"
+            android:textColor="@color/open_text_color" />
+
+        <TextView
+            android:textSize="12sp"
+
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/close"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/bg_close"
+            android:gravity="center"
+            android:text="全关"
+            android:textColor="@color/close_text_color" />
 
     </RelativeLayout>
-    <ImageView
+    <View
+        android:background="@color/divider_color"
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/gradient_shape2"
     />
+
 </RelativeLayout>

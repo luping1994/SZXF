@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/action_bar_size"
         android:background="@color/colorPrimary">
 
         <TextView
@@ -22,16 +22,17 @@
             android:paddingLeft="19dp"
             android:text="区域"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/title_size" />
 
         <ImageView
-            android:background="?attr/selectableItemBackground"
-            android:paddingLeft="14dp"
+            android:visibility="invisible"
             android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackground"
+            android:paddingLeft="14dp"
             android:paddingRight="14dp"
             android:src="@drawable/ic_add" />
     </RelativeLayout>
@@ -47,13 +48,179 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ExpandableListView
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#f7f7f7">
+         <android.support.v4.widget.NestedScrollView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="150dp"
+                 android:orientation="vertical">
 
-            </ExpandableListView>
+                 <LinearLayout
+                     android:background="@drawable/item_selector"
+                     android:layout_width="match_parent"
+                     android:layout_height="150dp"
+                     android:orientation="vertical"
+                    >
+
+                     <View
+                         android:background="@color/divider_color"
+                         android:layout_width="match_parent"
+                         android:layout_height="16dp"/>
+                     <RelativeLayout
+                         android:layout_weight="1"
+                         android:layout_width="match_parent"
+                         android:layout_height="0dp"
+                         android:orientation="horizontal">
+
+                         <TextView
+                             android:drawableLeft="@drawable/ic_home"
+                             android:layout_width="wrap_content"
+                             android:layout_height="match_parent"
+                             android:layout_marginLeft="16dp"
+                             android:gravity="center|right"
+                             android:text="整栋楼"
+                             android:textColor="@color/black" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+
+                             android:layout_toLeftOf="@+id/buildingClose"
+                             android:id="@+id/buildingOpen"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:background="@drawable/bg_open"
+                             android:gravity="center"
+                             android:text="全开"
+                             android:textColor="@color/open_text_color" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_alignParentRight="true"
+                             android:id="@+id/buildingClose"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:layout_marginLeft="16dp"
+                             android:layout_marginRight="16dp"
+                             android:background="@drawable/bg_close"
+                             android:gravity="center"
+                             android:text="全关"
+                             android:textColor="@color/close_text_color" />
+                     </RelativeLayout>
+
+
+                     <View
+                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                         android:background="@color/divider_color"
+                         android:layout_width="match_parent"
+                         android:layout_height="1dp"/>
+                     <RelativeLayout
+                         android:layout_gravity="center_vertical"
+                         android:layout_weight="1"
+                         android:layout_width="match_parent"
+                         android:layout_height="0dp"
+                         android:gravity="center"
+                         android:orientation="horizontal">
+
+                         <TextView
+                             android:drawableLeft="@drawable/ic_home"
+                             android:layout_width="wrap_content"
+                             android:layout_height="match_parent"
+                             android:layout_marginLeft="16dp"
+                             android:gravity="center|right"
+                             android:text="办公区"
+                             android:textColor="@color/black" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_toLeftOf="@id/officeClose"
+                             android:id="@+id/officeOpen"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:layout_marginLeft="16dp"
+                             android:background="@drawable/bg_open"
+                             android:gravity="center"
+                             android:text="全开"
+                             android:textColor="@color/open_text_color" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_alignParentRight="true"
+                             android:layout_width="50dp"
+                             android:id="@+id/officeClose"
+                             android:layout_height="25dp"
+                             android:layout_marginLeft="16dp"
+                             android:layout_marginRight="16dp"
+                             android:background="@drawable/bg_close"
+                             android:gravity="center"
+                             android:text="全关"
+                             android:textColor="@color/close_text_color" />
+                     </RelativeLayout>
+
+                     <View
+                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                         android:background="@color/divider_color"
+                         android:layout_width="match_parent"
+                         android:layout_height="1dp"/>
+
+                     <RelativeLayout
+                         android:layout_weight="1"
+                         android:layout_width="match_parent"
+                         android:layout_height="0dp"
+                         android:gravity="center"
+                         android:orientation="horizontal">
+
+                         <TextView
+                             android:drawableLeft="@drawable/ic_home"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="16dp"
+                             android:gravity="center|right"
+                             android:text="宿舍区"
+                             android:textColor="@color/black" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+
+                             android:layout_toLeftOf="@id/susheClose"
+                             android:id="@+id/susheOpen"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:background="@drawable/bg_open"
+                             android:gravity="center"
+                             android:text="全开"
+                             android:textColor="@color/open_text_color" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_alignParentRight="true"
+                             android:id="@+id/susheClose"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:layout_marginLeft="16dp"
+                             android:layout_marginRight="16dp"
+                             android:background="@drawable/bg_close"
+                             android:gravity="center"
+                             android:text="全关"
+                             android:textColor="@color/close_text_color" />
+                     </RelativeLayout>
+
+                     <View
+                         android:background="@color/divider_color"
+                         android:layout_width="match_parent"
+                         android:layout_height="1dp"/>
+                 </LinearLayout>
+
+                 <net.suntrans.szxf.views.NestedExpandaleListView
+                     style="@style/myExpandListview"
+                     android:id="@+id/recyclerview"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:background="#f7f7f7">
+
+                 </net.suntrans.szxf.views.NestedExpandaleListView>
+             </LinearLayout>
+         </android.support.v4.widget.NestedScrollView>
         </net.suntrans.szxf.views.ScrollChildSwipeRefreshLayout>
 
     </FrameLayout>

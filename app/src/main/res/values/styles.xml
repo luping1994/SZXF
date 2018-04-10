@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="QMUI.Compat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -70,7 +70,7 @@
     </style>
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/title_size</item>
         <item name="android:textStyle">normal</item>
     </style>
     <!--自定义checkbox样式-->
@@ -103,5 +103,12 @@
     <style name="dialogWindowAnim" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/window_in</item>
         <item name="android:windowExitAnimation">@anim/windows_out</item>
+    </style>
+
+    <style name="myExpandListview" parent="android:Widget.Holo.Light.ExpandableListView">
+
+    </style>
+    <style name="mySpinner" parent="android:Widget.Holo.Light.Spinner">
+
     </style>
 </resources>

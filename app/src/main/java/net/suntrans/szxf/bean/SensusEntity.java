@@ -105,7 +105,7 @@ public class SensusEntity extends RespondBody<SensusEntity.Data>{
 
                 } else {
                     this.pm25Eva = "严重污染";
-                    pm1Pro = 90;
+                    pm25Pro = 90;
 
                 }
             }

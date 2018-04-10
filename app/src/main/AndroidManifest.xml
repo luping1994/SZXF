@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="net.suntrans.szxf">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -8,6 +9,28 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Required -->
+    <permission
+        android:name="net.suntrans.szxf.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required -->
+    <uses-permission android:name="net.suntrans.szxf.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
 
     <application
         android:name="net.suntrans.szxf.App"
@@ -18,7 +41,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="PGYER_APPID"
-            android:value="bffe005228530f5eccf19a49a37a8d79" />
+            android:value="0cdbaeb67e3c38f849eee3b8db1f5db6" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -29,6 +52,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+   
 
         <activity
             android:name="net.suntrans.szxf.MainActivity"
@@ -92,7 +117,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="net.suntrans.szxf.activity.AddAreaActivity"
-            android:launchMode="standard"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="net.suntrans.szxf.activity.AddAreaChannelActivity"
@@ -114,21 +138,59 @@
         <activity
             android:name="net.suntrans.szxf.activity.AddSceneTimeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="net.suntrans.szxf.activity.DeviceDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name="net.suntrans.szxf.activity.ChannelEditActivity" android:screenOrientation="portrait"/>
-        <activity android:name="net.suntrans.szxf.activity.FloorPlanActivity" android:screenOrientation="landscape"/>
-        <activity android:name="net.suntrans.szxf.activity.ZHCurHisActivity" />
-        <activity android:name=".uiv2.activity.EnergyMoniActivity" />
-        <activity android:name=".uiv2.activity.MoniDetailActivity" />
-        <activity android:name=".uiv2.activity.MessageDetailActivity" />
-        <activity android:name=".uiv2.activity.MessageActivity" />
-        <activity android:name=".uiv2.activity.AddMessageActivity" />
-        <activity android:name=".uiv2.activity.EnergyHomeActivity" />
-        <activity android:name=".uiv2.activity.SceneActivity" />
-        <activity android:name=".uiv2.activity.AddSceneActivityV2" />
-        <activity android:name=".uiv2.activity.SceneDetailActivityV2" />
+        <activity
+            android:name="net.suntrans.szxf.activity.DeviceDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.ChannelEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.suntrans.szxf.activity.FloorPlanActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name="net.suntrans.szxf.activity.ZHCurHisActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.EnergyMoniActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.MoniDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.MessageDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.MessageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.AddMessageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.EnergyHomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.SceneActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.AddSceneActivityV2" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.SceneDetailActivityV2" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.DeviceDetailActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".uiv2.activity.FloorActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.EnvHomeActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.FankuiActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.EnvLogsActivity" />
+        <activity android:name=".uiv2.activity.ParamSettingActivity" android:screenOrientation="portrait" />
+        <activity android:name=".uiv2.activity.EnvYichangActivity" android:screenOrientation="portrait" />
+        <activity android:name=".uiv2.activity.KongtiaoActivity" />
+        <activity android:name=".uiv2.activity.ConLogsActivity" />
+        <activity android:name=".uiv2.activity.ControlLogsActivity" />
 
         <service android:name="net.suntrans.szxf.MyService" />
+
+
+
+
+        <receiver
+            android:name=".uiv2.broadcast.JpushReceive"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                <action android:name="cn.jpush.android.intent.ACTION_NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <category android:name="net.suntrans.szxf" />
+            </intent-filter>
+        </receiver>
+
+
+
     </application>
 
 </manifest>

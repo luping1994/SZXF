@@ -71,7 +71,7 @@ public class MoniListAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) view.getTag(R.id.name);
             view.setTag(R.id.root,groupPosition);
         } else {
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_group_area, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_group_env, parent, false);
             groupHolder = new GroupHolder(view);
             view.setTag(R.id.name,groupHolder);
             view.setTag(R.id.root,groupPosition);
@@ -138,9 +138,11 @@ public class MoniListAdapter extends BaseExpandableListAdapter {
         }
 
         public void setData(final int groupPosition, final int childPosition) {
-            mText.setText(datas.get(groupPosition).sub.get(childPosition).name);
-            power_rate.setText(datas.get(groupPosition).sub.get(childPosition).power+"kW");
-            current.setText(datas.get(groupPosition).sub.get(childPosition).current+"A");
+            mText.setText(datas.get(groupPosition).sub.get(childPosition).house_number+"-"+datas.get(groupPosition).sub.get(childPosition).name);
+            String power = datas.get(groupPosition).sub.get(childPosition).power==null?"0":datas.get(groupPosition).sub.get(childPosition).power;
+            String current2 = datas.get(groupPosition).sub.get(childPosition).current==null?"0":datas.get(groupPosition).sub.get(childPosition).current;
+            power_rate.setText(power+"kW");
+            current.setText(current2+"A");
 //            Glide.with(mContext)
 //                    .load(datas.get(groupPosition).sub.get(childPosition).img_url)
 //                    .centerCrop()

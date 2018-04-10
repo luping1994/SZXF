@@ -231,4 +231,5 @@ public class BasedActivity extends RxAppCompatActivity implements SlidingPaneLay
     public void startActivity(Intent intent) {
         super.startActivity(intent);
     }
+
 }

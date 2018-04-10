@@ -2,6 +2,7 @@ package net.suntrans.szxf.activity;
 
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.hardware.SensorManager;
@@ -16,12 +17,15 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.trello.rxlifecycle.android.ActivityEvent;
+import com.trello.rxlifecycle.android.FragmentEvent;
 
 
+import net.suntrans.looney.widgets.SegmentedGroup;
 import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.api.Api;
@@ -30,6 +34,9 @@ import net.suntrans.szxf.bean.ControlEntity;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.UiUtils;
+import net.suntrans.szxf.views.LoadingDialog;
+
+import java.io.IOException;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -64,7 +71,6 @@ public class FloorPlanActivity extends BasedActivity {
         }
 
 
-
         setContentView(R.layout.activity_plan);
 //        StatusBarCompat.compat(findViewById(R.id.root));
 
@@ -80,7 +86,7 @@ public class FloorPlanActivity extends BasedActivity {
             }
         });
 
-        house_id = getIntent().getStringExtra("house_id");
+        house_id = "4";
         token = "Bearer " + App.getSharedPreferences().getString("access_token", "-1");
         webview = (WebView) findViewById(R.id.webview);
         setUpWebview(webview);
@@ -99,7 +105,7 @@ public class FloorPlanActivity extends BasedActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                loadJs();
+                loadJs("token", house_id);
             }
         });
 
@@ -107,9 +113,22 @@ public class FloorPlanActivity extends BasedActivity {
         webview.loadUrl("file:///android_asset/plan/floor_plan.html");
         webview.addJavascriptInterface(new AndroidtoJs(), "control");
 
+        SegmentedGroup segmentedGroup = (SegmentedGroup) findViewById(R.id.segmented_group);
+
+        segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radio0) {
+                    loadJs("token", "4");
+                } else if (checkedId == R.id.radio1) {
+                    loadJs("token", "5");
+
+                }
+            }
+        });
     }
 
-    private void loadJs() {
+    private void loadJs(String token, String house_id) {
         String js = "";
         js += "var newscript = document.createElement(\"script\");";
         js += "newscript.src=\"./js/designer.js\";";
@@ -158,19 +177,24 @@ public class FloorPlanActivity extends BasedActivity {
         public void switchChannel(String control) {
             System.out.println(control);
             String[] split = control.split(",");
-            final String channel_id = split[0];
-            String title = split[1];
-            final String status = split[2].equals("1") ? "关闭" : "打开";
-            final String datapoint = split[3];
-            final String din = split[4];
+            final String din = split[0];
+            final String number = split[1];
+            final String status = split[2];
+            final String title = split[3];
+            String cmds = "";
+            if ("1".equals(status)) {
+                cmds = "关闭";
+            }else {
+                cmds = "打开";
+            }
 //            System.out.println(datapoint + "," + din);
             new AlertDialog.Builder(FloorPlanActivity.this)
-                    .setMessage("是否" + status + title)
+                    .setMessage("是否" + cmds + title)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            String cmd = status.equals("打开") ? "1" : "0";
-                            sendCmd(channel_id, datapoint, din, cmd);
+//                            System.out.println(din+","+number+","+status);
+                            sendCmd(din, status, number);
                         }
                     })
                     .setNegativeButton("取消", null).create().show();
@@ -253,7 +277,6 @@ public class FloorPlanActivity extends BasedActivity {
     }
 
     private void orientationChanged(int orientaion) {
-        System.out.println("屏幕方向改变");
         if (orientaion == 270) {
             toolbar.setVisibility(View.GONE);
             statusbar.setVisibility(View.GONE);
@@ -289,30 +312,42 @@ public class FloorPlanActivity extends BasedActivity {
 
     private Api api = RetrofitHelper.getApi();
 
-    private void sendCmd(String channel_id, String datapoint, String din, String cmd) {
-//        api.switchChannel(channel_id, datapoint,
-//                din, cmd)
-//                .compose(this.<ControlEntity>bindUntilEvent(ActivityEvent.DESTROY))
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new BaseSubscriber<ControlEntity>(this) {
-//                    @Override
-//                    public void onNext(ControlEntity controlEntity) {
-//                        UiUtils.showToast(controlEntity.msg);
-//                        handler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                reLoadJS();
-//                            }
-//                        },1000);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        super.onError(e);
-//                    }
-//                });
-    }
 
     private Handler handler = new Handler();
+
+    private void sendCmd(String din, String cmd, String number) {
+
+        if (cmd.equals("1")) {
+            cmd = "0";
+        } else {
+            cmd = "1";
+        }
+        api.switchChannel(din,
+                cmd, number)
+                .compose(this.<ControlEntity>bindUntilEvent(ActivityEvent.DESTROY))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new BaseSubscriber<ControlEntity>(this) {
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        e.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onNext(ControlEntity data) {
+                        if (data.code == 200) {
+
+                            UiUtils.showToast(data.msg);
+                        } else if (data.code == 102) {
+                            UiUtils.showToast("您没有控制权限");
+                        } else {
+                            UiUtils.showToast(data.msg);
+                        }
+
+                    }
+                });
+    }
+
 }

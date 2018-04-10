@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/statusbar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@color/colorPrimaryDark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/toobar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_size"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:src="@drawable/logo" />
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="首页"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_size" />
+
+            <RelativeLayout
+                android:id="@+id/menu"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="14dp"
+                    android:src="@drawable/menu"
+                    android:visibility="visible" />
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+       <android.support.v4.widget.SwipeRefreshLayout
+           android:id="@+id/refreshLayout"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <android.support.v4.widget.NestedScrollView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:orientation="vertical">
+
+                   <net.suntrans.szxf.views.AlwaysMarqueeTextView
+                       android:id="@+id/abnormal"
+                       android:layout_width="match_parent"
+                       android:layout_height="35dp"
+                       android:background="@color/bg_color"
+                       android:drawableLeft="@drawable/sz_logo_d"
+                       android:drawablePadding="4dp"
+                       android:ellipsize="marquee"
+                       android:focusable="true"
+                       android:focusableInTouchMode="true"
+                       android:gravity="center|left"
+                       android:marqueeRepeatLimit="marquee_forever"
+                       android:paddingLeft="8dp"
+                       android:scrollHorizontally="true"
+                       android:singleLine="true"
+                       android:text="@string/system_name"
+                       android:textColor="#000000"
+                       android:textSize="12sp" />
+
+                   <FrameLayout
+                       android:id="@+id/sceneContent"
+                       android:layout_width="match_parent"
+                       android:layout_height="96dp"
+                       android:background="@color/white">
+
+                   </FrameLayout>
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="30dp"
+                       android:background="@color/bg_color"
+                       android:gravity="center_vertical"
+                       android:paddingLeft="16dp"
+                       android:text="我的办公室"
+                       android:textColor="#000000"
+                       android:textSize="12sp" />
+
+                   <FrameLayout
+                       android:minHeight="120dp"
+                       android:id="@+id/officeContent"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@color/white">
+
+                   </FrameLayout>
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="30dp"
+                       android:background="@color/bg_color"
+                       android:gravity="center_vertical"
+                       android:paddingLeft="16dp"
+                       android:text="我的宿舍"
+                       android:textColor="#000000"
+                       android:textSize="12sp" />
+
+                   <FrameLayout
+                       android:minHeight="120dp"
+                       android:id="@+id/dormContent"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@color/white">
+
+                   </FrameLayout>
+               </LinearLayout>
+           </android.support.v4.widget.NestedScrollView>
+
+       </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

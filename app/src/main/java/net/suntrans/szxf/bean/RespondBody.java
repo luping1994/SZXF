@@ -10,7 +10,7 @@ public  class RespondBody <T>{
     public String msg;
 
     public boolean isOk(){
-        return code!=401;
+        return code==200;
     }
 
 }

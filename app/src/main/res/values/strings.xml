@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">深圳消防</string>
+    <string name="app_name">三川智楼</string>
     <string name="nav_tit">首页</string>
     <string name="nav_area">区域</string>
     <string name="nav_power">能耗</string>
@@ -9,7 +9,8 @@
     <string name="deviceManager">设备管理</string>
     <string name="help">使用帮助</string>
     <string name="about">关于</string>
-    <string name="company_name_EN">Copyright © 2017 Suntrans. All rights reserved.</string>
+    <string name="controlLogs">控制日志</string>
+    <string name="company_name_EN">Copyright © 2018 Suntrans. All rights reserved.</string>
     <!--<string name="company_name_CH">广州三川智控工程装备有限公司</string>-->
     <string name="company_name_CH">广州三川控制系统工程设备有限公司</string>
     <string name="company_reserved">Copyright © 2017 广州三川控制系统工程设备有限公司版权所有</string>
@@ -33,8 +34,8 @@
     <string name="scene_time_everyday">每天执行</string>
     <string name="activity_title_dingshi">定时</string>
     <string name="tx_version_code">版本号:</string>
-    <string name="tx_share_app">分享智能配电</string>
-    <string name="tx_share_app_des">智能配电app下载地址:https://www.pgyer.com/ST-dachuwang</string>
+    <string name="tx_share_app">分享</string>
+    <string name="tx_share_app_des">下载地址:https://www.pgyer.com/ST-ShenZhenXiaoFan</string>
     <string name="activity_title_add_area">添加区域</string>
     <string name="tx_choose_floor">-----请选择楼层-----</string>
     <string name="tips_please_enter_name">请输入名称</string>
@@ -62,5 +63,19 @@
     <string name="warning_empty_name">场景名称不能为空</string>
     <string name="info_saving">保存中...</string>
     <string name="created_success">创建成功!</string>
+    <string name="test_string">环境参数正常!</string>
+    <string name="device_status">大厦</string>
+    <string name="system_name">深圳公安消防局南头中队智慧能源和环境监测系统</string>
+    <string name="connect_timeout">连接超时</string>
+    <string name="login_failed">登录失败,请检查网络连接</string>
+    <string name="connect_failed">连接服务器失败,请稍后再试</string>
+    <string name="tips_account_empty">请输入账号</string>
+    <string name="tips_password_empty">请输入密码</string>
+    <string name="tips_login">登录中...</string>
+    <string name="tips_server_error">服务器错误!登录失败</string>
+    <string name="text_close">关闭</string>
+    <string name="text_open">打开</string>
+    <string name="tips_current_max">请输入有效值(0~40A)!</string>
+    <string name="tips_please_input_number">请输入数字</string>
 
 </resources>

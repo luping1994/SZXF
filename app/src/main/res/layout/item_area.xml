@@ -22,27 +22,30 @@
          android:textSize="16sp" />
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:paddingRight="8dp"
         android:gravity="center|right">
 
         <net.suntrans.szxf.views.SwitchButton
             android:paddingTop="8dp"
             android:id="@+id/checkbox"
-            style="@style/SwitchButtonStyleMD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textColor="@color/white"
             android:textSize="11sp"
             app:kswBackDrawable="@drawable/switch_bottom_white"
-            app:kswTextOff="OFF"
-            app:kswTextOn="ON"
-            app:kswThumbDrawable="@drawable/thumb" />
-    </LinearLayout>
+            app:kswThumbDrawable="@drawable/switch_top_circle"
+          />
+
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_arrow_right"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package net.suntrans.szxf.activity;
 
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -8,22 +7,23 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
-import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 
+import net.suntrans.stateview.StateView;
 import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.api.RetrofitHelper;
+import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.bean.SampleResult;
-import net.suntrans.szxf.bean.YichangEntity;
 import net.suntrans.szxf.rx.BaseSubscriber;
+import net.suntrans.szxf.uiv2.bean.Gustbook;
 import net.suntrans.szxf.utils.ActivityUtils;
 import net.suntrans.szxf.utils.UiUtils;
-import net.suntrans.stateview.StateView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +32,9 @@ import java.util.List;
  * Created by Looney on 2017/8/17.
  */
 
-public class YichangActivity extends BasedActivity {
+public class EnvLogsActivity extends BasedActivity {
 
-    private List<YichangEntity.DataBeanX.ListsBean.DataBean> datas;
+    private List<Gustbook> datas;
     private MyAdapter adapter;
     private StateView stateView;
     private RecyclerView recyclerView;
@@ -62,27 +62,27 @@ public class YichangActivity extends BasedActivity {
         final ItemTouchHelper touchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
         touchHelper.attachToRecyclerView(recyclerView);
         adapter.enableSwipeItem();
-        adapter.setOnItemSwipeListener(new OnItemSwipeListener() {
-            @Override
-            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
-
-            }
-
-            @Override
-            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-
-            }
-
-            @Override
-            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-                delete(datas.get(pos).log_id);
-            }
-
-            @Override
-            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-
-            }
-        });
+//        adapter.setOnItemSwipeListener(new OnItemSwipeListener() {
+//            @Override
+//            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
+//
+//            }
+//
+//            @Override
+//            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
+//
+//            }
+//
+//            @Override
+//            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
+//                delete(datas.get(pos).log_id);
+//            }
+//
+//            @Override
+//            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+//
+//            }
+//        });
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -125,24 +125,28 @@ public class YichangActivity extends BasedActivity {
     }
 
     private void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("异常提示");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+//        环境异常记录
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        TextView txTitle = (TextView) findViewById(R.id.title);
+        txTitle.setText("环境异常记录");
     }
 
-    class MyAdapter extends BaseItemDraggableAdapter<YichangEntity.DataBeanX.ListsBean.DataBean, BaseViewHolder> {
+    class MyAdapter extends BaseItemDraggableAdapter<Gustbook, BaseViewHolder> {
 
-        public MyAdapter(@LayoutRes int layoutResId, @Nullable List<YichangEntity.DataBeanX.ListsBean.DataBean> data) {
+        public MyAdapter(@LayoutRes int layoutResId, @Nullable List<Gustbook> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, YichangEntity.DataBeanX.ListsBean.DataBean item) {
-            helper.setText(R.id.msg, "" + item.name + ",异常类型:" + item.message)
-                    .setText(R.id.time, item.updated_at);
+        protected void convert(BaseViewHolder helper, Gustbook item) {
+            helper.setText(R.id.msg, "" + item.contents )
+                    .setText(R.id.time, item.username);
         }
     }
 
@@ -162,7 +166,7 @@ public class YichangActivity extends BasedActivity {
             recyclerView.setVisibility(View.INVISIBLE);
             stateView.showLoading();
         }
-        addSubscription(RetrofitHelper.getApi().getYichang(currentPage + ""), new BaseSubscriber<YichangEntity>(this) {
+        addSubscription(api.getGustbook(currentPage + ""), new BaseSubscriber<RespondBody<List<Gustbook>>>(this) {
             @Override
             public void onCompleted() {
 
@@ -183,16 +187,15 @@ public class YichangActivity extends BasedActivity {
             }
 
             @Override
-            public void onNext(YichangEntity o) {
+            public void onNext(RespondBody<List<Gustbook>> o) {
                 if (o.code == 200) {
-                    List<YichangEntity.DataBeanX.ListsBean.DataBean> lists = o.data.lists.data;
+                    List<Gustbook> lists = o.data;
                     if (lists == null || lists.size() == 0) {
                         if (loadtype==fristLoad){
                             stateView.showEmpty();
                             recyclerView.setVisibility(View.INVISIBLE);
                         }else {
                             adapter.loadMoreFail();
-
                         }
 
                     } else {
@@ -201,7 +204,6 @@ public class YichangActivity extends BasedActivity {
                         } else {
 
                         }
-                        totalPage  =o.data.lists.total/o.data.lists.per_page+1;
                         currentPage++;
                         stateView.showContent();
                         recyclerView.setVisibility(View.VISIBLE);

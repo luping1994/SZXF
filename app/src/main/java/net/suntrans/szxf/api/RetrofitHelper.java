@@ -27,7 +27,7 @@ public class RetrofitHelper {
     //public static final String BASE_URL = "http://www.suntrans.net:8956";
     public static final String BASE_URL = "http://stsz119.suntrans-cloud.com/api/v1/";
 
-    public static final String BASE_URL2 = "http://stsz119.suntrans-cloud.com/api/v1/";
+    public static final String BASE_URL2 = "http://stsz119.suntrans-cloud.com/";
 
 
 //    public static final String BASE_URL = "http://tit.suntrans-cloud.com/api/v1/";
@@ -40,8 +40,8 @@ public class RetrofitHelper {
 
     public static Api getLoginApi() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL2)
-                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASE_URL)
+                .addConverterFactory(MyGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit.create(Api.class);
@@ -53,7 +53,6 @@ public class RetrofitHelper {
                     .baseUrl(BASE_URL)
                     .client(mOkHttpClient)
                     .addConverterFactory(MyGsonConverterFactory.create())
-
 //                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
@@ -67,7 +66,7 @@ public class RetrofitHelper {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(mOkHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(MyGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build().create(Api.class);
     }
@@ -81,7 +80,7 @@ public class RetrofitHelper {
             public Response intercept(Chain chain) throws IOException {
                 String header = App.getSharedPreferences().getString("access_token", "-1");
                 header = "Bearer " + header;
-                LogUtil.i(header);
+//                LogUtil.i(header);
                 Request original = chain.request();
                 Request request = original.newBuilder()
                         .header("Authorization", header)
@@ -99,7 +98,7 @@ public class RetrofitHelper {
                 if (mOkHttpClient == null) {
                     mOkHttpClient = new OkHttpClient.Builder()
                             .addInterceptor(netInterceptor)
-                            .addInterceptor(logging)
+//                            .addInterceptor(logging)
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .build();
                 }

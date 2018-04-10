@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="196dp"
+    android:layout_height="186dp"
     android:background="@drawable/header_bg">
 
+    <net.suntrans.szxf.views.AlwaysMarqueeTextView
+        android:id="@+id/abnormal"
+        android:background="#33000000"
+        android:textSize="12sp"
+        android:textColor="#ff0000"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="@string/test_string"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 </RelativeLayout>

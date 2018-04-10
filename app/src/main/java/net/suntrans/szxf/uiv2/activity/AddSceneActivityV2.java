@@ -1,8 +1,10 @@
 package net.suntrans.szxf.uiv2.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,7 +16,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.suntrans.looney.widgets.IosAlertDialog;
 import net.suntrans.looney.widgets.LoadingDialog;
+import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.ROLE;
+import net.suntrans.szxf.activity.AddSceneChannelActivity;
 import net.suntrans.szxf.activity.BasedActivity;
 import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.databinding.ActivityAddSceneV2Binding;
@@ -50,6 +55,7 @@ public class AddSceneActivityV2 extends BasedActivity implements PicChooseFragme
     private SceneDetailActivityV2.SceneItemAdapter adapter;
     private List<SceneItem> datas;
 
+    private int requestCode = 101;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +69,15 @@ public class AddSceneActivityV2 extends BasedActivity implements PicChooseFragme
         binding.addDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                allChannelFragment = new AllChannelFragment();
-                allChannelFragment.setOnChannelSelectedListener(AddSceneActivityV2.this);
-                allChannelFragment.show(getSupportFragmentManager(), "allChannel");
+                if (App.ROLE_ID == ROLE.STAFF){
+                    allChannelFragment = new AllChannelFragment();
+                    allChannelFragment.setOnChannelSelectedListener(AddSceneActivityV2.this);
+                    allChannelFragment.show(getSupportFragmentManager(), "allChannel");
+                }else {
+                    Intent intent = new Intent(AddSceneActivityV2.this, AddSceneChannelActivity.class);
+                    intent.putExtra("showType",AddSceneChannelActivity.ADD);
+                    startActivityForResult(intent,requestCode);
+                }
             }
         });
 
@@ -83,6 +95,9 @@ public class AddSceneActivityV2 extends BasedActivity implements PicChooseFragme
         adapter.bindToRecyclerView(binding.recyclerView);
         adapter.setEmptyView(R.layout.recyclerview_empty_view);
         binding.recyclerView.setAdapter(adapter);
+
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setNestedScrollingEnabled(false);
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -211,5 +226,31 @@ public class AddSceneActivityV2 extends BasedActivity implements PicChooseFragme
                         System.out.println(datas.size());
                     }
                 }).create().show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode1, int resultCode, Intent data) {
+        if (requestCode == requestCode1){
+            if (resultCode == 102){
+                ArrayList<ChannelInfo> infos = data.getParcelableArrayListExtra("datas");
+
+                datas.clear();
+                for (ChannelInfo info :
+                    infos    ) {
+                    SceneItem item = new SceneItem();
+                    item.channel_id = info.id;
+                    item.title = info.title;
+                    item.name = info.name;
+                    item.status = 0;
+                    item.device_type = info.device_type;
+                    datas.add(item);
+
+                }
+                adapter.notifyDataSetChanged();
+                infos.clear();
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

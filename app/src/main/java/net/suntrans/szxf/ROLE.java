@@ -11,5 +11,4 @@ public class ROLE {
     public static final int SUPERVISOR=2;
     public static final int STAFF=3;
 
-
 }

@@ -111,7 +111,7 @@ public class WelcomeActivity extends BasedActivity {
     public void checkPermission() {
         final List<PermissonItem> permissionItems = new ArrayList<PermissonItem>();
         permissionItems.add(new PermissonItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "存储权限", R.drawable.permission_ic_memory));
-        permissionItems.add(new PermissonItem(Manifest.permission.ACCESS_NETWORK_STATE, "获取您的网络状态", R.drawable.ic_network));
+        permissionItems.add(new PermissonItem(Manifest.permission.READ_PHONE_STATE, "获取您的手机信息", R.drawable.phone));
         HiPermission.create(WelcomeActivity.this)
                 .permissions(permissionItems)
                 .checkMutiPermission(new PermissionCallback() {

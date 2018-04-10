@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class SceneV2ManagerFragment extends BasedFragment2 {
 
             }
         });
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         adapter.bindToRecyclerView(binding.recyclerView);
         adapter.setEmptyView(R.layout.recyclerview_empty_view);
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {

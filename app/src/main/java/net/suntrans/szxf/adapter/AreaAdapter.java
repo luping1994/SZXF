@@ -71,12 +71,12 @@ public class AreaAdapter extends BaseExpandableListAdapter {
         if (convertView != null) {
             view = convertView;
             groupHolder = (GroupHolder) view.getTag(R.id.name);
-            view.setTag(R.id.root,groupPosition);
+            view.setTag(R.id.root, groupPosition);
         } else {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_group_area, parent, false);
             groupHolder = new GroupHolder(view);
-            view.setTag(R.id.name,groupHolder);
-            view.setTag(R.id.root,groupPosition);
+            view.setTag(R.id.name, groupHolder);
+            view.setTag(R.id.root, groupPosition);
         }
         groupHolder.setData(groupPosition);
         return view;
@@ -111,49 +111,85 @@ public class AreaAdapter extends BaseExpandableListAdapter {
         TextView count;
         private final View root;
 
+        View close;
+        View open;
+
         public GroupHolder(View view) {
             mName = (TextView) view.findViewById(R.id.name);
             mImage = (ImageView) view.findViewById(R.id.imageView);
-
+            close = view.findViewById(R.id.close);
+            open =  view.findViewById(R.id.open);
             root = view.findViewById(R.id.root);
         }
 
         public void setData(final int groupPosition) {
 
             mName.setText(datas.get(groupPosition).name);
-//            mImage.setBackgroundColor(Color.parseColor(colors[groupPosition % 3]));
-//            count.setText(datas.get(groupPosition).sub.size() + "");
+            open.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener!=null){
+                        listener.onParentItemClick(v.getId(),groupPosition);
+                    }
+                }
+            });
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener!=null){
+                        listener.onParentItemClick(v.getId(),groupPosition);
+                    }
+                }
+            });
         }
     }
 
     public class ChildHolder {
         ImageView mImage;
         TextView mText;
-
+        View close;
+        View open;
         public ChildHolder(View view) {
             mText = (TextView) view.findViewById(R.id.name);
             mImage = (ImageView) view.findViewById(R.id.imageView);
+            close =  view.findViewById(R.id.close);
+            open =  view.findViewById(R.id.open);
         }
 
         public void setData(final int groupPosition, final int childPosition) {
-            mText.setText(datas.get(groupPosition).sub.get(childPosition).name);
-//            Glide.with(mContext)
-//                    .load(datas.get(groupPosition).sub.get(childPosition).img_url)
-//                    .centerCrop()
-//                    .crossFade()
-//                    .into(mImage);
+            mText.setText(datas.get(groupPosition).sub.get(childPosition).house_number+"-"+datas.get(groupPosition).sub.get(childPosition).name);
 
+            open.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener!=null){
+                        listener.onClildItemClick(v.getId(),groupPosition,childPosition);
+                    }
+                }
+            });
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener!=null){
+                        listener.onClildItemClick(v.getId(),groupPosition,childPosition);
+                    }
+                }
+            });
         }
     }
 
-    public void setOnGroupLongClickListener(AreaAdapter.onParentLongClickListener listener) {
+    public void setOnItemClickListener(AreaAdapter.onClickListener listener) {
         this.listener = listener;
     }
 
-    private onParentLongClickListener listener;
+    private onClickListener listener;
 
-    public interface onParentLongClickListener {
+    public interface onClickListener {
         void onLongParentClick(int parentPosition);
+
+        void onParentItemClick(int id,int parentPosition);
+
+        void onClildItemClick(int id,int parentPosition,int childPosition);
 
     }
 

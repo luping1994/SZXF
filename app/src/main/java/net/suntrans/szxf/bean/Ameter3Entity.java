@@ -48,12 +48,12 @@ public class Ameter3Entity extends RespondBody<Ameter3Entity.DataBean>{
          */
 
         private String sno;
-        public String day_avg;
-        public String month_avg;
+        public int day_avg;
+        public int month_avg;
         public String year_avg;
-        private List<EletricityDayBean> eletricity_day;
-        private List<EletricityMonthBean> eletricity_month;
-        private List<EletricityYearBean> eletricity_year;
+        private List<EletricityDayBean> day;
+        private List<EletricityMonthBean> month;
+        private List<EletricityYearBean> year;
 
         public String getSno() {
             return sno;
@@ -64,27 +64,27 @@ public class Ameter3Entity extends RespondBody<Ameter3Entity.DataBean>{
         }
 
         public List<EletricityDayBean> getEletricity_day() {
-            return eletricity_day;
+            return day;
         }
 
         public void setEletricity_day(List<EletricityDayBean> eletricity_day) {
-            this.eletricity_day = eletricity_day;
+            this.day = eletricity_day;
         }
 
         public List<EletricityMonthBean> getEletricity_month() {
-            return eletricity_month;
+            return month;
         }
 
         public void setEletricity_month(List<EletricityMonthBean> eletricity_month) {
-            this.eletricity_month = eletricity_month;
+            this.month = eletricity_month;
         }
 
         public List<EletricityYearBean> getEletricity_year() {
-            return eletricity_year;
+            return year;
         }
 
         public void setEletricity_year(List<EletricityYearBean> eletricity_year) {
-            this.eletricity_year = eletricity_year;
+            this.year = eletricity_year;
         }
 
         public static class EletricityDayBean {

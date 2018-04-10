@@ -117,10 +117,18 @@ public class AddSenceDevGrpAdapter extends BaseExpandableListAdapter {
         }
 
         public void setData(final int groupPosition) {
+            if (datas.get(groupPosition) == null) {
+                return;
+            }
+            if (datas.get(groupPosition).rooms == null) {
+                return;
+            }
             mText.setText(datas.get(groupPosition).name);
+
             int count = 0;
-            for (int j = 0; j < datas.get(groupPosition).sub.size(); j++) {
-                count += datas.get(groupPosition).sub.get(j).lists.size();
+
+            for (int j = 0; j < datas.get(groupPosition).rooms.size(); j++) {
+                count += datas.get(groupPosition).rooms.get(j).channels.size();
             }
 //            mCount.setText(count + "");
             state.setChecked(true);
@@ -132,15 +140,16 @@ public class AddSenceDevGrpAdapter extends BaseExpandableListAdapter {
 
         CustomExpandableListView listView;
         ParentAdapter adapter;
+
         public ChildHolder(View view) {
             listView = (CustomExpandableListView) view.findViewById(R.id.expandListView);
         }
 
         public void setData(final int groupPosition, final int childPosition) {
 
-            adapter =  new ParentAdapter(datas.get(groupPosition).sub, mContext);
+            adapter = new ParentAdapter(datas.get(groupPosition).rooms, mContext);
             listView.setAdapter(adapter);
-            listView. setGroupIndicator(null);
+            listView.setGroupIndicator(null);
         }
     }
 

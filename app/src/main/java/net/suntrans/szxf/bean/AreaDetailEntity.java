@@ -38,7 +38,7 @@ public class AreaDetailEntity extends RespondBody<List<AreaDetailEntity.AreaDeta
         public String status;
         public String show_sort;
         public String used;
-        public String channel_type;
+        public int channel_type;
         public String device_group;
         public String din;
     }

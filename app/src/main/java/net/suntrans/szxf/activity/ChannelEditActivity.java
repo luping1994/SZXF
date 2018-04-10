@@ -1,6 +1,7 @@
 package net.suntrans.szxf.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import net.suntrans.szxf.bean.ChannelEditorInfo;
 import net.suntrans.szxf.bean.SampleResult;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.utils.UiUtils;
+import net.suntrans.szxf.views.SwitchButton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +36,7 @@ public class ChannelEditActivity extends BasedActivity {
     private Spinner spinner;
     private EditText nameTx;
     private String name;
+    private SwitchButton usedCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class ChannelEditActivity extends BasedActivity {
         nameTx = (EditText) findViewById(R.id.name);
         name = getIntent().getStringExtra("title");
         nameTx.setText(name);
-        nameTx.setSelection(name.length()>10?10:name.length());
+        nameTx.setSelection(name.length() > 10 ? 10 : name.length());
 
         findViewById(R.id.fanhui).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,18 +62,21 @@ public class ChannelEditActivity extends BasedActivity {
         if ("1".equals(channel_type)) {
             spinner.setSelection(0);
         } else if ("2".equals(channel_type)) {
-            spinner.setSelection(1, true);
-
+            spinner.setSelection(0, true);
         } else {
-            spinner.setSelection(0);
+            spinner.setSelection(1);
         }
 
+        usedCB = (SwitchButton) findViewById(R.id.isUsed);
+
+        String checked = getIntent().getStringExtra("used");
+        usedCB.setChecked("1".equals(checked));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getData();
+//        getData();
     }
 
     private void getData() {
@@ -112,11 +118,13 @@ public class ChannelEditActivity extends BasedActivity {
             UiUtils.showToast("正在修改请稍后...");
             return;
         }
-//        System.out.println(id+","+name+","+channel_type);
+
+        String used = usedCB.isChecked() ? "1" : "0";
         Map<String, String> map = new HashMap<>();
-        map.put("channel_id", id);
+        map.put("id", id);
         map.put("title", name);
-        map.put("channel_type", channel_type);
+        map.put("vtype", channel_type);
+        map.put("used", used);
         committing = true;
         addSubscription(RetrofitHelper.getApi().updateChannel(map), new BaseSubscriber<SampleResult>(this) {
             @Override
@@ -136,7 +144,7 @@ public class ChannelEditActivity extends BasedActivity {
                 committing = false;
                 UiUtils.showToast(result.getMsg());
 
-                if (result.isOk()){
+                if (result.isOk()) {
                     finish();
                 }
             }
@@ -155,6 +163,6 @@ public class ChannelEditActivity extends BasedActivity {
             return;
         }
 
-        upDate(channel_id,name,type);
+        upDate(channel_id, name, type);
     }
 }

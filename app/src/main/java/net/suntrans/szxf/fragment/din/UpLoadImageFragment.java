@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.yalantis.ucrop.UCrop;
 
+import net.suntrans.szxf.Config;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.api.RetrofitHelper;
 import net.suntrans.szxf.bean.UpLoadImageMessage;
@@ -52,7 +53,6 @@ public class UpLoadImageFragment extends BottomSheetDialogFragment implements Vi
 
     private static final String CROPPED_IMAGE_NAME = "SceneCropImage.jpg";
     public String mCurrentPhotoPath;
-    static String FILE_PROVIDER = "net.suntrans.dachu.fileProvider";
     private Uri photoURI;
     private ImageView ll;
     private Subscription subscribe;
@@ -88,7 +88,7 @@ public class UpLoadImageFragment extends BottomSheetDialogFragment implements Vi
                 openGallery();
                 break;
             case R.id.takePhoto:
-                dispatchTakePictureIntent(FILE_PROVIDER);
+                dispatchTakePictureIntent(Config.FILE_PROVIDER);
                 break;
         }
     }
@@ -98,7 +98,6 @@ public class UpLoadImageFragment extends BottomSheetDialogFragment implements Vi
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
                 && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-
         } else {
             Intent intent = new Intent();
             intent.setType("image/*");

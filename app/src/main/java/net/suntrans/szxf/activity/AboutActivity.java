@@ -1,11 +1,17 @@
 package net.suntrans.szxf.activity;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import net.suntrans.szxf.BuildConfig;
 import net.suntrans.szxf.R;
+
+import java.io.IOException;
 
 /**
  * Created by Looney on 2017/7/24.
@@ -13,6 +19,9 @@ import net.suntrans.szxf.R;
 public class AboutActivity extends BasedActivity {
 
     private TextView guangwang;
+    private SoundPool sp;
+    private int load_id;
+    private AssetFileDescriptor assetFileDescriptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,21 @@ public class AboutActivity extends BasedActivity {
                 share(getString(R.string.tx_share_app));
             }
         });
+
+
+
+    }
+
+    private void load() {
+        try {
+            assetFileDescriptor = getAssets().openFd("sound/"+"dev.wav");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        load_id = sp.load(assetFileDescriptor,1);
+
+         int play = sp.play(load_id, 0.8f, 0.8f, 1, 0, 1.0f);
+
     }
 
     @Override

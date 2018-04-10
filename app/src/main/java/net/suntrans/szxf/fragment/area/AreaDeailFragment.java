@@ -1,6 +1,7 @@
 package net.suntrans.szxf.fragment.area;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
+import net.suntrans.szxf.Config;
+import net.suntrans.szxf.DeviceType;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.activity.AreaDetailActivity;
 import net.suntrans.szxf.api.Api;
@@ -28,6 +31,8 @@ import net.suntrans.szxf.bean.DeviceEntity;
 import net.suntrans.szxf.bean.SampleResult;
 import net.suntrans.szxf.fragment.din.ChangeNameDialogFragment;
 import net.suntrans.szxf.rx.BaseSubscriber;
+import net.suntrans.szxf.uiv2.activity.KongtiaoActivity;
+import net.suntrans.szxf.uiv2.adapter.DividerItemDecoration;
 import net.suntrans.szxf.utils.ActivityUtils;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.UiUtils;
@@ -58,7 +63,6 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
     private DevicesAdapter adapter;
     private String channelType;
 
-    private LoadingDialog dialog;
 
     public static final AreaDeailFragment newInstance(String channel_type, String id) {
         AreaDeailFragment fragment = new AreaDeailFragment();
@@ -86,9 +90,10 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-//        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshlayout);
+        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -183,7 +188,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            ImageView imageView;
+            ImageView arrow;
             TextView area;
             TextView name;
             RelativeLayout root;
@@ -193,6 +198,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                 super(itemView);
                 root = (RelativeLayout) itemView.findViewById(R.id.root);
                 name = (TextView) itemView.findViewById(R.id.name);
+                arrow = (ImageView) itemView.findViewById(R.id.arrow);
                 checkbox = (SwitchButton) itemView.findViewById(R.id.checkbox);
                 checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -222,15 +228,37 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                         return true;
                     }
                 });
+                root.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (getAdapterPosition() == -1) {
+                            return;
+                        }
+                        if (datas.get(getAdapterPosition()).channel_type == DeviceType.AIR_CONDITIONER){
+                            Intent intent = new Intent();
+                            intent.putExtra("channel_id",datas.get(getAdapterPosition()).id);
+                            intent.setClass(getActivity(), KongtiaoActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
             }
 
             public void setData(int position) {
-                name.setText(datas.get(position).name);
+                name.setText(datas.get(position).title);
 //                if (datas.get(position).permission.equals("1")){
 //                    checkbox.setEnabled(true);
 //                }else {
 //                    checkbox.setEnabled(false);
 //                }
+                if (datas.get(position).channel_type == DeviceType.AIR_CONDITIONER) {
+                    checkbox.setVisibility(View.INVISIBLE);
+                    arrow.setVisibility(View.VISIBLE);
+                } else {
+                    checkbox.setVisibility(View.VISIBLE);
+                    arrow.setVisibility(View.INVISIBLE);
+
+                }
                 checkbox.setCheckedImmediately(datas.get(position).status.equals("1") ? true : false);
 //                checkbox.setChecked();
 //                area.setText("暂无数据");
@@ -243,8 +271,9 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
     List<AreaDetailEntity.AreaDetailData> datas = new ArrayList<>();
     private Observable<ControlEntity> conOb;
     private Api api = RetrofitHelper.getApi();
+    private LoadingDialog dialog;
 
-    private void sendCmd(int position) {
+    private void sendCmd(final int position) {
         if (position == -1) {
             UiUtils.showToast("请不要频繁操作！");
             return;
@@ -257,14 +286,14 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
         dialog.setWaitText("请稍后");
         dialog.show();
 
+        final String cmd = datas.get(position).status.equals("1") ? "0" : "1";
         conOb = null;
         conOb = api.switchChannel(datas.get(position).din,
-                datas.get(position).status.equals("1") ? "0" : "1", datas.get(position).number)
+                cmd, datas.get(position).number)
                 .compose(this.<ControlEntity>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
 
-        String order = datas.get(position).status.equals("1") ? "关" : "开";
         conOb
                 .subscribe(new BaseSubscriber<ControlEntity>(getActivity()) {
                     @Override
@@ -279,56 +308,17 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                     public void onNext(ControlEntity data) {
                         dialog.dismiss();
                         if (data.code == 200) {
-//                            LogUtil.i(data.data.toString());
-                           UiUtils.showToast(data.msg);
-                           getData();
+                            datas.get(position).status = cmd;
+                            adapter.notifyDataSetChanged();
+                            UiUtils.showToast(data.msg);
                         } else if (data.code == 102) {
                             UiUtils.showToast("您没有控制权限");
                         } else {
                             UiUtils.showToast(data.msg);
                         }
-                        adapter.notifyDataSetChanged();
+
                     }
                 });
-//                .subscribe(new Subscriber<ControlEntity>() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                e.printStackTrace();
-//                UiUtils.showToast("服务器错误");
-//                dialog.dismiss();
-//                adapter.notifyDataSetChanged();
-//
-//            }
-//
-//            @Override
-//            public void onNext(ControlEntity data) {
-//                dialog.dismiss();
-//
-//                if (data.code == 200) {
-//                    LogUtil.i(data.data.toString());
-//                    for (int i = 0; i < datas.size(); i++) {
-//                        if (datas.get(i).channel_id.equals(data.data.id)) {
-//                            datas.get(i).status = String.valueOf(data.data.status);
-//                        }
-//                    }
-//                    adapter.notifyDataSetChanged();
-//
-//                } else if (data.code == 102) {
-//                    UiUtils.showToast("您没有控制权限");
-//                } else if (data.code == 401) {
-//                    ActivityUtils.showLoginOutDialogFragmentToActivity(getChildFragmentManager(), "Alert");
-//                } else {
-//                    UiUtils.showToast(data.msg);
-//                }
-//
-//
-//            }
-//        });
     }
 
 

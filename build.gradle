@@ -4,6 +4,7 @@ buildscript {
     ext.kotlin_version = '1.1.51'
     repositories {
         jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
@@ -24,6 +25,7 @@ allprojects {
         maven { url "http://clojars.org/repo" }
         maven { url "https://jitpack.io" }
         maven { url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master" }
+        google()
     }
 }
 
@@ -32,11 +34,13 @@ task clean(type: Delete) {
 }
 
 ext {
+
+
     buildToolsVersion = "26.0.2"
-    supportLibVersion = "26.1.0"
-    compileSdkVersion = 26
     minSdkVersion = 16
-    targetSdkVersion =25
+    targetSdkVersion = 25
+    compileSdkVersion = 25
+    supportVersion = "25.3.1"
 
     espressoVersion = '2.2.2'
     architectureComponentsVersion = "1.0.0-alpha3"

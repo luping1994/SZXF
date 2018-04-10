@@ -11,6 +11,8 @@ import java.util.Map;
 public class DeviceType {
 
     public static final int DEFAULT = 0;
+
+
     public static final int LIGHT = 1;
     public static final int SOCKET = 2;
     public static final int AIR_CONDITIONER = 3;

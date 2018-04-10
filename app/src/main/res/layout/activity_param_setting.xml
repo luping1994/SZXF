@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:id="@+id/statusBarFix"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimary">
+
+        </View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_size"
+            android:background="@color/colorPrimary">
+
+            <RelativeLayout
+                android:background="@drawable/ripple"
+                android:id="@+id/back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ripple"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_back" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/actionBarTitleSize" />
+
+            <TextView
+                android:id="@+id/rightSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:gravity="center"
+                android:onClick="rightSubTitleClicked"
+                android:text=""
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/actionBarSubTitleSize" />
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+         <android.support.v4.widget.NestedScrollView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <LinearLayout
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="1通道过流(A)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/guoliu1"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+
+                 <include layout="@layout/item_divider" />
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="2通道过流(A)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/guoliu2"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+
+                 <include layout="@layout/item_divider" />
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="3通道过流(A)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/guoliu3"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+
+                 <include layout="@layout/item_divider" />
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="4通道过流(A)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/guoliu4"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+
+                 <include layout="@layout/item_divider" />
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="5通道过流(A)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/guoliu5"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+
+                 <include layout="@layout/item_divider" />
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="6通道过流(A)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/guoliu6"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+                 <include layout="@layout/item_divider" />
+
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="过压保护值(V)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/guoya"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+
+                 <include layout="@layout/item_divider" />
+                 <RelativeLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="50dp"
+                     android:background="@color/white"
+                     android:paddingLeft="16dp">
+
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:gravity="center"
+                         android:text="欠压保护值(V)"
+                         android:textColor="@color/black" />
+
+                     <TextView
+                         android:id="@+id/qianya"
+                         android:layout_width="100dp"
+                         android:layout_height="35dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerVertical="true"
+                         android:layout_marginRight="16dp"
+                         android:background="@drawable/border_edit"
+                         android:gravity="center"
+                         android:text="--" />
+                 </RelativeLayout>
+                 <include layout="@layout/item_divider" />
+
+             </LinearLayout>
+         </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+</layout>

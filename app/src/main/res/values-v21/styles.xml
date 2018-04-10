@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="QMUI.Compat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
+
     <style name="AppTheme.translate" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -33,4 +34,14 @@
         <!--<item name="android:activityCloseEnterAnimation">@anim/fa</item>-->
         <!--<item name="android:activityCloseExitAnimation">@anim/alpha_out</item>-->
     </style>
+
+    <style name="myExpandListview" parent="android:Widget.Holo.Light.ExpandableListView">
+
+    </style>
+
+    <style name="mySpinner" parent="android:Widget.Holo.Light.Spinner">
+
+    </style>
+
+
 </resources>

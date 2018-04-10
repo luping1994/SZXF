@@ -1,6 +1,7 @@
 package net.suntrans.szxf.uiv2.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,12 +77,12 @@ public class EnvListAdapter extends BaseExpandableListAdapter {
         if (convertView != null) {
             view = convertView;
             groupHolder = (GroupHolder) view.getTag(R.id.name);
-            view.setTag(R.id.root,groupPosition);
+            view.setTag(R.id.root, groupPosition);
         } else {
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_group_area, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_group_env, parent, false);
             groupHolder = new GroupHolder(view);
-            view.setTag(R.id.name,groupHolder);
-            view.setTag(R.id.root,groupPosition);
+            view.setTag(R.id.name, groupHolder);
+            view.setTag(R.id.root, groupPosition);
         }
         groupHolder.setData(groupPosition);
         return view;
@@ -95,6 +96,7 @@ public class EnvListAdapter extends BaseExpandableListAdapter {
             view = convertView;
             holder = (ChildHolder) view.getTag();
         } else {
+
             view = LayoutInflater.from(mContext).inflate(R.layout.item_env, parent, false);
             holder = new ChildHolder(view);
             view.setTag(holder);
@@ -132,30 +134,75 @@ public class EnvListAdapter extends BaseExpandableListAdapter {
 
 
         private TextView pm25;
-        private TextView guanzhao;
-        private TextView shidu;
+        private TextView jiaquan;
+        private TextView yanwu;
         private TextView wendu;
         private TextView isOnline;
         private TextView name;
 
         public ChildHolder(View itemView) {
             pm25 = (TextView) itemView.findViewById(R.id.pm25);
-            guanzhao = (TextView) itemView.findViewById(R.id.guanzhao);
-            shidu = (TextView) itemView.findViewById(R.id.shidu);
+            jiaquan = (TextView) itemView.findViewById(R.id.guanzhao);
+            yanwu = (TextView) itemView.findViewById(R.id.shidu);
             name = (TextView) itemView.findViewById(R.id.name);
             wendu = (TextView) itemView.findViewById(R.id.wendu);
             isOnline = (TextView) itemView.findViewById(R.id.isOnline);
         }
 
         public void setData(final int groupPosition, final int childPosition) {
+            String pm25 = datas.get(groupPosition).sub.get(childPosition).pm25;
+            String jiquan = datas.get(groupPosition).sub.get(childPosition).jiaquan;
+            String yanwu = datas.get(groupPosition).sub.get(childPosition).yanwu;
+            String wendu = datas.get(groupPosition).sub.get(childPosition).wendu;
+            this.pm25.setText(pm25 == null ? "0.0" : pm25 + UNIT_PM25);
+            this.jiaquan.setText(jiquan == null ? "0.0" : jiquan + UNIT_PM25);
+            this.yanwu.setText(yanwu == null ? "0.0" : yanwu + UNIT_PM25);
+            this.wendu.setText(wendu == null ? "0.0" : wendu + UNIT_WENDU);
+            name.setText(datas.get(groupPosition).sub.get(childPosition).house_number+"-"+datas.get(groupPosition).sub.get(childPosition).name);
 
-            pm25.setText(datas.get(groupPosition).sub.get(childPosition).pm25+UNIT_PM25);
-            guanzhao.setText(datas.get(groupPosition).sub.get(childPosition).jiquan+UNIT_PM25);
-            shidu.setText(datas.get(groupPosition).sub.get(childPosition).yanwu+UNIT_PM25);
-            wendu.setText(datas.get(groupPosition).sub.get(childPosition).wendu+UNIT_WENDU);
-            name.setText(datas.get(groupPosition).sub.get(childPosition).name);
 
-            isOnline.setText("1".equals(datas.get(groupPosition).sub.get(childPosition).isOnline)?"在线":"不在线");
+            if (pm25 == null)
+                pm25 = "0.0";
+
+            if (jiquan == null)
+                jiquan = "0.0";
+
+            if (yanwu == null)
+                yanwu = "0.0";
+
+            if (wendu == null)
+                wendu = "0.0";
+
+
+            StringBuilder sb = new StringBuilder();
+
+            if (Float.parseFloat(pm25) > 115) {
+                sb.append("pm2.5超标");
+            }
+
+            if (Float.parseFloat(jiquan) > 0.1) {
+                sb.append("甲醛超标");
+            }
+
+            if (Float.parseFloat(yanwu) > 750) {
+                sb.append("烟雾超标");
+            }
+
+            if (Float.parseFloat(pm25) < 115 && Float.parseFloat(jiquan) < 0.1 && Float.parseFloat(yanwu) < 750) {
+                sb.append("正常");
+            }
+
+            String e = sb.toString();
+            int color = Color.RED;
+            if (e.equals("正常")) {
+                color = Color.parseColor("#0b9d2f");
+            } else {
+                color =Color.parseColor("#dc4200");
+
+            }
+
+            isOnline.setText("(" + e + ")");
+            isOnline.setTextColor(color);
         }
     }
 

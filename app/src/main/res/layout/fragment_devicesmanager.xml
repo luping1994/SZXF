@@ -7,40 +7,67 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="@dimen/action_bar_size"
         android:background="@color/colorPrimary">
 
-       <RelativeLayout
-           android:id="@+id/fanhui"
-           android:layout_width="60dp"
-           android:layout_height="match_parent">
-           <ImageView
-               android:src="@drawable/ic_back"
-               android:layout_centerVertical="true"
-               android:layout_marginLeft="14dp"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-       </RelativeLayout>
-        <TextView
-            android:layout_centerInParent="true"
-            android:text="设备管理"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/fanhui"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:src="@drawable/ic_back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="设备管理"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_size" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="#33000000"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="设备状态"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:paddingRight="16dp"
+            android:textColor="@color/black" />
+    </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <ExpandableListView
+                style="@style/myExpandListview"
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f7f7f7">
 
-        </android.support.v7.widget.RecyclerView>
+            </ExpandableListView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

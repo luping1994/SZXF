@@ -27,6 +27,11 @@ public class LoginResult {
         public TokenBean token;
         public UserBean user;
         public TimerBean timer;
+        public List<RoomBean> rooms;
+        public static class RoomBean{
+            public String house_id;
+            public String house_type;
+        }
 
         public static class TokenBean {
             /**

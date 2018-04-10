@@ -1,5 +1,6 @@
 package net.suntrans.szxf.api;
 
+import net.suntrans.szxf.R;
 import net.suntrans.szxf.bean.AddSceneChannelResult;
 import net.suntrans.szxf.bean.Ameter3Entity;
 import net.suntrans.szxf.bean.AmmeterInfos;
@@ -27,13 +28,20 @@ import net.suntrans.szxf.bean.SensusEntity;
 import net.suntrans.szxf.bean.UpLoadImageMessage;
 import net.suntrans.szxf.bean.UserInfo;
 import net.suntrans.szxf.bean.YichangEntity;
+import net.suntrans.szxf.uiv2.bean.AirCmd;
 import net.suntrans.szxf.uiv2.bean.ChannelEntity;
 import net.suntrans.szxf.uiv2.bean.ChannelInfo;
+import net.suntrans.szxf.uiv2.bean.DeviceManagerBean;
+import net.suntrans.szxf.uiv2.bean.EnergyListEntity;
+import net.suntrans.szxf.uiv2.bean.EnvLog;
+import net.suntrans.szxf.uiv2.bean.Gustbook;
+import net.suntrans.szxf.uiv2.bean.MaxI;
 import net.suntrans.szxf.uiv2.bean.MonitorEntity;
 import net.suntrans.szxf.uiv2.bean.NoticeEntity;
 import net.suntrans.szxf.uiv2.bean.SceneEntityV2;
 import net.suntrans.szxf.uiv2.bean.SceneImage;
 import net.suntrans.szxf.uiv2.bean.SceneItemlEntity;
+import net.suntrans.szxf.uiv2.bean.SensusAbnormal;
 
 import java.util.List;
 import java.util.Map;
@@ -56,15 +64,15 @@ public interface Api {
     /**
      * 登录api
      *
-     * @param username      账号
-     * @param password      密码
+     * @param username 账号
+     * @param password 密码
      * @return
      */
     @FormUrlEncoded
     @POST("login/token")
     Observable<LoginResult> login(
-                                  @Field("username") String username,
-                                  @Field("password") String password);
+            @Field("username") String username,
+            @Field("password") String password);
 
     @POST("home/scene")
     Observable<SceneEntity> getHomeScene();
@@ -76,8 +84,8 @@ public interface Api {
     @FormUrlEncoded
     @POST("switch/slcChannel")
     Observable<ControlEntity> switchChannel(@Field("din") String id,
-                                            @Field("cmd") String datapoint,
-                                            @Field("number") String din);
+                                            @Field("cmd") String cmd,
+                                            @Field("number") String number);
 
 
     @POST("home/light")
@@ -88,7 +96,6 @@ public interface Api {
     Observable<ControlEntity> switchScene(@Field("id") String id);
 
 
-
     @FormUrlEncoded
     @POST("house/houseChannel")
     Observable<AreaDetailEntity> getRoomChannel(@Field("house_id") String id);
@@ -97,6 +104,8 @@ public interface Api {
     @POST("energy/ammeter3")
     Observable<Ammeter3Eneity> getAmmeter3Detail(@Field("sno") String sno);
 
+
+    //http://stsz119.suntrans-cloud.com/api/v1/switch/slcChannel
     @POST("energy/index")
     Observable<EnergyEntity> getEnergyIndex();
 
@@ -109,7 +118,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("sensus/show")
-    Observable<EnvDetailEntity> getEnvDetail(@Field("id") String id);
+    Observable<EnvDetailEntity> getEnvDetail(@Field("house_id") String id);
 
 
     @POST("user/info")
@@ -189,13 +198,13 @@ public interface Api {
     Observable<SampleResult> updateProfile(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
-    @POST("device/updatechannel")
+    @POST("device/updateChannel")
     Observable<SampleResult> updateChannel(@FieldMap Map<String, String> map);
 
-
+    //http://stsz119.suntrans-cloud.com/api/v1/energy/electricityDetail
     @FormUrlEncoded
-    @POST("energy/ammeter3")
-    Observable<Ameter3Entity> getAmmeter3Data(@Field("sno") String sno, @Field("date") String date);
+    @POST("energy/electricityDetail")
+    Observable<Ameter3Entity> getAmmeter3Data(@Field("house_id") String sno, @Field("date") String date);
 
     @FormUrlEncoded
     @POST("house/add_channel")
@@ -208,9 +217,10 @@ public interface Api {
     Observable<UpLoadImageMessage> upload(
             @Part MultipartBody.Part image);
 
+    //http://stsz119.suntrans-cloud.com/api/v1/energy/electricalSafety
     @FormUrlEncoded
-    @POST("device/abnormal")
-    Observable<YichangEntity> getYichang(@Field("page") String page);
+    @POST("energy/electricalSafety")
+    Observable<YichangEntity> getYichang(@Field("current_page") String page);
 
     @FormUrlEncoded
     @POST("house/delete")
@@ -260,7 +270,6 @@ public interface Api {
     //2018-3-27
 
 
-
     //用电状态接口
     @POST("monitor/index")
     Observable<AreaEntity> loadMonitorIndex();
@@ -288,7 +297,7 @@ public interface Api {
 
     //能耗接口
     @POST("energy/index")
-    Observable<AreaEntity> getEnergyIndexNewApi();
+    Observable<EnergyListEntity> getEnergyIndexNewApi();
 
     //场景相关
     @POST("scene/index")
@@ -305,12 +314,13 @@ public interface Api {
     Observable<RespondBody<SceneItemlEntity>> getSceneChannelV2(@Field("id") String id);
 
     @FormUrlEncoded
-    @POST("scene/channel/store")
+    @POST("scene/channel/channelStore")
     Observable<RespondBody> addSceneChannel(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
     @POST("scene/update")
     Observable<RespondBody> updateSceneInfo(@FieldMap Map<String, String> map);
+
     @FormUrlEncoded
     @POST("scene/channel/update")
     Observable<RespondBody> updateSceneChannel(@FieldMap Map<String, String> map);
@@ -328,8 +338,8 @@ public interface Api {
     Observable<RespondBody> createScene(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
-    @POST("switch/slc/scene")
-    Observable<RespondBody> switchSceneV2(@Field("id") String id);
+    @POST("switch/slcScene")
+    Observable<RespondBody> switchSceneV2(@Field("scene_id") String id);
 
 
     @POST("houseList")
@@ -337,4 +347,93 @@ public interface Api {
 
     @POST("sensus/sensusList")
     Observable<AreaEntity> getSensusList();
+
+    //控制区域
+    @FormUrlEncoded
+    @POST("switch/slcArea")
+    Observable<RespondBody> switchArea(@Field("area_id") String area_id, @Field("cmd") String cmd);
+
+    //控制整栋楼
+    @FormUrlEncoded
+    @POST("switch/buildingCtrl")
+    Observable<RespondBody> switchBuilding(@Field("cmd") String cmd);
+
+    //控制宿舍区(type=1)、办公区(type=0)
+    @FormUrlEncoded
+    @POST("switch/officeCtrl")
+    Observable<RespondBody> switchOffice(@Field("cmd") String cmd, @Field("type") String type);
+
+    //控制房间
+    @FormUrlEncoded
+    @POST("switch/houseCtrl")
+    Observable<RespondBody> switchHouse(@Field("house_id") String area_id, @Field("cmd") String cmd);
+
+
+    //设备管理
+    //能耗接口
+    @POST("device/deviceManage")
+    Observable<RespondBody<List<DeviceManagerBean>>> getDeviceManagerList();
+
+    @FormUrlEncoded
+    @POST("device/channel")
+    Observable<RespondBody<List<ChannelInfo>>> getDeviceChannel(@Field("dev_id") String dev_id);
+
+    //环境异常提醒
+
+    @POST("sensus/abnomal")
+    Observable<SensusAbnormal> getSensusAbnormal();
+
+    //获取我的设备
+    @FormUrlEncoded
+    @POST("home/myDevice")
+    Observable<RespondBody<List<ChannelInfo>>> getMydevices(@Field("house_type") String house_type);
+
+
+    //获取我的设备管理员版
+    //获取我的设备
+    @POST("scene/channelTree")
+    Observable<AreaEntity> getMydevicesAdmin();
+
+    //http://stsz119.suntrans-cloud.com/api/v1/user/getGuestbook
+    //http://stsz119.suntrans-cloud.com/api/v1/sensus/environmentalLog
+    //获取我的设备管理员版
+    //获取我的设备
+    @FormUrlEncoded
+    @POST("user/getGuestbook")
+    Observable<RespondBody<List<Gustbook>>> getGustbook(@Field("current_page") String page);
+
+
+    @FormUrlEncoded
+    @POST("sensus/environmentalLog")
+    Observable<RespondBody<List<EnvLog>>> getEnvLog(@Field("house_id") String house_id);
+
+
+    @FormUrlEncoded
+    @POST("device/getMaxI")
+    Observable<RespondBody<List<MaxI>>> getMaxI(@Field("dev_id") String dev_id);
+
+    @FormUrlEncoded
+    @POST("device/getMaxU")
+    Observable<RespondBody<List<MaxI>>> getMaxU(@Field("dev_id") String dev_id);
+
+    //【1总过流 2 总过压 3 欠压 4 单通道】 type value channel_id/dev_id
+    @FormUrlEncoded
+    @POST("device/setMaxI")
+    Observable<RespondBody> setMaxI(@FieldMap Map<String, String> map);
+
+
+    @FormUrlEncoded
+    @POST("switch/logs")
+    Observable<RespondBody<List<EnvLog>>> getConLog(@Field("page") String page);
+
+
+    @FormUrlEncoded
+    @POST("device/electrical/totalCmd")
+    Observable<RespondBody<List<AirCmd>>> getTotalCmd(@Field("channel_id") String channel_id);
+
+
+
+    @FormUrlEncoded
+    @POST("device/electrical/send")
+    Observable<RespondBody> sendAirCmd(@Field("channel_id") String channel_id,@Field("id") String id);
 }

@@ -63,9 +63,11 @@
                 android:textColor="@color/black" />
 
             <EditText
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/border_edit"
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
@@ -87,13 +89,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="类型"
                 android:textColor="@color/black" />
 
             <android.support.v7.widget.AppCompatSpinner
-                android:gravity="right"
+                style="@style/mySpinner"
                 android:layout_weight="1"
                 android:id="@+id/type"
                 android:layout_width="wrap_content"
@@ -111,6 +112,42 @@
             android:layout_height="30dp"
             android:background="@color/item_press_true" />
 
+        <RelativeLayout
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:gravity="center"
+                android:text="启用"
+                android:textColor="@color/black" />
+
+          <RelativeLayout
+              android:gravity="center|right"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+              <net.suntrans.szxf.views.SwitchButton
+                  android:id="@+id/isUsed"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:textColor="@color/white"
+                  android:textSize="11sp"
+                  app:kswBackDrawable="@drawable/switch_bottom_white"
+                  app:kswThumbDrawable="@drawable/switch_top_circle"
+                  />
+          </RelativeLayout>
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/item_press_true" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

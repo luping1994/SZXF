@@ -1,5 +1,6 @@
 package net.suntrans.szxf.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +18,7 @@ import net.suntrans.szxf.api.RetrofitHelper;
 import net.suntrans.szxf.bean.EnvDetailEntity;
 import net.suntrans.szxf.bean.SensusEntity;
 import net.suntrans.szxf.rx.BaseSubscriber;
+import net.suntrans.szxf.uiv2.activity.EnvYichangActivity;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -68,6 +70,17 @@ public class EnvDetailActivity extends BasedActivity {
                 finish();
             }
         });
+        findViewById(R.id.subTitle)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(EnvDetailActivity.this, EnvYichangActivity.class);
+                        intent.putExtra("house_id",din);
+                        intent.putExtra("title",getIntent().getStringExtra("name"));
+                        startActivity(intent);
+                    }
+                });
+        initView(null);
     }
 
 
@@ -148,7 +161,7 @@ public class EnvDetailActivity extends BasedActivity {
                 nameTx.setText("烟雾");
                 standard.setImageResource(R.drawable.ic_pm_progress);
                 if (data != null) {
-                    valueTx.setText(data.getYanwu() + "ppm");
+                    valueTx.setText(data.getYanwu() + "ug/m³");
                     evaluateTx.setText(data.yanwuEva);
                     setPading(data.yanwuPro, layout_arrow, valueTx);
                 }
@@ -157,7 +170,7 @@ public class EnvDetailActivity extends BasedActivity {
                 nameTx.setText("甲醛");
                 standard.setImageResource(R.drawable.ic_pm_progress);
                 if (data != null) {
-                    valueTx.setText(data.getJiaquan() + "ppm");
+                    valueTx.setText(data.getJiaquan() + "ug/m³");
                     evaluateTx.setText(data.jiaquanEva);
                     setPading(data.jiaquanPro, layout_arrow, valueTx);
                 }
@@ -166,7 +179,7 @@ public class EnvDetailActivity extends BasedActivity {
                 nameTx.setText("PM1");
                 standard.setImageResource(R.drawable.ic_pm_progress);
                 if (data != null) {
-                    valueTx.setText(data.getPM1() + "ppm");
+                    valueTx.setText(data.getPM1() + "ug/m³");
                     evaluateTx.setText(data.pm1Eva);
                     setPading(data.pm1Pro, layout_arrow, valueTx);
                 }
@@ -175,7 +188,7 @@ public class EnvDetailActivity extends BasedActivity {
                 nameTx.setText("PM2.5");
                 standard.setImageResource(R.drawable.ic_pm_progress);
                 if (data != null) {
-                    valueTx.setText(data.getPm25() + "ppm");
+                    valueTx.setText(data.getPm25() + "ug/m³");
                     evaluateTx.setText(data.pm25Eva);
                     setPading(data.pm25Pro, layout_arrow, valueTx);
                 }
@@ -184,7 +197,7 @@ public class EnvDetailActivity extends BasedActivity {
                 nameTx.setText("PM10");
                 standard.setImageResource(R.drawable.ic_pm_progress);
                 if (data != null) {
-                    valueTx.setText(data.getPm10() + "ppm");
+                    valueTx.setText(data.getPm10() + "ug/m³");
                     evaluateTx.setText(data.pm10Eva);
                     setPading(data.pm10Pro, layout_arrow, valueTx);
                 }
@@ -268,28 +281,6 @@ public class EnvDetailActivity extends BasedActivity {
                             refreshLayout.setRefreshing(false);
                     }
                 });
-//                .subscribe(new Subscriber<EnvDetailEntity>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        e.printStackTrace();
-//                        if (e!=null){
-//                            UiUtils.showToast(e.getMessage());
-//                        }else {
-//                            UiUtils.showToast("服务器错误");
-//                        }
-//                        if (refreshLayout!=null)
-//                            refreshLayout.setRefreshing(false);
-//                    }
-//
-//                    @Override
-//                    public void onNext(EnvDetailEntity info) {
 
-//                    }
-//                });
     }
 }

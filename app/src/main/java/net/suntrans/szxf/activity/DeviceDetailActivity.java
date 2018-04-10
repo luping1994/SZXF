@@ -69,9 +69,9 @@ public class DeviceDetailActivity extends BasedActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(DeviceDetailActivity.this, ChannelEditActivity.class);
-                intent.putExtra("id", datas.get(position).id);
+                intent.putExtra("id", datas.get(position).id.toString());
                 intent.putExtra("title", datas.get(position).title);
-                intent.putExtra("channel_type", datas.get(position).channel_type);
+                intent.putExtra("channel_type", datas.get(position).channel_type.toString());
                 startActivity(intent);
             }
         });

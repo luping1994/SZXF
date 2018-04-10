@@ -29,6 +29,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class AddSceneChannelFragment extends RxFragment implements StateView.OnRetryClickListener {
+
+
+
     private ExpandableListView listView;
     private AddSenceDevGrpAdapter adapter;
     private StateView stateView;
@@ -55,9 +58,11 @@ public class AddSceneChannelFragment extends RxFragment implements StateView.OnR
         stateView = StateView.inject(view.findViewById(R.id.content), false);
         stateView.setOnRetryClickListener(this);
         listView = (ExpandableListView) view.findViewById(R.id.expandListView);
+        listView.setDivider(null);
         listView.setGroupIndicator(null);
         adapter = new AddSenceDevGrpAdapter(datas, getContext());
         listView.setAdapter(adapter);
+
     }
 
     @Override
@@ -68,7 +73,7 @@ public class AddSceneChannelFragment extends RxFragment implements StateView.OnR
 
     private void getData() {
         stateView.showLoading();
-        RetrofitHelper.getApi().getHomeHouse()
+        RetrofitHelper.getApi().getMydevicesAdmin()
                 .compose(this.<AreaEntity>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,6 +82,7 @@ public class AddSceneChannelFragment extends RxFragment implements StateView.OnR
                     public void onCompleted() {
 
                     }
+
 
                     @Override
                     public void onError(Throwable e) {

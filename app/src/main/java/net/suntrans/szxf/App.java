@@ -1,14 +1,17 @@
 package net.suntrans.szxf;
 
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.pgyersdk.crash.PgyCrashManager;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.Bugly;
 
 import net.suntrans.szxf.utils.LogUtil;
 
@@ -18,6 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import cn.jpush.android.api.BasicPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
+
 import static net.suntrans.szxf.BuildConfig.DEBUG;
 
 
@@ -26,6 +32,7 @@ import static net.suntrans.szxf.BuildConfig.DEBUG;
  */
 
 public class App extends MultiDexApplication {
+    public static Handler handler;
     public static Application getApplication() {
         return application;
     }
@@ -45,7 +52,7 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        handler = new Handler();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.dasdasd
@@ -65,10 +72,16 @@ public class App extends MultiDexApplication {
 //                    e.printStackTrace();
 //                }
 //            }
-//        }.start();
-        if (!DEBUG)
+//        }.start();\
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
+        if (!DEBUG){
             PgyCrashManager.register(this);
+            Bugly.init(this,"79411734d0",false);
+        }
     }
+
 
 
     // 复制和加载区域数据库中的数据
@@ -133,12 +146,4 @@ public class App extends MultiDexApplication {
     }
 
 
-    /**
-     * list[
-     *     item:{
-     *          x:2013
-     *          y:
-     *     }
-     * ]
-     */
 }

@@ -50,7 +50,7 @@ function sendCommand(d) {
       if(d.datapoint==null||d.datapoint==""){
             d.datapoint ="-1"
         }
-    control.switchChannel(d.channel_id + "," + d.title + "," + d.status + "," + d.datapoint + "," + d.din);
+    control.switchChannel(d.din + "," + d.number + "," + d.status+","+d.title );
 }
 
 //加载容器属性和元件
@@ -60,94 +60,102 @@ function sendCommand(d) {
 
 var tokens;
 var house_ids;
-
+var timer =null
 function init(token, house_id) {
     tokens = token;
     house_ids = house_id;
     floor = house_id;
     //加载容器属性和元件
     initContainerByToken(tokens, floor);
-    setInterval("refreshContainerByToken(tokens,house_ids)", 8000);
+    if (timer!=null){
+        clearInterval(timer);
+    }
+    timer =setInterval("refreshContainerByToken(tokens,house_ids)", 8000);
 }
 
 
 function refreshContainerByToken(token, house_id) {
     $.ajax({
-        url: 'http://dcw.suntrans-cloud.com/api/v1/plan',
+        url: 'http://stsz119.suntrans-cloud.com/api/v1/plan',
         type: 'GET',
-        data: {'house_id': house_id},
+        data: {'area_id': house_id},
         dataType: "json",
         success: function (json) {
             // setPlan1Data(json);
             var bgImage = "";
-            if (floor == 1) {
+            if (floor == 4) {
                 bgImage = "img/floor1.png";
-            }else if (floor==2){
+            }else if (floor==5){
                 bgImage = "img/floor2.png";
 
-            }else if (floor == 3){
-                bgImage = "img/floor3.png";
+            }else if (floor == 8){
+                bgImage = "img/floor2.png";
 
             }else {
-                bgImage = "img/floor4.png";
+                bgImage = "img/floor2.png";
 
             }
             var con = json.data.container;
             if (con) {
-                var width = 1309;
-                var height = 693;
+                   var width = 1385;
+                                     var height = 625;
                var  scale = $("body").width() / width;
                 $("div.full-wrapper").css("height", height * scale);
                 $("svg.designer").css("transform", "scale(" + scale + ")");
                 $("svg.designer").css("width", width);
                 $("svg.designer").css("height", height);
-                $("svg.designer").css("background-color", "#000000");
+                $("svg.designer").css("background-color", "transparent");
                 $("svg.designer").css("background-image", "url(" + bgImage+ ")");
                 $("svg.designer").empty();
-                $("body").css("background-color", "#000000");
+                $("body").css("background-color", "#feece6");
             }
 
             json.data.elements.map(createElement);
+            createScrollBarElements();
         }
     });
+}
+
+function createScrollBarElements() {
+    floor1ScrollBar.map(createScrollbar);
 }
 
 //初始化容器
 function initContainerByToken(token, house_id) {
     $.ajax({
-        url: 'http://dcw.suntrans-cloud.com/api/v1/plan',
+        url: 'http://stsz119.suntrans-cloud.com/api/v1/plan',
         type: 'GET',
-        data: {'house_id': house_id},
+        data: {'area_id': house_id},
 
         dataType: "json",
         success: function (json) {
             // setPlan1Data(json);
             var bgImage = "";
-            if (floor == '1') {
+            if (floor == '4') {
                 bgImage = "img/floor1.png";
-            }else if (floor=='2'){
+            }else if (floor=='5'){
                 bgImage = "img/floor2.png";
 
-            }else if (floor == '3'){
-                bgImage = "img/floor3.png";
+            }else if (floor == '8'){
+                bgImage = "img/floor2.png";
 
             }else {
-                bgImage = "img/floor4.png";
+                bgImage = "img/floor2.png";
 
             }
             var con = json.data.container;
             if (con) {
-                var width = 1309;
-                var height = 693;
+                  var width = 1385;
+                      var height = 625;
                 scale = $("body").width() / width;
                 $("div.full-wrapper").css("height", height * scale);
                 $("svg.designer").css("transform", "scale(" + scale + ")");
                 $("svg.designer").css("width", width);
                 $("svg.designer").css("height", height);
-                $("svg.designer").css("background-color", "#000000");
+                $("svg.designer").css("background-color", "transparent");
                 $("svg.designer").css("background-image", "url(" + bgImage+ ")");
                 $("svg.designer").empty();
-                $("body").css("background-color", "#000000");
+                $("body").css("background-color", "#feece6");
             }
             // json.signals.map(function(signal){
             //  if(signal){
@@ -156,6 +164,7 @@ function initContainerByToken(token, house_id) {
             // });
 
             json.data.elements.map(createElement);
+                createScrollBarElements();
         }
     });
 }
@@ -183,17 +192,17 @@ function createImage(data) {
     imageGroup.append("image")
         .classed("control-image", true)
         .attr("x", function (d) {
-            return d.x - 552
+            return d.x
         })
         .attr("y", function (d) {
-            return d.y - 106
+            return d.y
         })
         .attr("width", function (d) {
             if (d.vtype == 1) {
-                return 60
+                return 32
 
             } else {
-                return 30
+                return 32
 
             }
         })
@@ -201,27 +210,115 @@ function createImage(data) {
             if (d.vtype == 1) {
 
 
-                return 60
+                return 32
             } else {
-                return 30
+                return 32
             }
         })
         .attr("xlink:href", function (d) {
-            if (d.status) {
-                if (d.vtype == 1)
-                    return 'img/light_on2.png';
-                else
-                    return 'img/socket_on2.png';
+             if (d.status) {
+                           if (d.vtype == 1)
+                               return 'img/light_on2.png';
+                           else
+                               return 'img/socket_on2.png';
 
-            } else {
-                if (d.vtype == 1)
-                    return 'img/light_off2.png';
-                else
-                    return 'img/socket_off2.png';
-            }
+                       } else {
+                           if (d.vtype == 1)
+                               return 'img/light_off2.png';
+                           else
+                               return 'img/socket_off2.png';
+                       }
         });
     imageGroup.on("click", openConfirmDialog);
 
+}
+
+function createScrollBarElements() {
+
+  if (floor == 4) {
+               floor1ScrollBar.map(createScrollbar);
+            }else if (floor==5){
+                floor2ScrollBar.map(createScrollbar);
+
+            }else if (floor == 8){
+
+            }else {
+
+            }
+
+}
+
+/**
+ * 创建一条流动条控件
+ * @param data 绑定数据
+ * @return
+ */
+function createScrollbar(data) {
+    var signal = true;
+    var scrollbarGroup = d3.select("#floorPlanSvg")
+        .append("g")
+        .data([data]);
+
+    scrollbarGroup.append("line")
+        .classed("scrollbar-line", true)
+        .attr("x1", data.x1)
+        .attr("y1", data.y1)
+        .attr("x2", data.x2)
+        .attr("y2", data.y2)
+        .style({'stroke': data.stroke, 'stroke-width': data.strokeWidth, 'stroke-dasharray': data.strokeDasharray});
+
+    scrollbarGroup.append("polygon")
+        .classed("scrollbar-border", true)
+        .attr("stroke", data.fill)
+        .attr("points", calcScrollbarPoints(data))
+        .style("opacity", data.showBg);
+    if (signal) {
+        // var runScript = "(function(){var X=" + signal.value + ";return " + data.content + ";}())";
+        try {
+            // var result = eval(runScript);
+            // if (result) {
+                scrollbarGroup.select("line.scrollbar-line")
+                    .style("stroke-dashoffset", 0)
+                    .transition()
+                    .duration(data.radius)
+                    .ease("linear")
+                    .style("stroke-dashoffset", data.strokeLinecap);
+            // }
+        } catch (e) {
+            console.log("流动条公式计算异常" + runScript);
+        }
+    }
+
+    /**
+     * 计算边框的坐标
+     * @param data
+     * @return
+     */
+    function calcScrollbarPoints(data) {
+        var absX = data.width - data.x;
+        var absY = data.height - data.y;
+        var angle = Math.atan(absY / absX);
+        var r = data.strokeWidth / 2 + 2;
+        var offsetX = Math.sin(angle) * r;
+        var offsetY = Math.cos(angle) * r;
+        if (isNaN(offsetX) || isNaN(offsetY)) {
+            return "";
+        }
+        var point1 = (data.x + offsetX) + "," + (data.y - offsetY);
+        var point2 = (data.width + offsetX) + "," + (data.height - offsetY);
+        var point3 = (data.width - offsetX) + "," + (data.height + offsetY);
+        var point4 = (data.x - offsetX) + "," + (data.y + offsetY);
+        return point1 + " " + point2 + " " + point3 + " " + point4;
+    }
+
+    /**
+     * 计算流动条间隔
+     * @param data
+     * @return
+     */
+    function calcScrollbarDasharray(data) {
+        return data.strokeWidth + " " + data.strokeDasharray;
+    }
 }
 
 

@@ -61,6 +61,14 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         setOrientation(orientation);
     }
 
+    public DividerItemDecoration(Context context, int orientation,int offsets) {
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(context.getResources().getColor(R.color.bgColor));
+        offset = UiUtils.dip2px(offsets, context);
+        setOrientation(orientation);
+    }
+
     /**
      * Sets the orientation for this divider. This should be called if
      * {@link RecyclerView.LayoutManager} changes orientation.
@@ -184,7 +192,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             outRect.set(0, 0, offset, 0);
         }
     }
-
 
 
 }

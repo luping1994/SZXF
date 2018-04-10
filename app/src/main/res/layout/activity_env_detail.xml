@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="@dimen/action_bar_size"
         android:background="@color/colorPrimary">
 
         <RelativeLayout
@@ -32,6 +32,17 @@
             android:text="设备管理"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
+        <TextView
+            android:layout_marginRight="16dp"
+            android:id="@+id/subTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="异常记录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/actionBarSubTitleSize" />
     </RelativeLayout>
 
     <net.suntrans.szxf.views.ScrollChildSwipeRefreshLayout
@@ -88,11 +99,15 @@
 
                 <include layout="@layout/item_sensor" />
 
-                <include layout="@layout/item_sensor" />
+                <include
+                    layout="@layout/item_sensor"
+                    android:visibility="gone" />
 
                 <!--<include layout="@layout/item_sensor" />-->
 
-                <include android:visibility="gone" layout="@layout/item_sensor" />
+                <include
+                    layout="@layout/item_sensor"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -123,9 +138,9 @@
                 <include layout="@layout/item_sensor" />
 
                 <!--<include layout="@layout/item_sensor" />-->
-<!---->
+                <!---->
                 <!--<include layout="@layout/item_sensor" />-->
-<!---->
+                <!---->
                 <!--<include layout="@layout/item_sensor" />-->
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

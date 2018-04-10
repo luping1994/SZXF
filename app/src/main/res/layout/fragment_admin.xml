@@ -20,7 +20,7 @@
         <RelativeLayout
             android:id="@+id/toobar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="@dimen/action_bar_size"
             android:background="@color/colorPrimary">
 
             <ImageView
@@ -39,7 +39,7 @@
                 android:gravity="center"
                 android:text="首页"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/title_size" />
 
             <RelativeLayout
                 android:id="@+id/menu"
@@ -60,18 +60,29 @@
             </RelativeLayout>
         </RelativeLayout>
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            app:layoutManager="GridLayoutManager"
-            app:spanCount="3">
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
+                <include layout="@layout/header_view"/>
+                <android.support.v7.widget.RecyclerView
+                    android:background="@color/white"
+                    android:id="@+id/recyclerView"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="GridLayoutManager"
+                    app:spanCount="3">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+
     </LinearLayout>
 
 </LinearLayout>

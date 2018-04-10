@@ -7,12 +7,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import net.suntrans.looney.widgets.IosAlertDialog;
+import net.suntrans.szxf.DeviceType;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.activity.BasedActivity;
 import net.suntrans.szxf.bean.RespondBody;
@@ -60,7 +62,6 @@ public class MoniDetailActivity extends BasedActivity implements View.OnClickLis
         room_id = getIntent().getStringExtra("id");
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         myadapter = new Myadapter(R.layout.item_device_moni_detail, datas);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(myadapter);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshlayout);
         refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
@@ -80,6 +81,8 @@ public class MoniDetailActivity extends BasedActivity implements View.OnClickLis
                 //...
             }
         });
+
+
 
     }
 
@@ -127,10 +130,11 @@ public class MoniDetailActivity extends BasedActivity implements View.OnClickLis
 
         @Override
         protected void convert(BaseViewHolder helper, MonitorEntity item) {
+
             helper.setText(R.id.name, item.title == null ? "--" : item.title);
             helper.setText(R.id.des, item.name);
-//            ImageView imageView = helper.getView(R.id.image);
-//            imageView.setImageResource(DeviceType.deviceIcons.get(item.device_type));
+            ImageView imageView = helper.getView(R.id.image);
+            imageView.setImageResource(DeviceType.deviceIcons.get(item.channel_type));
             helper.setText(R.id.used, "   电流" + item.current + "A");
 
         }

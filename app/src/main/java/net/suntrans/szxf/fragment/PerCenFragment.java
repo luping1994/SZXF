@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,12 +24,15 @@ import com.trello.rxlifecycle.android.FragmentEvent;
 import net.suntrans.szxf.App;
 import net.suntrans.szxf.MainActivity;
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.ROLE;
 import net.suntrans.szxf.activity.AboutActivity;
 import net.suntrans.szxf.activity.ChangePassActivity;
 import net.suntrans.szxf.activity.DeviceManagerActivity;
+import net.suntrans.szxf.activity.FankuiActivity;
 import net.suntrans.szxf.activity.LoginActivity;
 import net.suntrans.szxf.activity.QuestionActivity;
 import net.suntrans.szxf.activity.YichangActivity;
+import net.suntrans.szxf.api.Api;
 import net.suntrans.szxf.api.RetrofitHelper;
 import net.suntrans.szxf.bean.SampleResult;
 import net.suntrans.szxf.bean.UserInfo;
@@ -36,9 +40,13 @@ import net.suntrans.szxf.fragment.base.LazyLoadFragment;
 import net.suntrans.szxf.fragment.din.ChangeNameDialogFragment;
 import net.suntrans.szxf.fragment.din.UpLoadImageFragment;
 import net.suntrans.szxf.rx.BaseSubscriber;
+import net.suntrans.szxf.uiv2.activity.ConLogsActivity;
+import net.suntrans.szxf.uiv2.activity.ControlLogsActivity;
+import net.suntrans.szxf.uiv2.bean.Image;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.StatusBarCompat;
 import net.suntrans.szxf.utils.UiUtils;
+import net.suntrans.szxf.views.GlideRoundTransform;
 import net.suntrans.szxf.views.LoadingDialog;
 
 import java.util.HashMap;
@@ -54,7 +62,7 @@ import rx.schedulers.Schedulers;
 
 public class PerCenFragment extends LazyLoadFragment implements View.OnClickListener, ChangeNameDialogFragment.ChangeNameListener, UpLoadImageFragment.onUpLoadListener {
     TextView name;
-    private CircleImageView avatar;
+    private ImageView avatar;
     private TextView bagde;
     private RequestManager glideRequest;
 //    private List<YichangEntity.DataBean.ListsBean> lists;
@@ -80,7 +88,7 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         setListener(view);
-        avatar = (CircleImageView) view.findViewById(R.id.img);
+        avatar = (ImageView) view.findViewById(R.id.img);
         bagde = (TextView) view.findViewById(R.id.bagde);
         glideRequest = Glide.with(this);
 
@@ -95,6 +103,7 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
         view.findViewById(R.id.loginOut).setOnClickListener(this);
         view.findViewById(R.id.titleHeader).setOnClickListener(this);
         view.findViewById(R.id.RLtishi).setOnClickListener(this);
+        view.findViewById(R.id.conLogs).setOnClickListener(this);
 
         name = (TextView) view.findViewById(R.id.name);
     }
@@ -103,8 +112,12 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.RLQues:
-                startActivity(new Intent(getActivity(), QuestionActivity.class));
+                if (App.ROLE_ID == ROLE.STAFF) {
+                    startActivity(new Intent(getActivity(), QuestionActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), FankuiActivity.class));
 
+                }
                 break;
             case R.id.RLModify:
                 startActivity(new Intent(getActivity(), ChangePassActivity.class));
@@ -120,7 +133,9 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
 
                 break;
             case R.id.RLtishi:
-                startActivity(new Intent(getActivity(), YichangActivity.class));
+                Intent intent = new Intent(getActivity(), YichangActivity.class);
+                intent.putExtra("title", "异常提示");
+                startActivity(intent);
 
                 break;
             case R.id.loginOut:
@@ -154,6 +169,12 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                 });
                 builder.create().show();
                 break;
+            case R.id.conLogs:
+                Intent intent4 = new Intent(getActivity(), ControlLogsActivity.class);
+                intent4.putExtra("title", "操作日志");
+                startActivity(intent4);
+
+                break;
         }
     }
 
@@ -182,9 +203,11 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
 
     }
 
+    private final Api api = RetrofitHelper.getApi();
+
     private void getInfo() {
-        RetrofitHelper.getApi()
-                .getUserInfo()
+
+        api.getUserInfo()
                 .compose(this.<UserInfo>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -198,12 +221,10 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                     public void onError(Throwable e) {
                         super.onError(e);
 
-                        e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(UserInfo info) {
-
                         if (info != null) {
                             if (info.code == 200) {
                                 name.setText(info.data.nickname);
@@ -211,17 +232,24 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                                         .putString("nikename", info.data.nickname)
                                         .putString("touxiang", info.data.avatar_url)
                                         .commit();
-                                LogUtil.i(RetrofitHelper.BASE_URL2 + info.data.avatar_url);
+//                                LogUtil.i(RetrofitHelper.BASE_URL2 + info.data.avatar_url);
                                 glideRequest
-                                        .load(RetrofitHelper.BASE_URL2 + info.data.avatar_url)
+                                        .load(info.data.avatar_url)
                                         .asBitmap()
                                         .override(UiUtils.dip2px(33), UiUtils.dip2px(33))
-//                                        .transform(new GlideRoundTransform(getActivity(), UiUtils.dip2px(16)))
+                                        .transform(new GlideRoundTransform(getActivity(), UiUtils.dip2px(16)))
                                         .placeholder(R.drawable.user_white)
                                         .into(new SimpleTarget<Bitmap>() {
                                             @Override
                                             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                                avatar.setImageBitmap(resource);
+
+                                                if (resource != null){
+
+                                                    avatar.setImageBitmap(resource);
+                                                }
+                                                else {
+                                                    avatar.setImageResource(R.drawable.user_white);
+                                                }
                                             }
                                         });
                             } else {

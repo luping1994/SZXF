@@ -6,5 +6,4 @@ package net.suntrans.szxf.bean;
 
 public class EnvDetailEntity extends RespondBody<SensusEntity.SixDetailData>{
 
-
 }

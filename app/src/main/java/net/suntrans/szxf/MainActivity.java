@@ -1,5 +1,6 @@
 package net.suntrans.szxf;
 
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -20,12 +21,17 @@ import android.widget.Toast;
 
 import com.pgyersdk.update.PgyUpdateManager;
 
+import net.suntrans.looney.widgets.IosAlertDialog;
 import net.suntrans.szxf.activity.BasedActivity;
 import net.suntrans.szxf.fragment.AreaFragment;
 import net.suntrans.szxf.fragment.AdminHomePageFragment;
 import net.suntrans.szxf.fragment.EnergyConFragment2;
 import net.suntrans.szxf.fragment.EnvHomeFragment;
 import net.suntrans.szxf.fragment.PerCenFragment;
+import net.suntrans.szxf.uiv2.fragment.EnergyStaffHomeFragment;
+import net.suntrans.szxf.uiv2.fragment.EnvListFragment;
+import net.suntrans.szxf.uiv2.fragment.EnvStaffHomeFragment;
+import net.suntrans.szxf.uiv2.fragment.StaffHomePageFragment;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.UiUtils;
 
@@ -37,11 +43,12 @@ import static net.suntrans.szxf.ROLE.LEADER;
 
 import android.content.Context;
 
+import cn.jpush.android.api.BasicPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
+
 public class MainActivity extends BasedActivity {
 
-
     private final int[] TAB_TITLES = new int[]{R.string.nav_tit, R.string.nav_area, R.string.nav_env, R.string.nav_power, R.string.nav_user};
-
     private final int[] TAB_IMGS = new int[]{
             R.drawable.select_home,
             R.drawable.select_area,
@@ -49,13 +56,22 @@ public class MainActivity extends BasedActivity {
             R.drawable.select_power,
             R.drawable.select_user
     };
+    private final int[] TAB_TITLES_RENT = new int[]{R.string.nav_tit, R.string.nav_env, R.string.nav_power, R.string.nav_user};
+    private final int[] TAB_IMGS_RENT = new int[]{
+            R.drawable.select_home,
+            R.drawable.select_env,
+            R.drawable.select_power,
+            R.drawable.select_user
+    };
 
     private TabLayout tabLayout;
 
-    private AreaFragment fragment2;
-    private EnergyConFragment2 fragment3;
-    private PerCenFragment fragment4;
-    private EnvHomeFragment fragment5;
+
+    private Fragment fragment2;
+    private Fragment fragment3;
+    private Fragment fragment4;
+    private Fragment fragment5;
+
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -89,18 +105,38 @@ public class MainActivity extends BasedActivity {
     private Fragment[] fragments;
 
     private void init() {
-        App.ROLE_ID = App.getSharedPreferences().getInt("role_id",-1);
-        AdminHomePageFragment fragment1= null;
+        App.ROLE_ID = App.getSharedPreferences().getInt("role_id", -1);
+        Fragment fragment1 = null;
         switch (App.ROLE_ID) {
             case LEADER:
-                fragment1 = new AdminHomePageFragment();
-                break;
             case ROLE.SUPERVISOR:
+                fragment1 = new AdminHomePageFragment();
+                fragment5 = new EnvHomeFragment();
+                if (fragment3 == null){
+                    fragment3 = new EnergyConFragment2();
+                }
                 break;
             case ROLE.STAFF:
+                fragment1 = new StaffHomePageFragment();
+                fragment5 = new EnvStaffHomeFragment();
+
+                if (fragment3 == null){
+                    fragment3 = new EnergyStaffHomeFragment();
+                }
                 break;
             default:
-                UiUtils.showToast(getString(R.string.tips_account_error));
+                fragment1 = new AdminHomePageFragment();
+                new IosAlertDialog(this)
+                        .builder()
+                        .setCancelable(false)
+                        .setMsg(getString(R.string.tips_account_error))
+                        .setPositiveButton(getResources().getString(R.string.close), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                App.getSharedPreferences().edit().clear().commit();
+                                finish();
+                            }
+                        }).show();
                 break;
         }
 
@@ -108,22 +144,32 @@ public class MainActivity extends BasedActivity {
         if (fragment2 == null)
             fragment2 = new AreaFragment();
 
-        if (fragment3 == null)
+        if (fragment3 == null){
             fragment3 = new EnergyConFragment2();
+        }
 
         if (fragment4 == null)
             fragment4 = new PerCenFragment();
 
-        if (fragment5 == null)
-            fragment5 = new EnvHomeFragment();
 
-        fragments = new Fragment[]{fragment1, fragment2, fragment5, fragment3, fragment4};
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment1).commit();
+
 
         tabLayout = (TabLayout) findViewById(R.id.main_tabLayout);
         tabLayout.setTabMode(MODE_FIXED);
         tabLayout.setTabGravity(GRAVITY_FILL);
-        setTabs(tabLayout, this.getLayoutInflater(), TAB_TITLES, TAB_IMGS);
+
+
+        if (App.ROLE_ID == ROLE.STAFF){
+            fragments = new Fragment[]{fragment1, fragment5, fragment3, fragment4};
+            setTabs(tabLayout, this.getLayoutInflater(), TAB_TITLES_RENT, TAB_IMGS_RENT);
+
+        }else {
+            fragments = new Fragment[]{fragment1, fragment2, fragment5, fragment3, fragment4};
+            setTabs(tabLayout, this.getLayoutInflater(), TAB_TITLES, TAB_IMGS);
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment1).commit();
+
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -206,5 +252,14 @@ public class MainActivity extends BasedActivity {
         currentIndex = index;
     }
 
+    private void initJpush() {
+        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(MainActivity.this);
+        builder.notificationFlags = Notification.FLAG_AUTO_CANCEL
+                | Notification.FLAG_SHOW_LIGHTS;  //设置为自动消失和呼吸灯闪烁
+        builder.notificationDefaults = Notification.DEFAULT_SOUND
+                | Notification.DEFAULT_VIBRATE
+                | Notification.DEFAULT_LIGHTS;  // 设置为铃声、震动、呼吸灯闪烁都要
+        JPushInterface.setPushNotificationBuilder(1, builder);
+    }
 
 }

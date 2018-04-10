@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.bean.AreaEntity;
+import net.suntrans.szxf.uiv2.bean.EnergyListEntity;
 
 import java.util.List;
 
@@ -21,10 +22,10 @@ import static net.suntrans.szxf.Config.UNIT_P;
  */
 
 public class EnergyListAdapter extends BaseExpandableListAdapter {
-    private List<AreaEntity.AreaFloor> datas;
+    private List<EnergyListEntity.FloorBean> datas;
     private Context mContext;
 
-    public EnergyListAdapter(List<AreaEntity.AreaFloor> datas, Context mContext) {
+    public EnergyListAdapter(List<EnergyListEntity.FloorBean> datas, Context mContext) {
         this.datas = datas;
         this.mContext = mContext;
 
@@ -74,7 +75,7 @@ public class EnergyListAdapter extends BaseExpandableListAdapter {
             groupHolder = (GroupHolder) view.getTag(R.id.name);
             view.setTag(R.id.root,groupPosition);
         } else {
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_group_area, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_group_ele, parent, false);
             groupHolder = new GroupHolder(view);
             view.setTag(R.id.name,groupHolder);
             view.setTag(R.id.root,groupPosition);
@@ -91,7 +92,7 @@ public class EnergyListAdapter extends BaseExpandableListAdapter {
             view = convertView;
             holder = (ChildHolder) view.getTag();
         } else {
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_energy2, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_energy_v2, parent, false);
             holder = new ChildHolder(view);
             view.setTag(holder);
         }
@@ -109,19 +110,18 @@ public class EnergyListAdapter extends BaseExpandableListAdapter {
         TextView mName;
         ImageView mImage;
         String[] colors = new String[]{"#f99e5b", "#d3e4ad", "#94c9d6"};
-        TextView count;
-        private final View root;
+        TextView ele;
 
         public GroupHolder(View view) {
             mName = (TextView) view.findViewById(R.id.name);
+            ele = (TextView) view.findViewById(R.id.ele);
             mImage = (ImageView) view.findViewById(R.id.imageView);
-
-            root = view.findViewById(R.id.root);
         }
 
         public void setData(final int groupPosition) {
 
             mName.setText(datas.get(groupPosition).name);
+            ele.setText(datas.get(groupPosition).floor_electricity+UNIT_ENERGY);
 //            mImage.setBackgroundColor(Color.parseColor(colors[groupPosition % 3]));
 //            count.setText(datas.get(groupPosition).sub.size() + "");
         }
@@ -131,22 +131,28 @@ public class EnergyListAdapter extends BaseExpandableListAdapter {
 
 
         private TextView allPower;
-        private TextView yesterday;
-        private TextView today;
+        private TextView fuzai;
+        private TextView zong;
         private TextView name;
 
         public ChildHolder(View itemView) {
             allPower = (TextView) itemView.findViewById(R.id.allPower);
-            yesterday = (TextView) itemView.findViewById(R.id.yesterday);
-            today = (TextView) itemView.findViewById(R.id.today);
+            zong = (TextView) itemView.findViewById(R.id.zong);
+            fuzai = (TextView) itemView.findViewById(R.id.fuzai);
             name = (TextView) itemView.findViewById(R.id.name);
         }
 
         public void setData(final int groupPosition, final int childPosition) {
-            allPower.setText(datas.get(groupPosition).sub.get(childPosition).electricity+UNIT_ENERGY);
-            yesterday.setText(datas.get(groupPosition).sub.get(childPosition).power+UNIT_P);
-            today.setText(datas.get(groupPosition).sub.get(childPosition).electricity+UNIT_ENERGY);
-            name.setText(datas.get(groupPosition).sub.get(childPosition).name);
+            String power = datas.get(groupPosition).sub.get(childPosition).power;
+            String electricity = datas.get(groupPosition).sub.get(childPosition).electricity;
+            if (power==null){
+                power ="0";
+            }if (electricity==null){
+                electricity ="0";
+            }
+            fuzai.setText("负载:"+power+UNIT_P);
+            zong.setText("总:"+electricity+UNIT_ENERGY);
+            name.setText(datas.get(groupPosition).sub.get(childPosition).house_number+"-"+datas.get(groupPosition).sub.get(childPosition).name);
 //            Glide.with(mContext)
 //                    .load(datas.get(groupPosition).sub.get(childPosition).img_url)
 //                    .centerCrop()

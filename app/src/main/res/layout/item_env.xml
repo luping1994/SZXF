@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="5dp">
+    android:layout_height="72dp"
+    android:background="@drawable/item_selector"
+    >
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:gravity="bottom"
+            android:layout_weight="1"
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,10 +29,12 @@
                 android:maxLength="10"
                 android:maxLines="1"
                 android:text="1楼餐厅"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#333333"
                 android:textSize="16sp" />
 
             <TextView
+                android:maxWidth="240dp"
+                android:maxLines="1"
                 android:id="@+id/isOnline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,19 +44,22 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_weight="1.5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/header"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
                 <ImageView
+                    android:tint="@color/colorPrimary"
+
                     android:layout_width="7dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
@@ -77,20 +82,20 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="4dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="9dp"
+                    android:tint="@color/colorPrimary"
+
+                    android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/icon_shidu" />
+                    android:src="@drawable/yanwu" />
 
                 <TextView
-
                     android:id="@+id/shidu"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
@@ -106,12 +111,12 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="4dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
                 <ImageView
+                    android:tint="@color/colorPrimary"
                     android:layout_width="17dp"
                     android:layout_height="9dp"
                     android:layout_centerVertical="true"
@@ -119,13 +124,13 @@
                     android:src="@drawable/icon_pm" />
 
                 <TextView
-                    android:maxLength="6"
                     android:id="@+id/pm25"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="4dp"
                     android:ellipsize="end"
                     android:gravity="center|left"
+                    android:maxLength="6"
                     android:maxLines="1"
                     android:text="52.6666666"
                     android:textColor="@color/black"
@@ -134,12 +139,12 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="4dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical">
 
                 <ImageView
+                    android:tint="@color/colorPrimary"
                     android:layout_width="22dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
@@ -153,14 +158,26 @@
                     android:layout_marginLeft="4dp"
                     android:ellipsize="end"
                     android:gravity="center|left"
-                    android:maxLength="3"
+                    android:maxLength="4"
                     android:maxLines="1"
-                    android:text="极强"
+                    android:text="2.0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/textNormalSize" />
             </LinearLayout>
 
         </LinearLayout>
-    </RelativeLayout>
+        <View
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:background="#dddddd"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </LinearLayout>
 
-</android.support.v7.widget.CardView>
+    <ImageView
+        android:tint="#aaaaaa"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

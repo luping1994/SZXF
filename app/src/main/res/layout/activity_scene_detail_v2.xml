@@ -112,6 +112,8 @@
 
 
                     <RelativeLayout
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:layout_width="match_parent"
                         android:layout_height="72dp"
                         android:background="@color/white">
@@ -130,15 +132,36 @@
                             android:paddingLeft="@dimen/activity_horizontal_margin"
                             android:paddingRight="@dimen/activity_horizontal_margin" />
                     </RelativeLayout>
-
-                    <TextView
+                    <View
+                        android:background="@color/devisionColor"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="1dp"/>
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
                         android:background="@color/bgColor"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
                         android:text="触发本场景后设备执行以下动作" />
 
+                    <TextView
+                        android:id="@+id/dingshi"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/item_selector"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:text="定时设置"
+                        android:textColor="@color/colorAccent" />
+
+                    <View
+                        android:background="@color/devisionColor"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
                     <TextView
                         android:id="@+id/addDevices"
                         android:layout_width="match_parent"
