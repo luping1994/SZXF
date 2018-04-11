@@ -1,0 +1,136 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": [
+    {
+      "id": 2,
+      "title": "18℃制冷\n风速自动",
+      "air_type": 0
+    },
+    {
+      "id": 3,
+      "title": "19℃制冷\n风速自动",
+      "air_type": 0
+    },
+    {
+      "id": 4,
+      "title": "20℃制冷\n风速自动",
+      "air_type": 0
+    },
+    {
+      "id": 5,
+      "title": "21℃制冷\n风速自动",
+      "air_type": 0
+    },
+    {
+      "id": 6,
+      "title": "22℃制冷\n风速自动",
+      "air_type": 0
+    },
+    {
+      "id": 7,
+      "title": "23℃制冷\n风速自动",
+      "air_type": 0
+    },
+    {
+      "id": 8,
+      "title": "关闭空调",
+      "air_type": 0
+    },
+    {
+      "id": 9,
+      "title": "20℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 10,
+      "title": "21℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 11,
+      "title": "22℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 12,
+      "title": "23℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 13,
+      "title": "24℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 14,
+      "title": "25℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 15,
+      "title": "26℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 16,
+      "title": "27℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 17,
+      "title": "28℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 18,
+      "title": "29℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 19,
+      "title": "30℃制热\n自动风速",
+      "air_type": 0
+    },
+    {
+      "id": 20,
+      "title": "除湿模式\n26℃",
+      "air_type": 0
+    },
+    {
+      "id": 21,
+      "title": "送风模式",
+      "air_type": 0
+    },
+    {
+      "id": 22,
+      "title": "上下扫风",
+      "air_type": 0
+    },
+    {
+      "id": 23,
+      "title": "左右扫风",
+      "air_type": 0
+    },
+    {
+      "id": 24,
+      "title": "强劲风开启",
+      "air_type": 0
+    },
+    {
+      "id": 25,
+      "title": "强劲风关闭",
+      "air_type": 0
+    },
+    {
+      "id": 26,
+      "title": "定时0.5小时",
+      "air_type": 0
+    },
+    {
+      "id": 27,
+      "title": "睡眠模式",
+      "air_type": 0
+    }
+  ]
+}

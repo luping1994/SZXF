@@ -1,0 +1,81 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": [
+    {
+      "id": 28,
+      "title": "自动模式",
+      "air_type": 1
+    },
+    {
+      "id": 29,
+      "title": "关闭空调",
+      "air_type": 1
+    },
+    {
+      "id": 30,
+      "title": "16℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 31,
+      "title": "17℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 32,
+      "title": "18℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 33,
+      "title": "19℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 34,
+      "title": "20℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 35,
+      "title": "21℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 36,
+      "title": "22℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 37,
+      "title": "23℃制冷\n风速自动",
+      "air_type": 1
+    },
+    {
+      "id": 38,
+      "title": "除湿模式\n25℃",
+      "air_type": 1
+    },
+    {
+      "id": 39,
+      "title": "送风模式",
+      "air_type": 1
+    },
+    {
+      "id": 40,
+      "title": "自动模式下睡眠模式",
+      "air_type": 1
+    },
+    {
+      "id": 41,
+      "title": "制冷模式下睡眠模式",
+      "air_type": 1
+    },
+    {
+      "id": 42,
+      "title": "除湿模式下睡眠模式",
+      "air_type": 1
+    }
+  ]
+}
