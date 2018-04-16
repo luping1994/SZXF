@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/statusBarFix"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimary">
+
+        </View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_size"
+            android:background="@color/colorPrimary">
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@drawable/ripple">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ripple"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_back" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/actionBarTitleSize" />
+
+            <TextView
+                android:id="@+id/rightSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:gravity="center"
+                android:onClick="rightSubTitleClicked"
+                android:text=""
+                android:textColor="@color/textcolor"
+                android:textSize="@dimen/actionBarSubTitleSize" />
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:paddingRight="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="甲醛"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/jiaquanYuzhi"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="16dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_edit"
+                            android:gravity="center"
+                            android:text="--" />
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <net.suntrans.szxf.views.SwitchButton
+                                android:id="@+id/jiaquanSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:kswBackDrawable="@drawable/switch_bottom_white"
+                                app:kswThumbDrawable="@drawable/switch_top_circle" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <include layout="@layout/item_divider" />
+
+
+                    <LinearLayout
+                        android:paddingRight="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="PM2.5"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/pm25Yuzhi"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="16dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_edit"
+                            android:gravity="center"
+                            android:text="--" />
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <net.suntrans.szxf.views.SwitchButton
+                                android:id="@+id/pm25Switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:kswBackDrawable="@drawable/switch_bottom_white"
+                                app:kswThumbDrawable="@drawable/switch_top_circle" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <include layout="@layout/item_divider" />
+
+
+                    <LinearLayout
+                        android:paddingRight="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="振动"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/zhendongYuzhi"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="16dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_edit"
+                            android:gravity="center"
+                            android:text="--" />
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <net.suntrans.szxf.views.SwitchButton
+                                android:id="@+id/zhendongSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:kswBackDrawable="@drawable/switch_bottom_white"
+                                app:kswThumbDrawable="@drawable/switch_top_circle" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <include layout="@layout/item_divider" />
+
+
+                    <LinearLayout
+                        android:paddingRight="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="烟雾"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/yanwuYuzhi"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="16dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_edit"
+                            android:gravity="center"
+                            android:text="--" />
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <net.suntrans.szxf.views.SwitchButton
+                                android:id="@+id/yanwuSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:kswBackDrawable="@drawable/switch_bottom_white"
+                                app:kswThumbDrawable="@drawable/switch_top_circle" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <include layout="@layout/item_divider" />
+
+                    <LinearLayout
+                        android:paddingRight="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="温度"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/wenduYuzhi"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="16dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_edit"
+                            android:gravity="center"
+                            android:text="--" />
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+
+                            <net.suntrans.szxf.views.SwitchButton
+                                android:id="@+id/wenduSwitch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:kswBackDrawable="@drawable/switch_bottom_white"
+                                app:kswThumbDrawable="@drawable/switch_top_circle" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+                    <include layout="@layout/item_divider" />
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+</layout>

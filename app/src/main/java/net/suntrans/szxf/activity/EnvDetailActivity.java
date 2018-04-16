@@ -36,6 +36,7 @@ public class EnvDetailActivity extends BasedActivity {
     private SwipeRefreshLayout refreshLayout;
     private String din;
     private EnvDetailFragment fragment;
+    private String source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,15 @@ public class EnvDetailActivity extends BasedActivity {
         time = (TextView) findViewById(R.id.time);
         din = getIntent().getStringExtra("id");
 
+        TextView tx = (TextView) findViewById(R.id.subTitle);
+        source = getIntent().getStringExtra("source");
+
+        if ("manager".equals(source)){
+            tx.setText("报警配置");
+        }else {
+            tx.setText("异常记录");
+
+        }
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);//获取屏幕大小的信息
         Pwidth = displayMetrics.widthPixels;   //屏幕宽度,先锋的宽度是800px，小米2a的宽度是720px
         SensusEntity.SixDetailData info = getIntent().getParcelableExtra("info");
@@ -60,14 +70,23 @@ public class EnvDetailActivity extends BasedActivity {
                 finish();
             }
         });
-        findViewById(R.id.subTitle)
+        tx
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(EnvDetailActivity.this, EnvYichangActivity.class);
-                        intent.putExtra("house_id",din);
-                        intent.putExtra("title",getIntent().getStringExtra("name"));
-                        startActivity(intent);
+                        if ("manager".equals(source)){
+                            Intent intent = new Intent(EnvDetailActivity.this, EnvYichangActivity.class);
+                            intent.putExtra("house_id",din);
+                            intent.putExtra("title",getIntent().getStringExtra("name"));
+                            startActivity(intent);
+                        }else {
+                            Intent intent = new Intent(EnvDetailActivity.this, EnvYichangActivity.class);
+                            intent.putExtra("house_id",din);
+                            intent.putExtra("title",getIntent().getStringExtra("name"));
+                            startActivity(intent);
+
+                        }
+
                     }
                 });
 //        initView(null);

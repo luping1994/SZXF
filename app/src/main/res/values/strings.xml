@@ -76,6 +76,8 @@
     <string name="text_close">关闭</string>
     <string name="text_open">打开</string>
     <string name="tips_current_max">请输入有效值(0~40A)!</string>
+    <string name="tips_voltage_max">请输入有效值(240~280V)!</string>
+    <string name="tips_voltage_min">请输入有效值(150~200V)!</string>
     <string name="tips_please_input_number">请输入数字</string>
 
     <!-- TODO: Remove or change this placeholder text -->

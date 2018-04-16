@@ -64,11 +64,13 @@ class DevicesManagerFragment : RxFragment() {
                 intent.putExtra("name", datas!![groupPosition].device[childPosition].title)
                 startActivity(intent)
             }else if ("6100" == vtype){
-//                val intent = Intent(activity, EnvDetailActivity::class.java)
-//                intent.putExtra("id", datas!![groupPosition].device[childPosition].id.toString() + "")
-//                intent.putExtra("name", datas!![groupPosition].device[childPosition].title)
-//                intent.putExtra("sno", datas!![groupPosition].device[childPosition].sno)
-//                startActivity(intent)
+
+                val intent = Intent(activity, EnvDetailActivity::class.java)
+                intent.putExtra("id", datas!![groupPosition].device[childPosition].house_id.toString() + "")
+                intent.putExtra("name", datas!![groupPosition].device[childPosition].title)
+                intent.putExtra("sno", datas!![groupPosition].device[childPosition].house_id)
+                intent.putExtra("source", "manager")
+                startActivity(intent)
             }
 
             true

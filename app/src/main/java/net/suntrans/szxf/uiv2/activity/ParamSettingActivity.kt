@@ -29,8 +29,8 @@ class ParamSettingActivity : BasedActivity(), View.OnClickListener {
         val editText = builder.editText
        val tag  =  v!!.getTag(v!!.id) as Int
         when (tag) {
-            7 -> builder.setTitle("设置过压值(280~360V)")
-            8 -> builder.setTitle("设置欠压值(0~150V)")
+            7 -> builder.setTitle("设置过压值(240~280V)")
+            8 -> builder.setTitle("设置欠压值(150~200V)")
             else -> builder.setTitle("设置通道 $tag 过流值(0~40A)")
         }
         editText.inputType = InputType.TYPE_CLASS_NUMBER
@@ -47,15 +47,19 @@ class ParamSettingActivity : BasedActivity(), View.OnClickListener {
                 return@addAction
             }
             if (tag==7){
+                if (s.toInt()<240||s.toInt()>280){
+                    UiUtils.showToast(getString(R.string.tips_voltage_max))
+                    return@addAction
 
+                }
             }else if (tag==8){
-                if (s.toInt()<280||s.toInt()>360){
-                    UiUtils.showToast(getString(R.string.tips_current_max))
+                if (s.toInt()<150||s.toInt()>200){
+                    UiUtils.showToast(getString(R.string.tips_voltage_min))
                     return@addAction
 
                 }
             }else{
-                if (s.toInt()<0||s.toInt()>150){
+                if (s.toInt()<0||s.toInt()>40){
                     UiUtils.showToast(getString(R.string.tips_current_max))
                     return@addAction
 

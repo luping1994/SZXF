@@ -34,6 +34,9 @@ public class EnvYichangActivity  extends RecyclerviewActivity<EnvLog> {
         super.onCreate(savedInstanceState);
         house_id = getIntent().getStringExtra("house_id");
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+
+        adapter.bindToRecyclerView(recyclerView);
+        adapter.setEmptyView(R.layout.recyclerview_empty_view);
         refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

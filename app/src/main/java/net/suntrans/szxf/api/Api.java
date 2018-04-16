@@ -43,6 +43,7 @@ import net.suntrans.szxf.uiv2.bean.SceneEntityV2;
 import net.suntrans.szxf.uiv2.bean.SceneImage;
 import net.suntrans.szxf.uiv2.bean.SceneItemlEntity;
 import net.suntrans.szxf.uiv2.bean.SensusAbnormal;
+import net.suntrans.szxf.uiv2.bean.SensusConfig;
 
 import java.util.List;
 import java.util.Map;
@@ -442,4 +443,13 @@ public interface Api {
     @FormUrlEncoded
     @POST("device/electrical/send")
     Observable<RespondBody> sendAirCmd(@Field("channel_id") String channel_id,@Field("id") String id);
+
+    //http://stsz119.suntrans-cloud.com/api/v1/sensus/getConfig
+    @FormUrlEncoded
+    @POST("sensus/getConfig")
+    Observable<RespondBody<SensusConfig>> getSensusConfig(@Field("dev_id") String dev_id);
+
+    @FormUrlEncoded
+    @POST("sensus/setConfig")
+    Observable<RespondBody<SensusConfig>> setSensusConfig(@Field("dev_id") String dev_id,@Field("field") String field,@Field("type") String type);
 }

@@ -169,6 +169,7 @@
         <activity android:name=".uiv2.activity.ConLogsActivity" />
         <activity android:name=".uiv2.activity.ControlLogsActivity" />
         <activity android:name=".uiv2.activity.EnvHisActivity" />
+        <activity android:name=".uiv2.activity.SensusConfigActivity" />
 
         <service android:name="net.suntrans.szxf.MyService" />
 
