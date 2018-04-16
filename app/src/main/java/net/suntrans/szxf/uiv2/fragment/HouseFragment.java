@@ -1,6 +1,7 @@
 package net.suntrans.szxf.uiv2.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.trello.rxlifecycle.android.FragmentEvent;
 
+import net.suntrans.szxf.DeviceType;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.api.Api;
 import net.suntrans.szxf.api.RetrofitHelper;
@@ -24,6 +26,7 @@ import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.databinding.FragmentRecyclerviewBinding;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.uiv2.BasedFragment2;
+import net.suntrans.szxf.uiv2.activity.KongtiaoActivity;
 import net.suntrans.szxf.uiv2.bean.ChannelInfo;
 import net.suntrans.szxf.uiv2.bean.SceneEntityV2;
 import net.suntrans.szxf.uiv2.bean.SceneInfo;
@@ -81,6 +84,17 @@ public class HouseFragment extends BasedFragment2 {
                 } else if (view.getId() == R.id.open) {
                     sendCmd(position,1);
 
+                }
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (datas.get(position).channel_type == DeviceType.AIR_CONDITIONER){
+                    Intent intent = new Intent();
+                    intent.putExtra("channel_id",datas.get(position).id);
+                    intent.setClass(getActivity(), KongtiaoActivity.class);
+                    startActivity(intent);
                 }
             }
         });

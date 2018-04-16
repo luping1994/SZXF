@@ -132,7 +132,9 @@ public final class Air0 implements Air {
     public boolean isOn() {
         return hasOn;
     }
-
+    public void setOn(boolean a) {
+        hasOn = a;
+    }
     public void close() {
         hasOn = false;
         listener.stateStringChanged("", "", "", "");

@@ -15,6 +15,7 @@ import net.suntrans.szxf.api.RetrofitHelper;
 import net.suntrans.szxf.bean.Ameter3;
 import net.suntrans.szxf.bean.AmmeterInfos;
 import net.suntrans.szxf.rx.BaseSubscriber;
+import net.suntrans.szxf.uiv2.adapter.DividerItemDecoration;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.UiUtils;
 import net.suntrans.szxf.views.OffsetDecoration;
@@ -46,6 +47,7 @@ public class AmmeterParameterActivity extends BasedActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         adapter = new Myadapter(this);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,1));
         findViewById(R.id.fanhui).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,11 +119,28 @@ public class AmmeterParameterActivity extends BasedActivity {
         dictionary.put("EletricityValleyU", "kW·h");
         dictionary.put("Temp", "电表温度");
         dictionary.put("TempU", "℃");
+
+
+        dictionary.put("electricity", "用电量");
+        dictionary.put("electricityU", "kW·h");
+
+
+        dictionary.put("current", "电流");
+        dictionary.put("currentU", "A");
+
+        dictionary.put("voltage", "电压");
+        dictionary.put("voltageU", "V");
+
+        dictionary.put("power", "功率");
+        dictionary.put("powerU", "kW");
+
+        dictionary.put("power_rate", "功率因数");
+        dictionary.put("power_rateU", "");
     }
 
     private void getData() {
 //        System.out.println(sno);
-        addSubscription(RetrofitHelper.getApi().getAmmeterInfo(sno), new BaseSubscriber<AmmeterInfos>(this) {
+        addSubscription(RetrofitHelper.getApi().getAmmeterInfo(id), new BaseSubscriber<AmmeterInfos>(this) {
             @Override
             public void onCompleted() {
 
@@ -142,12 +161,17 @@ public class AmmeterParameterActivity extends BasedActivity {
                 if (refreshLayout != null) {
                     refreshLayout.setRefreshing(false);
                 }
-                Map<String, Object> map = data.data;
+                Map<String, Object> map = data.data.get(0);
                 datas.clear();
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
-                    if (entry.getKey().equals("id") || entry.getKey().equals("sno")
+
+                    if (entry.getKey().equals("id")
                             || entry.getKey().equals("EletricitySharp")
                             || entry.getKey().equals("din") || entry.getKey().equals("user_id")) {
+                        continue;
+                    }
+                    if (entry.getKey().equals("sno")){
+                        sno = (String) entry.getValue();
                         continue;
                     }
                     Ameter3 ameter3 = new Ameter3(entry.getKey(), (String) entry.getValue(), dictionary.get(entry.getKey()),entry.getKey());
@@ -209,6 +233,9 @@ public class AmmeterParameterActivity extends BasedActivity {
 //                        intent.putExtra("data_type", datas.get(getAdapterPosition()).name);
 //                        intent.putExtra("shuoming", dictionary.get(datas.get(getAdapterPosition()).name));
 //                        startActivity(intent);
+                        if("更新时间".equals(datas.get(getAdapterPosition()).nameCH)){
+                            return;
+                        }
                         Intent intent = new Intent(AmmeterParameterActivity.this, ZHCurHisActivity.class);
                         intent.putExtra("paramName",datas.get(getAdapterPosition()).nameCH);
                         intent.putExtra("datapoint",datas.get(getAdapterPosition()).name);

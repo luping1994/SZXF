@@ -12,8 +12,8 @@ import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.databinding.FragmentKongtiaoBinding;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.uiv2.BasedFragment2;
-import net.suntrans.szxf.uiv2.air.Air;
 import net.suntrans.szxf.uiv2.air.Air0;
+import net.suntrans.szxf.uiv2.air.Air1;
 import net.suntrans.szxf.uiv2.bean.AirCmd;
 
 import java.util.List;
@@ -22,24 +22,24 @@ import java.util.List;
  * Created by Looney on 2018/4/9.
  * Des:
  */
-public class KongtiaoFragment extends BasedFragment2 implements View.OnClickListener, Air0.AirStateChangedListener {
+public class KongtiaoFragment_type1 extends BasedFragment2 implements View.OnClickListener, Air1.AirStateChangedListener {
 
     private List<AirCmd> data;
 
 
     private String channel_id;
 
-    public static KongtiaoFragment newInstance(String channel_id) {
+    public static KongtiaoFragment_type1 newInstance(String channel_id) {
 
         Bundle args = new Bundle();
         args.putString("channel_id", channel_id);
-        KongtiaoFragment fragment = new KongtiaoFragment();
+        KongtiaoFragment_type1 fragment = new KongtiaoFragment_type1();
         fragment.setArguments(args);
         return fragment;
     }
 
     FragmentKongtiaoBinding binding;
-    private Air0 air;
+    private Air1 air;
 
     @Nullable
     @Override
@@ -53,7 +53,7 @@ public class KongtiaoFragment extends BasedFragment2 implements View.OnClickList
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         channel_id = getArguments().getString("channel_id");
-        air = new Air0();
+        air = new Air1();
         air.setListener(this);
         getData(channel_id);
 
@@ -90,12 +90,11 @@ public class KongtiaoFragment extends BasedFragment2 implements View.OnClickList
                 binding.feng.setVisibility(View.VISIBLE);
                 air.switchModel();
                 air.setOn(true);
-
                 break;
+
             case R.id.add:
                 air.addWendu();
                 air.setOn(true);
-
                 binding.feng.setVisibility(View.VISIBLE);
                 break;
 
@@ -170,7 +169,6 @@ public class KongtiaoFragment extends BasedFragment2 implements View.OnClickList
 
     private void sendCmdToServer(String id) {
 
-//        System.out.println("id="+id);
         addSubscription(api.sendAirCmd(channel_id, id), new BaseSubscriber<RespondBody<List<AirCmd>>>(getContext()) {
             @Override
             public void onNext(RespondBody<List<AirCmd>> body) {

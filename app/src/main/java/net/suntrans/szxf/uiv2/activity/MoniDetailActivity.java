@@ -55,6 +55,8 @@ public class MoniDetailActivity extends BasedActivity implements View.OnClickLis
             }
         });
 
+        findViewById(R.id.rightSubTitle)
+                .setVisibility(View.INVISIBLE);
 
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(getIntent().getStringExtra("title"));

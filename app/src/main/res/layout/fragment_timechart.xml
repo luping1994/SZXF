@@ -16,16 +16,6 @@
             android:layout_height="1dp"
             android:background="@color/colorPrimaryDark" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/action_bar_size"
-            android:background="?attr/colorPrimary"
-            app:paddingStart="0dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/Toolbar"
-            app:titleTextAppearance="@style/Toolbar.TitleText" />
-
         <LinearLayout
             android:background="@color/item_press_true"
             android:layout_width="match_parent"

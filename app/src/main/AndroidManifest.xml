@@ -168,6 +168,7 @@
         <activity android:name=".uiv2.activity.KongtiaoActivity" />
         <activity android:name=".uiv2.activity.ConLogsActivity" />
         <activity android:name=".uiv2.activity.ControlLogsActivity" />
+        <activity android:name=".uiv2.activity.EnvHisActivity" />
 
         <service android:name="net.suntrans.szxf.MyService" />
 

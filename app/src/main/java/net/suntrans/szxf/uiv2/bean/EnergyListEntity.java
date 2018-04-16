@@ -49,6 +49,7 @@ public class EnergyListEntity extends RespondBody<EnergyListEntity.EnergyListDat
             public String house_number;
             public String electricity;
             public String power;
+            public String sno;
         }
     }
 }

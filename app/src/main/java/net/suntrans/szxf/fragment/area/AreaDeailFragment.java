@@ -252,10 +252,8 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
 //                    checkbox.setEnabled(false);
 //                }
                 if (datas.get(position).channel_type == DeviceType.AIR_CONDITIONER) {
-                    checkbox.setVisibility(View.INVISIBLE);
                     arrow.setVisibility(View.VISIBLE);
                 } else {
-                    checkbox.setVisibility(View.VISIBLE);
                     arrow.setVisibility(View.INVISIBLE);
 
                 }

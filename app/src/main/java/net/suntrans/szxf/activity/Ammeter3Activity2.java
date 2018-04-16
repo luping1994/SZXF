@@ -66,7 +66,11 @@ public class Ammeter3Activity2 extends BasedActivity{
         findViewById(R.id.rightTitleMore).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.putExtra("sno",sno);
+                intent.putExtra("id",id);
+                intent.setClass(Ammeter3Activity2.this, AmmeterParameterActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -74,7 +78,7 @@ public class Ammeter3Activity2 extends BasedActivity{
         sno = getIntent().getStringExtra("sno");
         id = getIntent().getStringExtra("id");
 
-        EnergyDetailFragment fragment = EnergyDetailFragment.newInstance(id);
+        EnergyDetailFragment fragment = EnergyDetailFragment.newInstance(id,sno);
         getSupportFragmentManager().beginTransaction().replace(R.id.content,fragment)
                 .commit();
     }

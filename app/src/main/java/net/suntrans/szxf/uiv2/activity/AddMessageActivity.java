@@ -29,6 +29,7 @@ import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.activity.BasedActivity;
 import net.suntrans.szxf.bean.RespondBody;
+import net.suntrans.szxf.bean.UpLoadImageMessage;
 import net.suntrans.szxf.databinding.ActivityAddMessageBinding;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.utils.FileUtils;
@@ -372,24 +373,23 @@ public class AddMessageActivity extends BasedActivity {
                         return imageBodyPart;
                     }
                 })
-                .flatMap(new Func1<MultipartBody.Part, Observable<RespondBody<Map<String, String>>>>() {
+                .flatMap(new Func1<MultipartBody.Part, Observable<UpLoadImageMessage>>() {
                     @Override
-                    public Observable<RespondBody<Map<String, String>>> call(MultipartBody.Part part) {
+                    public Observable<UpLoadImageMessage> call(MultipartBody.Part part) {
                         return api.uploadNoticeFile(part);
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
-                .subscribe(new Subscriber<RespondBody<Map<String, String>>>() {
+                .subscribe(new Subscriber<UpLoadImageMessage>() {
                     @Override
                     public void onCompleted() {
 
-//                        System.out.println("完成");
                         StringBuilder builder = new StringBuilder();
                         for (String s :
                                 uploadedImages) {
                             builder.append(s)
-                                    .append(",");
+                                    .append(",&nbsp");
                         }
                         String images = builder.toString();
                         images = images.substring(0, images.length() - 1);
@@ -403,8 +403,8 @@ public class AddMessageActivity extends BasedActivity {
                     }
 
                     @Override
-                    public void onNext(RespondBody<Map<String, String>> result) {
-                        String image = result.data.get("image");
+                    public void onNext(UpLoadImageMessage result) {
+                        String image = result.data;
                         LogUtil.i(TAG,image);
                         uploadedImages.add(image);
                     }

@@ -9,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.suntrans.szxf.Config;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.bean.AreaEntity;
 import net.suntrans.szxf.uiv2.bean.DeviceManagerBean;
@@ -138,6 +139,7 @@ public class DeviceManagerAdapter extends BaseExpandableListAdapter {
                 }
             }
 
+
             status.setText("在线:" + onLinecount + ",离线:" + offLinecount);
 
 //            mImage.setBackgroundColor(Color.parseColor(colors[groupPosition % 3]));
@@ -152,10 +154,12 @@ public class DeviceManagerAdapter extends BaseExpandableListAdapter {
         private TextView des;
         private TextView title;
         private int onlineColor;
+        private ImageView mImage;
 
         public ChildHolder(View itemView) {
             name = (TextView) itemView.findViewById(R.id.name);
             title = (TextView) itemView.findViewById(R.id.title);
+            mImage = (ImageView) itemView.findViewById(R.id.image);
             des = (TextView) itemView.findViewById(R.id.des);
             onlineColor =mContext.getResources().getColor(R.color.online_color);
 
@@ -166,6 +170,14 @@ public class DeviceManagerAdapter extends BaseExpandableListAdapter {
             des.setText(datas.get(groupPosition).device.get(childPosition).name);
             title.setText("1".equals(datas.get(groupPosition).device.get(childPosition).is_online) ? "在线" : "不在线");
             title.setTextColor("1".equals(datas.get(groupPosition).device.get(childPosition).is_online) ? onlineColor : Color.RED);
+            String device_type = datas.get(groupPosition).device.get(childPosition).vtype;
+//            System.out.println(device_type);
+            if ("6100".equals(device_type)){
+                mImage.setImageResource(R.drawable.diliugan);
+            }else if ("4300".equals(device_type)){
+                mImage.setImageResource(R.drawable.ic_liutongdao);
+
+            }
         }
     }
 

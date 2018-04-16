@@ -1,16 +1,20 @@
-package net.suntrans.szxf.activity;
+package net.suntrans.szxf.uiv2.fragment;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.RadioGroup;
 
@@ -27,48 +31,40 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
-import net.suntrans.szxf.R;
-import net.suntrans.szxf.adapter.FragmentAdapter;
-import net.suntrans.szxf.api.RetrofitHelper;
-import net.suntrans.szxf.bean.HisEntity;
-import net.suntrans.szxf.chart.MyMarkerView;
-import net.suntrans.szxf.databinding.ActivityZhCurHisBinding;
-import net.suntrans.szxf.fragment.ZhCurHisItemFragment;
-import net.suntrans.szxf.rx.BaseSubscriber;
-import net.suntrans.looney.utils.LogUtil;
 import net.suntrans.looney.utils.UiUtils;
 import net.suntrans.looney.widgets.CompatDatePickerDialog;
-
 import net.suntrans.stateview.StateView;
+import net.suntrans.szxf.R;
+import net.suntrans.szxf.adapter.DefaultDecoration;
+import net.suntrans.szxf.adapter.FragmentAdapter;
+import net.suntrans.szxf.bean.HisEntity;
+import net.suntrans.szxf.chart.DayAxisValueFormatter;
+import net.suntrans.szxf.chart.MyAxisValueFormatter;
+import net.suntrans.szxf.chart.MyMarkerView;
+import net.suntrans.szxf.databinding.FragmentTimechartBinding;
+import net.suntrans.szxf.fragment.ZhCurHisItemFragment;
+import net.suntrans.szxf.uiv2.BasedFragment2;
+import net.suntrans.szxf.uiv2.bean.ChartData;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 /**
- * Created by Looney on 2017/9/7.
+ * Created by Looney on 2018/4/16.
+ * Des:
  */
+public class TimeChartFragment extends BasedFragment2 implements View.OnClickListener {
 
-public class ZHCurHisActivity extends BasedActivity implements View.OnClickListener {
+    private FragmentTimechartBinding binding;
+    protected Typeface mTfLight;
+    protected Typeface mTfRegular;
 
-    private static final String TAG = "AmmeterHisActivity";
-    private static final String DISPLAY_WEEK = "WEEK";
-    private static final String DISPLAY_DAY = "DAY";
-    private static final String DISPLAY_MONTH = "MONTH";
-
-    private ActivityZhCurHisBinding binding;
-    private String sno;
-    private String mDisplayType = DISPLAY_DAY;
-    private HisEntity data;
-    //    private MyAdapter adapter;
     private StateView stateView;
-    private String datapoint;
+
 
     private int mYear;
     private int mMonth;
@@ -79,47 +75,52 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
     private String paramName;
     private FragmentAdapter adapter;
 
+
+    public static TimeChartFragment newInstance(String unit, String paramName) {
+
+        Bundle args = new Bundle();
+        args.putString("unit", unit);
+        args.putString("paramName", paramName);
+        TimeChartFragment fragment = new TimeChartFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_zh_cur_his);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_timechart,container,false);
+        return binding.getRoot();
+    }
 
-//        StatusBarCompat.compat(binding.headerView);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+        initChart();
+    }
 
-        initData();
-
-
+    private void initView(){
         stateView = StateView.inject(binding.content);
         stateView.setOnRetryClickListener(new StateView.OnRetryClickListener() {
             @Override
             public void onRetryClick() {
-                getData(binding.startTime.getText().toString(), binding.endTime.getText().toString());
+//                getData(binding.startTime.getText().toString(), binding.endTime.getText().toString());
             }
         });
-        setSupportActionBar(binding.toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        initChart();
+        unit = getArguments().getString("unit");
+        paramName = getArguments().getString("paramName");
 
+        mTfRegular = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Regular.ttf");
+        mTfLight = Typeface.createFromAsset(getContext().getAssets(), "OpenSans-Light.ttf");
 
-//        adapter = new MyAdapter(R.layout.item_his, datas);
         binding.tabLayout.setupWithViewPager(binding.viewpager);
         binding.radio0.setChecked(true);
         binding.segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
-                    case R.id.radio0:
-                        mDisplayType = DISPLAY_DAY;
-                        break;
-                    case R.id.radio1:
-                        mDisplayType = DISPLAY_WEEK;
-                        break;
-                    case R.id.radio2:
-                        mDisplayType = DISPLAY_MONTH;
-                        break;
+
                 }
 //                setData(data);
             }
@@ -167,49 +168,14 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
                     UiUtils.showToast("起始时间必须小于结束时间");
                     return;
                 }
-                getData(startTime, endTime);
+               mListener.getData(startTime, endTime);
             }
         });
-
     }
 
-    private boolean threeLine = false;
-
-    private void initData() {
-
-        paramName = getIntent().getStringExtra("paramName");
-        unit = getIntent().getStringExtra("unit");
-        sno = getIntent().getStringExtra("sno");
-        datapoint = getIntent().getStringExtra("datapoint");
-//        if (paramName != null) {
-//
-//            if (paramName.contains("A") || paramName.contains("B") || paramName.contains("C")) {
-//                threeLine = true;
-//            }
-//        }
-        if (threeLine) {
-            binding.toolbar.setTitle("");
-        } else {
-            binding.toolbar.setTitle(paramName);
-        }
-        if (paramName != null) {
-            String name = paramName;
-//            if (name.contains("A")) {
-//                name = name.replace("A", "三");
-//            }
-//            if (name.contains("B")) {
-//                name = name.replace("B", "三");
-//            }
-//            if (name.contains("C")) {
-//                name = name.replace("C", "三");
-//            }
-            binding.unit.setText(name + "(" + unit + ")");
-        }
 
 
-    }
-
-    private void initChart() {
+    private void initChart(){
 
 //        mChart.setOnChartGestureListener(this);
 //        binding.mChart.setOnChartValueSelectedListener(this);
@@ -236,7 +202,7 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
 
         // create a custom MarkerView (extend MarkerView) and specify the layout
         // to use for it
-        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+        MyMarkerView mv = new MyMarkerView(getContext(), R.layout.custom_marker_view);
         mv.setChartView(binding.mChart); // For bounds control
         binding.mChart.setMarker(mv); // Set the marker to the chart
 
@@ -296,7 +262,7 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
 //        leftAxis.addLimitLine(ll1);
 //        leftAxis.addLimitLine(ll2);
 //        leftAxis.setAxisMaximum(200f);
-//        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMinimum(0f);
         //leftAxis.setYOffset(20f);
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(false);
@@ -327,59 +293,15 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
 
         // // dont forget to refresh the drawing
         // mChart.invalidate();
+
+
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getData(binding.startTime.getText().toString(), binding.endTime.getText().toString());
-//      ArrayList<String> pastDays = DateUtils.getPastDays(10);
-//      System.out.println(pastDays);
-    }
 
+    private boolean threeLine = false;
 
-    private void getData(String startTime, String endTime) {
-        LogUtil.i("room id is:" + sno);
-        binding.query.setEnabled(false);
-        stateView.showLoading();
-        binding.mainContent.setVisibility(View.INVISIBLE);
-        Map<String, String> map = new HashMap<>();
-        map.put("sno", sno);
-        map.put("field", datapoint);
-        map.put("startTime", startTime);
-        map.put("endTime", endTime);
-        addSubscription(RetrofitHelper.getApi().getZHCurHis(map), new BaseSubscriber<HisEntity>(this) {
-            @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                e.printStackTrace();
-                binding.query.setEnabled(true);
-                stateView.showRetry();
-                binding.mainContent.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onNext(HisEntity hisEntity) {
-                super.onNext(hisEntity);
-                binding.query.setEnabled(true);
-                data = hisEntity;
-                try {
-                    setData(data);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    binding.query.setEnabled(true);
-                    stateView.showRetry();
-                    binding.mainContent.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-    }
-
-
-    private void setData(HisEntity hisEntity) throws ParseException {
-
-
+    public void setData(HisEntity hisEntity) throws ParseException {
         if (hisEntity == null) {
             stateView.showEmpty();
             binding.mainContent.setVisibility(View.INVISIBLE);
@@ -460,7 +382,7 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
 
                 if (Utils.getSDKInt() >= 18) {
                     // fill drawable only supported on api level 18 and above
-                    Drawable drawable = ContextCompat.getDrawable(this, R.drawable.bg_liner_chart);
+                    Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bg_liner_chart);
                     set1.setFillDrawable(drawable);
                 }
                 else {
@@ -550,7 +472,7 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
                 set1.setDrawCircleHole(false);
                 if (Utils.getSDKInt() >= 18) {
                     // fill drawable only supported on api level 18 and above
-                    Drawable drawable = ContextCompat.getDrawable(this, R.drawable.bg_liner_chart);
+                    Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bg_liner_chart);
                     set1.setFillDrawable(drawable);
                 }
                 else {
@@ -600,27 +522,63 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
 //            MyAxisValueFormatter formatter = new MyAxisValueFormatter(ls);
 //            binding.mChart.getXAxis().setValueFormatter(formatter);
         }
-        setRecyclerViewDatas(data);
+        setRecyclerViewDatas(hisEntity);
 //        binding.mChart.invalidate();
-
         stateView.showContent();
         binding.mainContent.setVisibility(View.VISIBLE);
     }
 
-    private List<HisEntity.EleParmHisItem> datas = new ArrayList<>();
+
+    @Override
+    public void onClick(View v) {
+        checkedId = v.getId();
+        pickerDialog = new CompatDatePickerDialog(getContext(), mDateSetListener, mYear, mMonth - 1, mDay);
+        DatePicker datePicker = pickerDialog.getDatePicker();
+        datePicker.setMaxDate(System.currentTimeMillis());
+
+        pickerDialog.show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String startTime = binding.startTime.getText().toString();
+        String endTime = binding.endTime.getText().toString();
+        mListener.getData(startTime,endTime);
+    }
+
+    private static String pad(int c) {
+        if (c >= 10)
+            return String.valueOf(c);
+        else
+            return "0" + String.valueOf(c);
+    }
 
 
-    class MyAdapter extends BaseQuickAdapter<HisEntity.EleParmHisItem, BaseViewHolder> {
 
-        public MyAdapter(@LayoutRes int layoutResId, @Nullable List<HisEntity.EleParmHisItem> data) {
-            super(layoutResId, data);
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
+    }
 
-        @Override
-        protected void convert(BaseViewHolder helper, HisEntity.EleParmHisItem item) {
-            helper.setText(R.id.value, item.Value == null ? "0.00" : item.Value);
-            helper.setText(R.id.time, item.GetTime == null ? "0.00" : item.GetTime);
-        }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
+    private OnFragmentInteractionListener mListener;
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void getData(String startTime, String endTime);
     }
 
     private void setRecyclerViewDatas(HisEntity hisEntity) {
@@ -629,7 +587,7 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
         }
 
         if (adapter == null && binding.viewpager.getAdapter() == null) {
-            adapter = new FragmentAdapter(getSupportFragmentManager());
+            adapter = new FragmentAdapter(getChildFragmentManager());
             if (!threeLine) {
                 ZhCurHisItemFragment fragment = ZhCurHisItemFragment.newInstance((ArrayList<HisEntity.EleParmHisItem>) hisEntity.data);
                 adapter.addFragment(fragment, paramName);
@@ -675,30 +633,4 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
 
                 }
             };
-
-    private static String pad(int c) {
-        if (c >= 10)
-            return String.valueOf(c);
-        else
-            return "0" + String.valueOf(c);
-    }
-
-    @Override
-    public void onClick(View v) {
-        checkedId = v.getId();
-        pickerDialog = new CompatDatePickerDialog(this, mDateSetListener, mYear, mMonth - 1, mDay);
-        DatePicker datePicker = pickerDialog.getDatePicker();
-        datePicker.setMaxDate(System.currentTimeMillis());
-
-        pickerDialog.show();
-
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        getMenuInflater().inflate(R.menu.menu_query,menu);
-//        return true;
-//    }
-
 }

@@ -31,6 +31,7 @@ import net.suntrans.szxf.bean.YichangEntity;
 import net.suntrans.szxf.uiv2.bean.AirCmd;
 import net.suntrans.szxf.uiv2.bean.ChannelEntity;
 import net.suntrans.szxf.uiv2.bean.ChannelInfo;
+import net.suntrans.szxf.uiv2.bean.ConLog;
 import net.suntrans.szxf.uiv2.bean.DeviceManagerBean;
 import net.suntrans.szxf.uiv2.bean.EnergyListEntity;
 import net.suntrans.szxf.uiv2.bean.EnvLog;
@@ -186,8 +187,8 @@ public interface Api {
     Observable<SceneEdit> getSceneInfo(@Field("id") String id);
 
     @FormUrlEncoded
-    @POST("energy/more")
-    Observable<AmmeterInfos> getAmmeterInfo(@Field("sno") String sno);
+    @POST("energy/detail")
+    Observable<AmmeterInfos> getAmmeterInfo(@Field("house_id") String house_id);
 
 
     @POST("house/freshchannel")
@@ -254,18 +255,22 @@ public interface Api {
     @POST("device/channel_edit")
     Observable<ChannelEditorInfo> getChannelEditor(@Field("channel_id") String channel_id);
 
-
+    //2018-4/16
     /**
-     * 查询三相电表实时历史数据
+     * 查询电表实时历史数据
      *
      * @param
      * @return
      */
     @FormUrlEncoded
-    @POST("energy/history")
+    @POST("energy/electricityCuv")
     Observable<HisEntity> getZHCurHis(@FieldMap Map<String, String> map);
 
 
+    //http://stsz119.suntrans-cloud.com/api/v1/sensus/sensusCuv
+    @FormUrlEncoded
+    @POST("sensus/sensusCuv")
+    Observable<HisEntity> getEnvHis(@FieldMap Map<String, String> map);
     //=========================================================================
     //2018-3-27
 
@@ -290,9 +295,10 @@ public interface Api {
     @POST("notice/store")
     Observable<RespondBody> storeNotice(@FieldMap Map<String, String> map);
 
+
     @Multipart
-    @POST("notice/upload")
-    Observable<RespondBody<Map<String, String>>> uploadNoticeFile(
+    @POST("upload/images")
+    Observable<UpLoadImageMessage> uploadNoticeFile(
             @Part MultipartBody.Part image);
 
     //能耗接口
@@ -424,7 +430,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("switch/logs")
-    Observable<RespondBody<List<EnvLog>>> getConLog(@Field("page") String page);
+    Observable<RespondBody<ConLog>> getConLog(@Field("page") String page);
 
 
     @FormUrlEncoded

@@ -2,6 +2,7 @@ package net.suntrans.szxf.fragment;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -15,10 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -57,6 +62,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import me.weyye.hipermission.WrapHeightGridView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -105,7 +111,26 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
 
     private void initView(View view) {
         initData();
-
+//        String[] from = {"image", "name"};
+//        int[] to = {R.id.image, R.id.name};
+//        GridView gridView = (GridView) view.findViewById(R.id.gridView);
+//        gridView.setGravity(Gravity.LEFT);
+//        gridView.setAdapter(new SimpleAdapter(getContext(), maps, R.layout.item_admin_home2, from, to));
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (position >= maps.size()) {
+//                    UiUtils.showToast(getString(R.string.tip_code_error));
+//                    return;
+//                }
+//                Class<?> aClass = (Class<?>) maps.get(position).get("class");
+//                if (aClass == null) {
+//                    return;
+//                }
+//                Intent intent = new Intent(getActivity(), aClass);
+//                startActivity(intent);
+//            }
+//        });
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL, 1));
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL, 1));
@@ -128,7 +153,8 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
                 startActivity(intent);
             }
         });
-
+        View viewById = view.findViewById(R.id.header);
+        viewById.getLayoutParams().height = (int) (widthPixels/1.9);
 //        headerView = LayoutInflater.from(getContext().getApplicationContext())
 //                .inflate(R.layout.header_view, recyclerView, false);
 //        adminAdapter.addHeaderView(headerView);
@@ -140,6 +166,8 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
         }, new Date(), 4000);
 
         nomal = (TextView) view.findViewById(R.id.abnormal);
+
+
     }
 
     private void initData() {
@@ -155,30 +183,35 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
         map7.put("name", "用电安全");
         map7.put("class", YichangActivity.class);
         map7.put("drawable", getActivity().getResources().getDrawable(R.drawable.ic_safe));
+        map7.put("image", R.drawable.ic_safe);
         maps.add(map7);
 
         Map<String, Object> map8 = new HashMap<>();
         map8.put("name", "环境安全");
         map8.put("class", EnvHomeActivity.class);
         map8.put("drawable", getActivity().getResources().getDrawable(R.drawable.ic_env));
+        map8.put("image", R.drawable.ic_env);
         maps.add(map8);
 
         Map<String, Object> map5 = new HashMap<>();
         map5.put("name", "设备状态");
         map5.put("class", DeviceManagerActivity.class);
         map5.put("drawable", getActivity().getResources().getDrawable(R.drawable.ic_yichang));
+        map5.put("image", R.drawable.ic_yichang);
         maps.add(map5);
 
         Map<String, Object> map6 = new HashMap<>();
         map6.put("name", "平面图");
         map6.put("class", FloorPlanActivity.class);
         map6.put("drawable", getActivity().getResources().getDrawable(R.drawable.ic_plan));
+        map6.put("image", R.drawable.ic_plan);
         maps.add(map6);
 
         Map<String, Object> map1 = new HashMap<>();
         map1.put("name", "用电状态");
         map1.put("class", EnergyMoniActivity.class);
         map1.put("drawable", getActivity().getResources().getDrawable(R.drawable.ic_ydstate));
+        map1.put("image", R.drawable.ic_ydstate);
         maps.add(map1);
 
 
@@ -186,18 +219,21 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
         map2.put("name", "能耗");
         map2.put("class", EnergyHomeActivity.class);
         map2.put("drawable", getActivity().getResources().getDrawable(R.drawable.icon_energy));
+        map2.put("image", R.drawable.icon_energy);
         maps.add(map2);
 
         Map<String, Object> map3 = new HashMap<>();
         map3.put("name", "模式");
         map3.put("class", SceneActivity.class);
         map3.put("drawable", getActivity().getResources().getDrawable(R.drawable.ic_scene));
+        map3.put("image", R.drawable.ic_scene);
         maps.add(map3);
 
         Map<String, Object> map4 = new HashMap<>();
         map4.put("name", "公告");
         map4.put("class", MessageActivity.class);
         map4.put("drawable", getActivity().getResources().getDrawable(R.drawable.ic_gonggao));
+        map4.put("image", R.drawable.ic_gonggao);
         maps.add(map4);
 
 
@@ -205,8 +241,8 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
         map9.put("name", "反馈建议");
         map9.put("class", FankuiActivity.class);
         map9.put("drawable", getActivity().getResources().getDrawable(R.drawable.feedback));
+        map9.put("image", R.drawable.feedback);
         maps.add(map9);
-
 
 
     }
@@ -229,10 +265,12 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
 //            view.getLayoutParams().height = widthPixels/3;
             TextView name = helper.getView(R.id.name);
             name.setText((String) item.get("name"));
-            Drawable drawable = (Drawable) item.get("drawable");
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            name.setCompoundDrawables(null, drawable, null, null);
 
+            ImageView image = helper.getView(R.id.image);
+            image.setImageResource((Integer) item.get("image"));
+//            Drawable drawable = (Drawable) item.get("drawable");
+//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//            name.setCompoundDrawables(null, drawable, null, null);
 
         }
     }
@@ -347,17 +385,20 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
                     public void onNext(SensusAbnormal sensusAbnormalRespondBody) {
                         super.onNext(sensusAbnormalRespondBody);
                         List<SensusAbnormal.Abnormal> data = sensusAbnormalRespondBody.data;
-                        if (data != null&&data.size()>=1){
+                        if (data != null && data.size() >= 1) {
                             StringBuilder sb = new StringBuilder();
                             for (SensusAbnormal.Abnormal d :
                                     data) {
-                                sb.append(d.house_number+"-"+d.message)
+                                sb.append(d.house_number + "-" + d.message)
                                         .append("  ");
                             }
                             nomal.setText(sb.toString());
-                        }else {
-                            nomal.setText("无异常");
+                            nomal.setTextColor(Color.parseColor("#ff0000"));
 
+                        } else {
+                            nomal.setText("一切正常");
+
+                            nomal.setTextColor(Color.parseColor("#00ff00"));
                         }
 
                     }

@@ -1,5 +1,6 @@
 package net.suntrans.szxf.uiv2.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import net.suntrans.szxf.R;
 import net.suntrans.szxf.activity.RecyclerviewActivity;
 import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.rx.BaseSubscriber;
+import net.suntrans.szxf.uiv2.bean.ConLog;
 import net.suntrans.szxf.uiv2.bean.EnvLog;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import java.util.List;
  * Created by Looney on 2018/4/8.
  * Des:
  */
-public class ConLogsActivity extends RecyclerviewActivity<EnvLog> {
+public class ConLogsActivity extends RecyclerviewActivity<ConLog.ConLogItem> {
 
     private String house_id;
     private SwipeRefreshLayout refreshLayout;
@@ -40,10 +42,12 @@ public class ConLogsActivity extends RecyclerviewActivity<EnvLog> {
     }
 
     @Override
-    protected void setDataBySub(BaseViewHolder helper, EnvLog item) {
+    protected void setDataBySub(BaseViewHolder helper, ConLog.ConLogItem item) {
 
-        helper.setText(R.id.msg,item.house_number+"-"+"-"+item.name+"-"+item.msg)
-                .setText(R.id.time,item.created_at);
+
+        helper.setText(R.id.msg,item.username+""+" "+item.message+"")
+                .setText(R.id.time,item.created_at)
+                .setTextColor(R.id.msg, Color.parseColor("#333333"));
 
     }
 
@@ -58,7 +62,7 @@ public class ConLogsActivity extends RecyclerviewActivity<EnvLog> {
     }
 
     @Override
-    protected List<EnvLog> getDatas() {
+    protected List<ConLog.ConLogItem> getDatas() {
         return new ArrayList<>();
     }
 
@@ -75,11 +79,11 @@ public class ConLogsActivity extends RecyclerviewActivity<EnvLog> {
 
     //    private Api api = RetrofitHelper.getApi();
     private void getData(){
-       addSubscription( api.getConLog(""),new BaseSubscriber<RespondBody<List<EnvLog>>>(this){
+       addSubscription( api.getConLog(""),new BaseSubscriber<RespondBody<ConLog>>(this){
            @Override
-           public void onNext(RespondBody<List<EnvLog>> listRespondBody) {
+           public void onNext(RespondBody<ConLog> listRespondBody) {
                super.onNext(listRespondBody);
-               datas.addAll(listRespondBody.data);
+               datas.addAll(listRespondBody.data.list);
                refreshLayout.setRefreshing(false);
                adapter.notifyDataSetChanged();
            }

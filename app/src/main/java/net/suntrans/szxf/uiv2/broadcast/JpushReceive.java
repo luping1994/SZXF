@@ -72,6 +72,7 @@ public class JpushReceive extends BroadcastReceiver {
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
         LogUtil.e("message:" + message);
         LogUtil.e("extras:" + extras);
+        System.out.println(extras);
         if (sp == null)
             sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         if (assets == null)

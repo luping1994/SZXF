@@ -62,23 +62,49 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-                <include layout="@layout/header_view"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/header_view" />
+
                 <android.support.v7.widget.RecyclerView
-                    android:background="@color/white"
                     android:id="@+id/recyclerView"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="vertical"
                     app:layoutManager="GridLayoutManager"
                     app:spanCount="3">
 
                 </android.support.v7.widget.RecyclerView>
+
+                <!--<me.weyye.hipermission.WrapHeightGridView-->
+
+                <!--android:id="@+id/gridView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@color/white"-->
+                <!--android:horizontalSpacing="4dp"-->
+                <!--android:numColumns="3"-->
+                <!--android:orientation="vertical"-->
+                <!--android:stretchMode="columnWidth"-->
+                <!--android:verticalSpacing="4dp">-->
+
+
+                <!--</me.weyye.hipermission.WrapHeightGridView>-->
+                <!--<GridLayout-->
+                <!--android:id="@+id/gridLayout"-->
+                <!--android:columnCount="3"-->
+                <!--android:rowCount="3"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+                <!--</GridLayout>-->
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.trello.rxlifecycle.android.FragmentEvent
 import com.trello.rxlifecycle.components.support.RxFragment
 import net.suntrans.szxf.R
+import net.suntrans.szxf.activity.EnvDetailActivity
 import net.suntrans.szxf.api.RetrofitHelper
 import net.suntrans.szxf.bean.RespondBody
 import net.suntrans.szxf.rx.BaseSubscriber
@@ -56,10 +57,20 @@ class DevicesManagerFragment : RxFragment() {
         refreshLayout!!.setColorSchemeColors(activity.resources.getColor(R.color.colorPrimary))
 
         expandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
-            val intent = Intent(activity, DeviceDetailActivity::class.java)
-            intent.putExtra("id", datas!![groupPosition].device[childPosition].id.toString() + "")
-            intent.putExtra("name", datas!![groupPosition].device[childPosition].title)
-            startActivity(intent)
+            val vtype = datas!![groupPosition].device[childPosition].vtype
+            if ("4300" == vtype){
+                val intent = Intent(activity, DeviceDetailActivity::class.java)
+                intent.putExtra("id", datas!![groupPosition].device[childPosition].id.toString() + "")
+                intent.putExtra("name", datas!![groupPosition].device[childPosition].title)
+                startActivity(intent)
+            }else if ("6100" == vtype){
+//                val intent = Intent(activity, EnvDetailActivity::class.java)
+//                intent.putExtra("id", datas!![groupPosition].device[childPosition].id.toString() + "")
+//                intent.putExtra("name", datas!![groupPosition].device[childPosition].title)
+//                intent.putExtra("sno", datas!![groupPosition].device[childPosition].sno)
+//                startActivity(intent)
+            }
+
             true
         }
     }

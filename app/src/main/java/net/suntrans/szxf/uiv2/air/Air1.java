@@ -1,5 +1,8 @@
 package net.suntrans.szxf.uiv2.air;
 
+import com.github.mikephil.charting.formatter.IFillFormatter;
+
+import net.suntrans.szxf.uiv2.fragment.EnvListFragment;
 import net.suntrans.szxf.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -12,95 +15,64 @@ import java.util.Map;
  */
 
 public final class Air1 implements Air {
-    public static final int SWITCH_MODEL = 0;
-    public static final int ADD_WENDU = 1;
-    public static final int SUB_WENDU = 2;
-    public static final int SWITCH_FENGSU = 3;
-    public static final int SWITCH_FENGXIANG = 4;
+
 
     //模式
-    public static final String[] MODELS = {"制冷", "制热", "除湿", "送风", "睡眠"};
+    public static final String[] MODELS = {"制冷", "送风", "除湿", "自动模式下睡眠模式", "制冷模式下睡眠模式", "除温模式下睡眠模式"};
     public static final int ZHILENG = 0;
-    public static final int ZHIRE = 1;
+    public static final int SONGFENG = 1;
     public static final int CHUSHI = 2;
-    public static final int SONGFENG = 3;
-    public static final int SHUIMING = 4;
 
-    //风速
-    public static final String[] FENGSUS = {"", "强劲风"};
-    public static final int NORMAL_FENG = 0;
-    public static final int QIANG_FENG = 1;
+    public static final int SLEEP_AUTO = 3;
+    public static final int SLEEP_ZHILENG = 4;
+    public static final int SLEEP_CHUWEN = 5;
 
-    //风向
-    public static final String[] FENGXIANG = {"上下扫风", "左右扫风"};
-    public static final int TOP_FENG = 0;
-    public static final int RIGHT_FENG = 1;
 
-    public static final String OFF_CMD_ID = "8";
+    public static final String OFF_CMD_ID = "29";
 
     public static final Map<Integer, String> COLD_WENDU_CMD_ID = new HashMap<>();
-    public static final Map<Integer, String> HOT_WENDU_CMD_ID = new HashMap<>();
 
-    public static final Map<String, String> CHU_SHI = new HashMap<>();
     public static final Map<String, String> SONG_FENG = new HashMap<>();
-    public static final Map<String, String> SHUI_MIN = new HashMap<>();
+    public static final Map<String, String> CHU_SHI = new HashMap<>();
+
+    public static final Map<String, String> SHUI_MING_AUTO = new HashMap<>();
+    public static final Map<String, String> SHUI_MING_ZHILENG = new HashMap<>();
+    public static final Map<String, String> SHUI_MING_CHUSHI = new HashMap<>();
 
 
     public static final Map<String, String> DING_SHI = new HashMap<>();
-    public static final List<Map<String, String>> FENG_SU = new ArrayList<>();
-    public static final List<Map<String, String>> FENG_XIANG = new ArrayList<>();
+
 
     static {
-        COLD_WENDU_CMD_ID.put(18, "2");
-        COLD_WENDU_CMD_ID.put(19, "3");
-        COLD_WENDU_CMD_ID.put(20, "4");
-        COLD_WENDU_CMD_ID.put(21, "5");
-        COLD_WENDU_CMD_ID.put(22, "6");
-        COLD_WENDU_CMD_ID.put(23, "7");
+        COLD_WENDU_CMD_ID.put(16, "30");
+        COLD_WENDU_CMD_ID.put(17, "31");
+        COLD_WENDU_CMD_ID.put(18, "32");
+        COLD_WENDU_CMD_ID.put(19, "33");
+        COLD_WENDU_CMD_ID.put(20, "34");
+        COLD_WENDU_CMD_ID.put(21, "35");
+        COLD_WENDU_CMD_ID.put(22, "36");
+        COLD_WENDU_CMD_ID.put(23, "37");
 
-        HOT_WENDU_CMD_ID.put(20, "9");
-        HOT_WENDU_CMD_ID.put(21, "10");
-        HOT_WENDU_CMD_ID.put(22, "11");
-        HOT_WENDU_CMD_ID.put(23, "12");
-        HOT_WENDU_CMD_ID.put(24, "13");
-        HOT_WENDU_CMD_ID.put(25, "14");
-        HOT_WENDU_CMD_ID.put(26, "15");
-        HOT_WENDU_CMD_ID.put(27, "16");
-        HOT_WENDU_CMD_ID.put(28, "17");
-        HOT_WENDU_CMD_ID.put(29, "18");
-        HOT_WENDU_CMD_ID.put(30, "19");
 
-        CHU_SHI.put("id", "20");
-        CHU_SHI.put("title", "除湿模式 26℃");
+//        CHU_SHI.put("id", "20");
+//        CHU_SHI.put("title", "除湿模式 26℃");
 
-        SONG_FENG.put("id", "21");
+        SONG_FENG.put("id", "39");
         SONG_FENG.put("title", "送风模式");
 
-
-        Map<String, String> map1 = new HashMap<>();
-        map1.put("id", "22");
-        map1.put("title", "上下扫风");
-        FENG_SU.add(map1);
-
-        Map<String, String> map2 = new HashMap<>();
-        map2.put("id", "23");
-        map2.put("title", "左右扫风");
-        FENG_SU.add(map1);
+        SHUI_MING_AUTO.put("id", "40");
+        SHUI_MING_AUTO.put("title", "自动模式下睡眠模式");
 
 
-        Map<String, String> map4 = new HashMap<>();
-        map4.put("id", "25");
-        map4.put("title", "");
-        FENG_XIANG.add(map4);
+        SHUI_MING_ZHILENG.put("id", "41");
+        SHUI_MING_ZHILENG.put("title", "制冷模式下睡眠模式");
 
-        Map<String, String> map3 = new HashMap<>();
-        map3.put("id", "24");
-        map3.put("title", "强劲风开启");
-        FENG_XIANG.add(map3);
+        SHUI_MING_CHUSHI.put("id", "42");
+        SHUI_MING_CHUSHI.put("title", "除湿模式下睡眠模式");
 
 
-        SHUI_MIN.put("id", "27");
-        SHUI_MIN.put("title", "睡眠模式");
+        CHU_SHI.put("id", "38");
+        CHU_SHI.put("title", "除湿模式");
 
 
         DING_SHI.put("id", "26");
@@ -117,10 +89,9 @@ public final class Air1 implements Air {
     public int currentHotWendu = 20;
 
 
-    private static int coldMin = 18;
+    private static int coldMin = 16;
     private static int coldMax = 23;
-    private static int hotMin = 20;
-    private static int hotMax = 30;
+
 
     public String getCmdID(int modelIndex, int control) {
         return null;
@@ -133,6 +104,11 @@ public final class Air1 implements Air {
         return hasOn;
     }
 
+    public void setOn(boolean a) {
+        hasOn = a;
+    }
+
+
     public void close() {
         hasOn = false;
         listener.stateStringChanged("", "", "", "");
@@ -142,8 +118,8 @@ public final class Air1 implements Air {
     public void open() {
         hasOn = true;
         updateUI();
+        sendModelCmd();
     }
-
 
     @Override
     public void switchModel() {
@@ -158,10 +134,34 @@ public final class Air1 implements Air {
             currentModel = 0;
         }
 
-
         updateUI();
+        sendModelCmd();
+    }
 
+    private void sendModelCmd() {
+        String id = "";
+        if (currentModel==ZHILENG){
+            id = COLD_WENDU_CMD_ID.get(currentColdWendu);
+        }
+        if (currentModel ==SONGFENG){
+            id = SONG_FENG.get("id");
+        }
 
+        if (currentModel ==CHUSHI){
+            id = CHU_SHI.get("id");
+        }
+
+        if (currentModel ==SLEEP_AUTO){
+            id = SHUI_MING_AUTO.get("id");
+        }
+        if (currentModel ==SLEEP_ZHILENG){
+            id = SHUI_MING_ZHILENG.get("id");
+        }
+
+        if (currentModel ==SLEEP_CHUWEN){
+            id = SHUI_MING_CHUSHI.get("id");
+        }
+        listener.sendCmd(id);
     }
 
 
@@ -172,28 +172,31 @@ public final class Air1 implements Air {
             hasOn = true;
             return;
         }
-        if (currentModel == CHUSHI || currentModel == SONGFENG || currentModel == SHUIMING) {
+        if (currentModel != ZHILENG) {
             UiUtils.showToast(MODELS[currentModel] + "不支持调温度");
             return;
         }
-
-        if (currentModel == ZHILENG) {
-            currentColdWendu++;
-            if (currentColdWendu > coldMax) {
-                currentColdWendu = coldMax;
-                UiUtils.showToast("已是最大温度值!");
-                return;
-            }
-        } else if (currentModel == ZHIRE) {
-            currentHotWendu++;
-            if (currentColdWendu > hotMax) {
-                currentHotWendu = hotMin;
-                UiUtils.showToast("已是最大温度值!");
-                return;
-            }
+        currentColdWendu++;
+        if (currentColdWendu > coldMax) {
+            currentColdWendu = coldMax;
+            UiUtils.showToast("已是最大温度值!");
+            return;
         }
 
         updateUI();
+
+        sendWenCmd();
+    }
+
+    private void sendWenCmd() {
+        String id = "";
+        id = COLD_WENDU_CMD_ID.get(currentColdWendu);
+        listener.sendCmd(id);
+
+//        if (currentModel == ZHIRE) {
+//            id = HOT_WENDU_CMD_ID.get(currentHotWendu);
+//        }
+
     }
 
     @Override
@@ -202,58 +205,32 @@ public final class Air1 implements Air {
             updateUI();
             hasOn = true;
             return;
-
         }
-        if (currentModel == CHUSHI || currentModel == SONGFENG || currentModel == SHUIMING) {
+
+        if (currentModel != ZHILENG) {
             UiUtils.showToast(MODELS[currentModel] + "不支持调温度");
             return;
         }
-        if (currentModel == ZHILENG) {
-            currentColdWendu--;
-            if (currentColdWendu < coldMin) {
-                currentColdWendu = coldMin;
-                UiUtils.showToast("已是最小温度值!");
-                return;
-            }
-        } else if (currentModel == ZHIRE) {
-            currentHotWendu--;
-            if (currentColdWendu < hotMin) {
-                currentHotWendu = hotMin;
-                UiUtils.showToast("已是最小温度值!");
-                return;
-            }
-        }
 
+        currentColdWendu--;
+        if (currentColdWendu < coldMin) {
+            currentColdWendu = coldMin;
+            UiUtils.showToast("已是最小温度值!");
+            return;
+        }
         updateUI();
+        sendWenCmd();
     }
 
     @Override
     public void switchFengsu() {
-        if (!hasOn) {
-            updateUI();
-            hasOn = true;
-            return;
+        UiUtils.showToast("此空调不支持风速调节");
 
-        }
-        currentFengSuIndex++;
-        if (currentFengSuIndex == FENGSUS.length) {
-            currentFengSuIndex = 0;
-        }
-        updateUI();
     }
 
     @Override
     public void switchFengXiang() {
-        if (!hasOn) {
-            updateUI();
-            hasOn = true;
-            return;
-        }
-        currentFengXiangIndex++;
-        if (currentFengXiangIndex == FENGXIANG.length) {
-            currentFengXiangIndex = 0;
-        }
-        updateUI();
+        UiUtils.showToast("此空调不支持风向调节");
     }
 
 
@@ -272,57 +249,43 @@ public final class Air1 implements Air {
 
     private void updateUI() {
 
-        String id = "";
         String modelText = "";
         String wenText = "";
         String fengsuText = "";
         String fengxiangText = "";
 
-
         modelText = MODELS[currentModel];
-        if (currentFengSuIndex == -1) {
-            fengsuText = "";
-        } else {
-            fengsuText = FENGSUS[currentFengSuIndex];
-        }
-
-        if (currentFengXiangIndex == -1) {
-            fengxiangText = "";
-        } else {
-            fengxiangText = FENGXIANG[currentFengXiangIndex];
-        }
-
-
+        String id = "";
         if (currentModel == ZHILENG) {
             id = COLD_WENDU_CMD_ID.get(currentColdWendu);
             wenText = currentColdWendu + "℃";
         }
-
-        if (currentModel == ZHIRE) {
-            id = HOT_WENDU_CMD_ID.get(currentHotWendu);
-            wenText = currentHotWendu + "℃";
-
-        }
-
-        if (currentModel == CHUSHI) {
-            id = CHU_SHI.get("id");
-            wenText = "";
-        }
-
+//
         if (currentModel == SONGFENG) {
-            id = SONG_FENG.get("id");
-            wenText = "";
-        }
 
 
-        if (currentModel == SHUIMING) {
-            id = SHUI_MIN.get("id");
-            wenText = "";
         }
+        if (currentModel == CHUSHI) {
+            wenText = "25℃";
+
+        }
+
+//
+//
+//        if (currentModel == SONGFENG) {
+//            id = SONG_FENG.get("id");
+//            wenText = "";
+//        }
+//
+//
+//        if (currentModel == SHUIMING) {
+//            id = SHUI_MIN.get("id");
+//            wenText = "";
+//        }
 
 
         listener.stateStringChanged(modelText, wenText, fengsuText, fengxiangText);
-        listener.sendCmd(id);
+
     }
 
 }

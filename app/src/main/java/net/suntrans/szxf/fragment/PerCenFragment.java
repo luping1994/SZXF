@@ -171,7 +171,7 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                 break;
             case R.id.conLogs:
                 Intent intent4 = new Intent(getActivity(), ControlLogsActivity.class);
-                intent4.putExtra("title", "操作日志");
+                intent4.putExtra("title", "控制日志");
                 startActivity(intent4);
 
                 break;

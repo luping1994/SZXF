@@ -56,11 +56,11 @@ public class EnergyDetailFragment extends BasedFragment2 implements OnChartValue
 
     private SwipeRefreshLayout refreshLayout;
 
-    public static EnergyDetailFragment newInstance(String id) {
+    public static EnergyDetailFragment newInstance(String id,String sno) {
 
         Bundle args = new Bundle();
         args.putString("id",id);
-        args.putString("sno",id);
+        args.putString("sno",sno);
         EnergyDetailFragment fragment = new EnergyDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -286,7 +286,7 @@ public class EnergyDetailFragment extends BasedFragment2 implements OnChartValue
                     for (int j = 0; j < dayDatas.size(); j++) {
                         if ((dayDatas.get(j).getX()) == i) {
                             val = Float.parseFloat(dayDatas.get(j).getY());
-                            LogUtil.i(i+":"+dayDatas.get(j).getY()+"");
+//                            LogUtil.i(i+":"+dayDatas.get(j).getY()+"");
                         }
                     }
                     yVals1.add(new BarEntry(i, val));

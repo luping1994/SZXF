@@ -1,35 +1,30 @@
 package net.suntrans.szxf.uiv2.activity
 
-import android.annotation.SuppressLint
-import android.databinding.adapters.TextViewBindingAdapter.setText
-import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.TextView
-
 import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
-import com.chad.library.adapter.base.listener.OnItemSwipeListener
-
+import net.suntrans.stateview.StateView
 import net.suntrans.szxf.App
+import net.suntrans.szxf.Config.UNIT_I
 import net.suntrans.szxf.R
+import net.suntrans.szxf.activity.BasedActivity
 import net.suntrans.szxf.api.RetrofitHelper
+import net.suntrans.szxf.bean.RespondBody
 import net.suntrans.szxf.bean.SampleResult
 import net.suntrans.szxf.bean.YichangEntity
 import net.suntrans.szxf.rx.BaseSubscriber
+import net.suntrans.szxf.uiv2.bean.ConLog
 import net.suntrans.szxf.utils.ActivityUtils
 import net.suntrans.szxf.utils.UiUtils
-import net.suntrans.stateview.StateView
-import net.suntrans.szxf.Config.UNIT_I
-import net.suntrans.szxf.activity.BasedActivity
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Looney on 2017/8/17.
@@ -37,7 +32,7 @@ import java.util.ArrayList
 
 class ControlLogsActivity : BasedActivity() {
 
-    private var datas: MutableList<YichangEntity.Yichang>? = null
+    private var datas: MutableList<ConLog.ConLogItem>? = null
     private var adapter: MyAdapter? = null
     private var stateView: StateView? = null
     private var recyclerView: RecyclerView? = null
@@ -58,7 +53,7 @@ class ControlLogsActivity : BasedActivity() {
     }
 
     private fun init() {
-        datas = ArrayList<YichangEntity.Yichang>()
+        datas = ArrayList<ConLog.ConLogItem>()
         recyclerView = findViewById(R.id.recyclerView) as RecyclerView
         adapter = MyAdapter(R.layout.item_yicahng, datas)
         val itemDragAndSwipeCallback = ItemDragAndSwipeCallback(adapter)
@@ -140,11 +135,12 @@ class ControlLogsActivity : BasedActivity() {
         txTitle.text = "控制日志"
     }
 
-    internal inner class MyAdapter(@LayoutRes layoutResId: Int, data: List<YichangEntity.Yichang>?) : BaseItemDraggableAdapter<YichangEntity.Yichang, BaseViewHolder>(layoutResId, data) {
+    internal inner class MyAdapter(@LayoutRes layoutResId: Int, data: List<ConLog.ConLogItem>?) : BaseItemDraggableAdapter<ConLog.ConLogItem, BaseViewHolder>(layoutResId, data) {
 
-        override fun convert(helper: BaseViewHolder, item: YichangEntity.Yichang) {
-            helper.setText(R.id.msg, item.house_number + "-" + item.name + item.message + "(" + item.value + UNIT_I + ")")
+        override fun convert(helper: BaseViewHolder, item: ConLog.ConLogItem) {
+            helper.setText(R.id.msg, item.username + "-"+ item.message)
                     .setText(R.id.time, item.created_at)
+                    .setTextColor(R.id.msg,Color.parseColor("#333333"))
         }
     }
 
@@ -158,7 +154,7 @@ class ControlLogsActivity : BasedActivity() {
             recyclerView!!.visibility = View.INVISIBLE
             stateView!!.showLoading()
         }
-        addSubscription(api.getConLog(currentPage.toString() + ""), object : BaseSubscriber<YichangEntity>(this) {
+        addSubscription(api.getConLog(currentPage.toString() + ""), object : BaseSubscriber<RespondBody<ConLog>>(this) {
             override fun onCompleted() {
 
             }
@@ -176,9 +172,9 @@ class ControlLogsActivity : BasedActivity() {
                 }
             }
 
-            override fun onNext(o: YichangEntity) {
+            override fun onNext(o: RespondBody<ConLog>) {
                 if (o.code == 200) {
-                    val lists = o.data
+                    val lists = o.data.list
                     if (lists == null || lists.size == 0) {
                         if (loadtype == fristLoad) {
                             stateView!!.showEmpty()

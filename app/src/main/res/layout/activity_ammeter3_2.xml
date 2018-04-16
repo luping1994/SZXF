@@ -35,7 +35,7 @@
             android:textSize="@dimen/title_size" />
 
         <TextView
-            android:visibility="invisible"
+            android:visibility="visible"
             android:background="?attr/selectableItemBackground"
             android:id="@+id/rightTitleMore"
             android:layout_width="60dp"

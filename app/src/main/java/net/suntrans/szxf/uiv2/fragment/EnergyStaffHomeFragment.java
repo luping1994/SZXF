@@ -50,8 +50,8 @@ public class EnergyStaffHomeFragment extends RxFragment {
         String dormHouseId = SharedPreferencesHepler.getDormHouseId();
         LogUtil.i(TAG,officeHouseId);
         LogUtil.i(TAG,dormHouseId);
-        EnergyDetailFragment fragment = EnergyDetailFragment.newInstance(officeHouseId);
-        EnergyDetailFragment fragment2 = EnergyDetailFragment.newInstance(dormHouseId);
+        EnergyDetailFragment fragment = EnergyDetailFragment.newInstance(officeHouseId,"");
+        EnergyDetailFragment fragment2 = EnergyDetailFragment.newInstance(dormHouseId,"");
         FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager());
         adapter.addFragment(fragment,"office");
         adapter.addFragment(fragment2,"dorm");

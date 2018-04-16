@@ -46,7 +46,7 @@ class EnvListFragment : BasedFragment() {
         refreshLayout = view!!.findViewById(R.id.refreshlayout) as ScrollChildSwipeRefreshLayout
         refreshLayout?.setOnRefreshListener { getAreaData(1) }
 
-        datas = ArrayList<AreaEntity.AreaFloor>()
+        datas = ArrayList<AreaEntity.AreaFloor>() as MutableList<AreaEntity.AreaFloor>?
         expandableListView = view!!.findViewById(R.id.recyclerview) as ExpandableListView
         adapter = EnvListAdapter(datas, context)
         expandableListView!!.setAdapter(adapter)

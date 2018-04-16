@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="186dp"
-    android:background="@drawable/header_bg">
+    android:id="@+id/header"
+    android:layout_height="196dp"
+    >
 
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/header_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <net.suntrans.szxf.views.AlwaysMarqueeTextView
         android:id="@+id/abnormal"
         android:background="#33000000"
