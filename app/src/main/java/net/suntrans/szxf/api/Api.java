@@ -451,5 +451,16 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("sensus/setConfig")
-    Observable<RespondBody<SensusConfig>> setSensusConfig(@Field("dev_id") String dev_id,@Field("field") String field,@Field("type") String type);
+    Observable<RespondBody> setSensusConfig(@Field("dev_id") String dev_id,@Field("field") String field,@Field("type") String type);
+
+
+    @FormUrlEncoded
+    @POST("device/electrical/getMaxWendu")
+    Observable<RespondBody<Map<String,String>>> getMaxWendu(@Field("channel_id") String channel_id);
+
+    @FormUrlEncoded
+    @POST("device/electrical/setMaxWendu")
+    Observable<RespondBody> setMaxWendu(@Field("channel_id") String channel_id,
+                                        @Field("max_wendu") String max_wendu,
+                                        @Field("status") String status);
 }

@@ -19,6 +19,7 @@ import net.suntrans.szxf.bean.EnvDetailEntity;
 import net.suntrans.szxf.bean.SensusEntity;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.uiv2.activity.EnvYichangActivity;
+import net.suntrans.szxf.uiv2.activity.SensusConfigActivity;
 import net.suntrans.szxf.uiv2.fragment.EnvDetailFragment;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -70,13 +71,12 @@ public class EnvDetailActivity extends BasedActivity {
                 finish();
             }
         });
-        tx
-                .setOnClickListener(new View.OnClickListener() {
+        tx.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if ("manager".equals(source)){
-                            Intent intent = new Intent(EnvDetailActivity.this, EnvYichangActivity.class);
-                            intent.putExtra("house_id",din);
+                            Intent intent = new Intent(EnvDetailActivity.this, SensusConfigActivity.class);
+                            intent.putExtra("dev_id",din);
                             intent.putExtra("title",getIntent().getStringExtra("name"));
                             startActivity(intent);
                         }else {

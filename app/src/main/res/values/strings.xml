@@ -82,5 +82,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_kt_control">空调控制</string>
+    <string name="sub_title_liandong">联动设置</string>
+    <string name="tips_kt_unsported">不支持的空调类型...</string>
 
 </resources>

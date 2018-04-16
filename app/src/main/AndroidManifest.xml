@@ -165,11 +165,12 @@
         <activity android:name=".activity.EnvLogsActivity" />
         <activity android:name=".uiv2.activity.ParamSettingActivity" android:screenOrientation="portrait" />
         <activity android:name=".uiv2.activity.EnvYichangActivity" android:screenOrientation="portrait" />
-        <activity android:name=".uiv2.activity.KongtiaoActivity" />
-        <activity android:name=".uiv2.activity.ConLogsActivity" />
-        <activity android:name=".uiv2.activity.ControlLogsActivity" />
-        <activity android:name=".uiv2.activity.EnvHisActivity" />
-        <activity android:name=".uiv2.activity.SensusConfigActivity" />
+        <activity android:name=".uiv2.activity.KongtiaoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.ConLogsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.ControlLogsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.EnvHisActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.SensusConfigActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.KtAutoActivity" />
 
         <service android:name="net.suntrans.szxf.MyService" />
 

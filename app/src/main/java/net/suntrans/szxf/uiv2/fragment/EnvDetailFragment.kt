@@ -32,8 +32,6 @@ class EnvDetailFragment : BasedFragment2(), View.OnClickListener {
     override fun onClick(v: View?) {
         val field =v!!.getTag(v.id) as HashMap<String,String>
 
-        println(v!!.id)
-        v!!.setBackgroundColor(Color.parseColor("#000000"))
         val intent = Intent(activity,EnvHisActivity::class.java)
         intent.putExtra("field",field["field"])
         intent.putExtra("name",field["name"])

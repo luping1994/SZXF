@@ -6,7 +6,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="eleitem_textmargin">40dp</dimen>
     <dimen name="pouopwindon_offset">134dp</dimen>
-    <dimen name="actionBarTitleSize">20sp</dimen>
+    <dimen name="actionBarTitleSize">18sp</dimen>
     <dimen name="actionBarSubTitleSize">12sp</dimen>
     <dimen name="action_bar_size">48dp</dimen>
     <dimen name="content_textSize">16sp</dimen>

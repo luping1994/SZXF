@@ -3,6 +3,7 @@ package net.suntrans.szxf.uiv2.activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.text.InputType
+import android.text.method.TransformationMethod
 import android.view.View
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog
 
@@ -24,10 +25,12 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
 
     private var binding: ActivitySensusConfigBinding? = null
 
+    private var dev_id = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sensus_config)
-        house_id = intent.getStringExtra("house_id")
+
         //        api.getEnvLog()
         binding!!.jiaquanYuzhi.setOnClickListener(this)
         binding!!.pm25Yuzhi.setOnClickListener(this)
@@ -35,6 +38,85 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         binding!!.yanwuYuzhi.setOnClickListener(this)
         binding!!.wenduYuzhi.setOnClickListener(this)
 
+
+        dev_id = intent.getStringExtra("dev_id")
+        house_id = intent.getStringExtra("house_id")
+        binding!!.title.text = intent.getStringExtra("title")
+
+        binding!!.back.setOnClickListener({
+            finish()
+        })
+
+        init()
+
+    }
+
+    fun init() {
+
+        val map1 = HashMap<String, String>()
+        map1["name"] = "甲醛"
+        map1["max"] = "10.0"
+        map1["min"] = "0.0"
+        map1["field"] = "jiaquan"
+        map1["unit"] = "ug/m³"
+        binding!!.jiaquanYuzhi.setTag(R.id.jiaquanYuzhi, map1)
+
+        val map2 = HashMap<String, String>()
+        map2["name"] = "PM25"
+        map2["max"] = "6000.0"
+        map2["min"] = "0.0"
+        map2["field"] = "pm25"
+        map2["unit"] = "ug/m³"
+        binding!!.pm25Yuzhi.setTag(R.id.pm25Yuzhi, map2)
+
+        val map3 = HashMap<String, String>()
+        map3["name"] = "振动"
+        map3["max"] = "6.0"
+        map3["min"] = "0.0"
+        map3["field"] = "zhendong"
+        map3["unit"] = "G"
+        binding!!.zhendongYuzhi.setTag(R.id.zhendongYuzhi, map3)
+
+        val map4 = HashMap<String, String>()
+        map4["name"] = "烟雾"
+        map4["max"] = "6.0"
+        map4["min"] = "0.0"
+        map4["field"] = "yanwu"
+        map4["unit"] = "ug/m³"
+
+        binding!!.yanwuYuzhi.setTag(R.id.yanwuYuzhi, map4)
+
+        val map5 = HashMap<String, String>()
+        map5["name"] = "温度"
+        map5["max"] = "120"
+        map5["min"] = "-40"
+        map5["field"] = "yanwu"
+        map5["unit"] = "℃"
+        binding!!.wenduYuzhi.setTag(R.id.wenduYuzhi, map5)
+
+        binding!!.jiaquanSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            setSwitchParam(isChecked,"jiaquan")
+        }
+
+        binding!!.pm25Switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            setSwitchParam(isChecked,"pm25")
+
+        }
+
+        binding!!.zhendongSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            setSwitchParam(isChecked,"zhendong")
+        }
+        binding!!.yanwuSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            setSwitchParam(isChecked,"yanwu")
+
+        }
+        binding!!.wenduSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            setSwitchParam(isChecked,"wendu")
+
+        }
+
+        binding!!.refreshLayout
+                .setOnRefreshListener { getConfig(house_id) }
     }
 
 
@@ -47,11 +129,15 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         addSubscription(api.getSensusConfig(house_id), object : BaseSubscriber<RespondBody<SensusConfig>>(this) {
             override fun onError(e: Throwable) {
                 super.onError(e)
+                e.printStackTrace()
+                binding!!.refreshLayout.isRefreshing = false
+
             }
 
             override fun onNext(sensusConfigRespondBody: RespondBody<SensusConfig>) {
                 super.onNext(sensusConfigRespondBody)
                 initView(sensusConfigRespondBody.data)
+                binding!!.refreshLayout.isRefreshing = false
             }
         })
     }
@@ -74,74 +160,33 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         binding!!.yanwuSwitch.isChecked = values[3] == "1"
         binding!!.wenduSwitch.isChecked = values[4] == "1"
 
+
     }
 
     override fun onClick(v: View) {
         val builder = QMUIDialog.EditTextDialogBuilder(this)
         val editText = builder.editText
-        val tag  =  v!!.getTag(v!!.id) as Int
+        val tag = v!!.getTag(v!!.id) as HashMap<String, String>
 
-        editText.inputType = InputType.TYPE_CLASS_NUMBER
-        builder.addAction(R.string.cancel) {
-            dialog,
-            index -> dialog.dismiss()
+        val field = tag["field"]
+        val name = tag["name"]
+        val min = tag["min"]!!.toFloat()
+        val max = tag["max"]!!.toFloat()
+        val unit = tag["unit"]
+        builder.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL)
+        builder.setTitle("请输入$name 报警阈值")
+        builder.addAction(R.string.cancel) { dialog,
+                                             index ->
+            dialog.dismiss()
         }
-        builder.addAction(R.string.ok){
-            dialog,
-            index ->
+        builder.addAction(R.string.ok) { dialog,
+                                         index ->
             val s = editText.text.toString()
-            if (!s.matches("[0-9]+".toRegex())) {
-                UiUtils.showToast(getString(R.string.tips_please_input_number))
-                return@addAction
-            }
-            if (tag==7){
-                if (s.toInt()<240||s.toInt()>280){
-                    UiUtils.showToast(getString(R.string.tips_voltage_max))
-                    return@addAction
-
-                }
-            }else if (tag==8){
-                if (s.toInt()<150||s.toInt()>200){
-                    UiUtils.showToast(getString(R.string.tips_voltage_min))
-                    return@addAction
-
-                }
-            }else{
-                if (s.toInt()<0||s.toInt()>40){
-                    UiUtils.showToast(getString(R.string.tips_current_max))
-                    return@addAction
-
-                }
-            }
 
 
 
-            setParam(s,tag)
-//            when (v!!.id) {
-//                R.id.guoliu1 -> {
-//                    setParam(s,1)
-//                }
-//                R.id.guoliu2 -> {
-//                    setParam(s,2)
-//
-//                }
-//                R.id.guoliu3 -> {
-//                    setParam(s,3)
-//
-//                }
-//                R.id.guoliu4 -> {
-//                    setParam(s,4)
-//
-//                }
-//                R.id.guoliu5 -> {
-//                    setParam(s,5)
-//
-//                }
-//                R.id.guoliu6 -> {
-//                    setParam(s,6)
-//
-//                }
-//            }
+            setParam(s, field!!)
+
             dialog.dismiss()
         }
 
@@ -149,8 +194,22 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
 
     }
 
-    private fun setParam(s:String,field :Int){
+    private fun setParam(s: String, field: String) {
 
+        addSubscription(api.setSensusConfig(dev_id, field, ""), object : BaseSubscriber<RespondBody<*>>(this) {
+            override fun onError(e: Throwable?) {
+                super.onError(e)
+            }
+
+            override fun onNext(t: RespondBody<*>?) {
+                super.onNext(t)
+                UiUtils.showToast(t!!.msg)
+            }
+        })
+
+    }
+
+    private fun setSwitchParam(isChecked:Boolean,field: String){
 
     }
 }

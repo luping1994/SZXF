@@ -3,17 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SZXF.iml" filepath="$PROJECT_DIR$/SZXF.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../SZXF/SZXF.iml" filepath="$PROJECT_DIR$/../../SZXF/SZXF.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../SZXF/app/app.iml" filepath="$PROJECT_DIR$/../../SZXF/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/looney/looney.iml" filepath="$PROJECT_DIR$/looney/looney.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../SZXF/looney/looney.iml" filepath="$PROJECT_DIR$/../../SZXF/looney/looney.iml" />
       <module fileurl="file://$PROJECT_DIR$/matisse/matisse.iml" filepath="$PROJECT_DIR$/matisse/matisse.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../SZXF/matisse/matisse.iml" filepath="$PROJECT_DIR$/../../SZXF/matisse/matisse.iml" />
       <module fileurl="file://$PROJECT_DIR$/stateview/stateview.iml" filepath="$PROJECT_DIR$/stateview/stateview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../SZXF/stateview/stateview.iml" filepath="$PROJECT_DIR$/../../SZXF/stateview/stateview.iml" />
       <module fileurl="file://$PROJECT_DIR$/toprightmenu/toprightmenu.iml" filepath="$PROJECT_DIR$/toprightmenu/toprightmenu.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../SZXF/toprightmenu/toprightmenu.iml" filepath="$PROJECT_DIR$/../../SZXF/toprightmenu/toprightmenu.iml" />
     </modules>
   </component>
 </project>
