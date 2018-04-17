@@ -33,7 +33,7 @@ class ParamSettingActivity : BasedActivity(), View.OnClickListener {
             8 -> builder.setTitle("设置欠压值(150~200V)")
             else -> builder.setTitle("设置通道 $tag 过流值(0~40A)")
         }
-        editText.inputType = InputType.TYPE_CLASS_NUMBER
+        builder.setInputType(InputType.TYPE_CLASS_NUMBER )
         builder.addAction(R.string.cancel) {
             dialog,
             index -> dialog.dismiss()

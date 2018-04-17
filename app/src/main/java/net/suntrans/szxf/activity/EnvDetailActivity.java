@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.trello.rxlifecycle.android.ActivityEvent;
 
+import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.ROLE;
 import net.suntrans.szxf.api.RetrofitHelper;
 import net.suntrans.szxf.bean.EnvDetailEntity;
 import net.suntrans.szxf.bean.SensusEntity;
@@ -52,10 +54,16 @@ public class EnvDetailActivity extends BasedActivity {
 
         if ("manager".equals(source)){
             tx.setText("报警配置");
+            if (App.ROLE_ID== ROLE.STAFF){
+                findViewById(R.id.subTitle).setVisibility(View.INVISIBLE);
+            }else {
+                findViewById(R.id.subTitle).setVisibility(View.VISIBLE);
+            }
+
         }else {
             tx.setText("异常记录");
-
         }
+
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);//获取屏幕大小的信息
         Pwidth = displayMetrics.widthPixels;   //屏幕宽度,先锋的宽度是800px，小米2a的宽度是720px
         SensusEntity.SixDetailData info = getIntent().getParcelableExtra("info");
@@ -76,7 +84,7 @@ public class EnvDetailActivity extends BasedActivity {
                     public void onClick(View v) {
                         if ("manager".equals(source)){
                             Intent intent = new Intent(EnvDetailActivity.this, SensusConfigActivity.class);
-                            intent.putExtra("dev_id",din);
+                            intent.putExtra("dev_id",fragment.getDevID());
                             intent.putExtra("title",getIntent().getStringExtra("name"));
                             startActivity(intent);
                         }else {

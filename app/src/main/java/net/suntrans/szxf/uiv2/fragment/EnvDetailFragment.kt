@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import net.suntrans.szxf.databinding.FragmentEnvDetailBinding
 import net.suntrans.szxf.rx.BaseSubscriber
 import net.suntrans.szxf.uiv2.BasedFragment2
 import net.suntrans.szxf.uiv2.activity.EnvHisActivity
+import net.suntrans.szxf.utils.UiUtils
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
@@ -30,13 +32,13 @@ import rx.schedulers.Schedulers
  */
 class EnvDetailFragment : BasedFragment2(), View.OnClickListener {
     override fun onClick(v: View?) {
-        val field =v!!.getTag(v.id) as HashMap<String,String>
+        val field = v!!.getTag(v.id) as HashMap<String, String>
 
-        val intent = Intent(activity,EnvHisActivity::class.java)
-        intent.putExtra("field",field["field"])
-        intent.putExtra("name",field["name"])
-        intent.putExtra("unit",field["unit"])
-        intent.putExtra("house_id",house_id)
+        val intent = Intent(activity, EnvHisActivity::class.java)
+        intent.putExtra("field", field["field"])
+        intent.putExtra("name", field["name"])
+        intent.putExtra("unit", field["unit"])
+        intent.putExtra("house_id", house_id)
         startActivity(intent)
     }
 
@@ -56,6 +58,7 @@ class EnvDetailFragment : BasedFragment2(), View.OnClickListener {
     private var Pwidth: Int = 0
     private val displayMetrics = DisplayMetrics()
     private var house_id: String = "0"
+    private var dev_id = ""
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater!!, R.layout.fragment_env_detail, container, false)
@@ -80,54 +83,54 @@ class EnvDetailFragment : BasedFragment2(), View.OnClickListener {
     }
 
 
-    private fun initData(){
-        val map = HashMap<String,String>()
+    private fun initData() {
+        val map = HashMap<String, String>()
         map["name"] = "温度"
         map["field"] = "wendu"
         map["unit"] = "℃"
-        binding!!.rootLL.getChildAt(2).setTag(R.id.r1,map)
+        binding!!.rootLL.getChildAt(2).setTag(R.id.r1, map)
 
-        val map2 = HashMap<String,String>()
+        val map2 = HashMap<String, String>()
         map2["name"] = "湿度"
         map2["field"] = "shidu"
         map2["unit"] = "%RH"
-        binding!!.rootLL.getChildAt(3).setTag(R.id.r2,map2)
+        binding!!.rootLL.getChildAt(3).setTag(R.id.r2, map2)
 
-        val map5 = HashMap<String,String>()
+        val map5 = HashMap<String, String>()
         map5["name"] = "烟雾"
         map5["field"] = "yanwu"
         map5["unit"] = "ug/m³"
-        binding!!.rootLL.getChildAt(7).setTag(R.id.r5,map5)
+        binding!!.rootLL.getChildAt(7).setTag(R.id.r5, map5)
 
-        val map6 = HashMap<String,String>()
+        val map6 = HashMap<String, String>()
         map6["name"] = "甲醛"
         map6["field"] = "jiaquan"
         map6["unit"] = "ug/m³"
-        binding!!.rootLL.getChildAt(8).setTag(R.id.r6,map6)
+        binding!!.rootLL.getChildAt(8).setTag(R.id.r6, map6)
 
-        val map7 = HashMap<String,String>()
+        val map7 = HashMap<String, String>()
         map7["name"] = "PM1"
         map7["field"] = "pm1"
         map7["unit"] = "ug/m³"
-        binding!!.rootLL.getChildAt(9).setTag(R.id.r7,map7)
+        binding!!.rootLL.getChildAt(9).setTag(R.id.r7, map7)
 
-        val map8 = HashMap<String,String>()
+        val map8 = HashMap<String, String>()
         map8["name"] = "PM2.5"
         map8["field"] = "pm25"
         map8["unit"] = "ug/m³"
-        binding!!.rootLL.getChildAt(10).setTag(R.id.r8,map8)
+        binding!!.rootLL.getChildAt(10).setTag(R.id.r8, map8)
 
-        val map9 = HashMap<String,String>()
+        val map9 = HashMap<String, String>()
         map9["name"] = "PM10"
         map9["field"] = "pm10"
         map9["unit"] = "ug/m³"
-        binding!!.rootLL.getChildAt(11).setTag(R.id.r9,map9)
+        binding!!.rootLL.getChildAt(11).setTag(R.id.r9, map9)
 
-        val map10= HashMap<String,String>()
+        val map10 = HashMap<String, String>()
         map10["name"] = "建筑姿态"
         map10["field"] = "z_zhou"
         map10["unit"] = ""
-        binding!!.rootLL.getChildAt(13).setTag(R.id.r10,map10)
+        binding!!.rootLL.getChildAt(13).setTag(R.id.r10, map10)
 
 
         binding!!.rootLL.getChildAt(2).setOnClickListener(this)
@@ -148,6 +151,9 @@ class EnvDetailFragment : BasedFragment2(), View.OnClickListener {
     }
 
     private fun getData(house_id: String) {
+        if (TextUtils.isEmpty(house_id)){
+            return
+        }
         mCompositeSubscription.add(api.getEnvDetail(house_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -161,10 +167,15 @@ class EnvDetailFragment : BasedFragment2(), View.OnClickListener {
                         if (info?.data != null)
                             info.data.setEva()
                         initView(info.data)
+                        dev_id = info.data.dev_id
                         binding!!.refreshlayout?.isRefreshing = false
                     }
                 }))
 
+    }
+
+    public fun getDevID(): String {
+        return dev_id
     }
 
     private fun initView(data: SensusEntity.SixDetailData?) {

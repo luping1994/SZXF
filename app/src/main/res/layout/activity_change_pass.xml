@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true">
 
     <View
@@ -11,18 +11,18 @@
         android:background="@color/colorPrimary" />
 
 
-        <RelativeLayout
-            android:id="@+id/fanhui"
-            android:layout_width="60dp"
-            android:layout_height="56dp">
+    <RelativeLayout
+        android:id="@+id/fanhui"
+        android:layout_width="60dp"
+        android:layout_height="56dp">
 
-            <ImageView
-                android:layout_marginTop="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:src="@drawable/ic_back" />
-        </RelativeLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_back" />
+    </RelativeLayout>
 
 
     <TextView
@@ -44,14 +44,14 @@
         android:background="@drawable/bg_card">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            app:civ_border_color="@color/white"
-            app:civ_border_width="1dp"
             android:id="@+id/img"
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="17dp"
-            android:src="@drawable/user_white" />
+            android:src="@drawable/user_white"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1dp" />
 
         <TextView
             android:id="@+id/name"
@@ -79,53 +79,53 @@
         android:orientation="vertical">
 
         <net.suntrans.szxf.views.EditView
-            android:inputType="textPassword"
-            android:maxLength="18"
             android:id="@+id/oldPass"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:background="@null"
             android:hint="请输入旧密码"
+            android:inputType="textPassword"
+            android:maxLength="18"
             android:maxLines="1"
             android:paddingLeft="16dp"
             android:textSize="@dimen/textNormalSize" />
 
         <View
-            android:layout_marginRight="7dp"
             android:layout_width="match_parent"
             android:layout_height="2dp"
+            android:layout_marginRight="7dp"
             android:background="@color/devisionColor" />
 
         <net.suntrans.szxf.views.EditView
-            android:digits="@string/abcd123"
-            android:maxLength="18"
             android:id="@+id/newPass"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@null"
+            android:digits="@string/abcd123"
             android:hint="请输入新密码"
             android:inputType="textPassword"
+            android:maxLength="18"
             android:maxLines="1"
             android:paddingLeft="16dp"
             android:textSize="@dimen/textNormalSize" />
 
         <View
-            android:layout_marginRight="7dp"
-
             android:layout_width="match_parent"
+
             android:layout_height="2dp"
+            android:layout_marginRight="7dp"
             android:background="@color/devisionColor" />
 
         <net.suntrans.szxf.views.EditView
-            android:maxLength="18"
-            android:digits="@string/abcd123"
             android:id="@+id/repassword"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@null"
+            android:digits="@string/abcd123"
             android:hint="确认新密码"
             android:inputType="textPassword"
+            android:maxLength="18"
             android:maxLines="1"
             android:paddingLeft="16dp"
             android:textSize="@dimen/textNormalSize" />
@@ -133,19 +133,21 @@
     </LinearLayout>
 
     <RelativeLayout
+
         android:id="@+id/login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="325dp"
-        android:background="@drawable/bg_user_zhuxiao"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="335dp"
+        android:background="@drawable/bg_bt_login"
         android:onClick="changePass"
         android:textColor="@color/white"
         android:textSize="17sp">
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:layout_marginTop="6dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:clickable="false"
             android:text="确  定"

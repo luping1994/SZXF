@@ -398,7 +398,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
                         } else {
                             nomal.setText("一切正常");
 
-                            nomal.setTextColor(Color.parseColor("#00ff00"));
+                            nomal.setTextColor(Color.parseColor("#0b9d2f"));
                         }
 
                     }

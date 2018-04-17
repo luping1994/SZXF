@@ -9,8 +9,8 @@ android {
         applicationId "net.suntrans.szxf"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 24
-        versionName "0.2.4"
+        versionCode 26
+        versionName "0.2.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true//这行
         ndk {

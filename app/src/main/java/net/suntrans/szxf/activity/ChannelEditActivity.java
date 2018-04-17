@@ -62,9 +62,9 @@ public class ChannelEditActivity extends BasedActivity {
         if ("1".equals(channel_type)) {
             spinner.setSelection(0);
         } else if ("2".equals(channel_type)) {
-            spinner.setSelection(0, true);
-        } else {
-            spinner.setSelection(1);
+            spinner.setSelection(1, true);
+        }   else if ("3".equals(channel_type)){
+            spinner.setSelection(2);
         }
 
         usedCB = (SwitchButton) findViewById(R.id.isUsed);

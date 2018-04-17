@@ -31,7 +31,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
-import net.suntrans.looney.utils.UiUtils;
 import net.suntrans.looney.widgets.CompatDatePickerDialog;
 import net.suntrans.stateview.StateView;
 import net.suntrans.szxf.R;
@@ -45,6 +44,7 @@ import net.suntrans.szxf.databinding.FragmentTimechartBinding;
 import net.suntrans.szxf.fragment.ZhCurHisItemFragment;
 import net.suntrans.szxf.uiv2.BasedFragment2;
 import net.suntrans.szxf.uiv2.bean.ChartData;
+import net.suntrans.szxf.utils.UiUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -141,10 +141,10 @@ public class TimeChartFragment extends BasedFragment2 implements View.OnClickLis
         binding.endTime.setText(mYear + "-" + pad(mMonth) + "-" + pad(mDay));
 
 
-        c.add(Calendar.DAY_OF_MONTH,-1);
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH) + 1;
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+//        c.add(Calendar.DAY_OF_MONTH,-1);
+//        mYear = c.get(Calendar.YEAR);
+//        mMonth = c.get(Calendar.MONTH) + 1;
+//        mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
         binding.startTime.setText(mYear + "-" + pad(mMonth) + "-" + pad(mDay));
@@ -171,6 +171,20 @@ public class TimeChartFragment extends BasedFragment2 implements View.OnClickLis
                mListener.getData(startTime, endTime);
             }
         });
+
+        if (paramName != null) {
+            String name = paramName;
+//            if (name.contains("A")) {
+//                name = name.replace("A", "三");
+//            }
+//            if (name.contains("B")) {
+//                name = name.replace("B", "三");
+//            }
+//            if (name.contains("C")) {
+//                name = name.replace("C", "三");
+//            }
+            binding.unit.setText(name + "(" + unit + ")");
+        }
     }
 
 

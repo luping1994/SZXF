@@ -170,12 +170,10 @@
         <activity android:name=".uiv2.activity.ControlLogsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".uiv2.activity.EnvHisActivity" android:screenOrientation="portrait"/>
         <activity android:name=".uiv2.activity.SensusConfigActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".uiv2.activity.KtAutoActivity" />
+        <activity android:name=".uiv2.activity.KtAutoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".uiv2.activity.ChannelHisActivity" android:screenOrientation="portrait"/>
 
         <service android:name="net.suntrans.szxf.MyService" />
-
-
-
 
         <receiver
             android:name=".uiv2.broadcast.JpushReceive"
@@ -191,8 +189,6 @@
                 <category android:name="net.suntrans.szxf" />
             </intent-filter>
         </receiver>
-
-
 
     </application>
 

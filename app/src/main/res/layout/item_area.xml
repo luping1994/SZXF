@@ -18,7 +18,7 @@
          android:layout_height="match_parent"
          android:layout_marginLeft="20dp"
          android:text="大厅灯"
-         android:textColor="@color/colorPrimary"
+         android:textColor="@color/textColor"
          android:textSize="16sp" />
 
 
@@ -46,6 +46,7 @@
                 />
         </RelativeLayout>
         <ImageView
+            android:tint="@color/grey"
             android:id="@+id/arrow"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_arrow_right"

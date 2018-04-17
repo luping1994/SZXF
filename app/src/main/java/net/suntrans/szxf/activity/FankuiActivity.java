@@ -1,5 +1,6 @@
 package net.suntrans.szxf.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -146,7 +147,8 @@ public class FankuiActivity extends BasedActivity {
         @Override
         protected void convert(BaseViewHolder helper, Gustbook item) {
             helper.setText(R.id.msg, "" + item.contents )
-                    .setText(R.id.time, item.username);
+                    .setText(R.id.time, item.username)
+                    .setTextColor(R.id.msg, Color.parseColor("#333333"));
         }
     }
 

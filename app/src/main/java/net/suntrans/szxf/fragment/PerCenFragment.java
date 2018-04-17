@@ -52,6 +52,7 @@ import net.suntrans.szxf.views.LoadingDialog;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -144,9 +145,10 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
                                 App.getSharedPreferences().edit().clear().commit();
                                 ((MainActivity) getActivity()).killAll();
-                                UiUtils.showToast("已退出当前账号");
+                                JPushInterface.deleteAlias(getContext().getApplicationContext(),0);
                                 startActivity(new Intent(getActivity(), LoginActivity.class));
 
                             }

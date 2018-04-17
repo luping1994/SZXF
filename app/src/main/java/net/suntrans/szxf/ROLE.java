@@ -6,6 +6,7 @@ package net.suntrans.szxf;
  */
 
 public class ROLE {
+
     public static final int UNKNOWN=-1;
     public static final int LEADER=1;
     public static final int SUPERVISOR=2;

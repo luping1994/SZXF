@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -496,6 +497,10 @@ public class EnergyDetailFragment extends BasedFragment2 implements OnChartValue
 
     private  Ameter3Entity infos = null;
     private void getData(String sno, String date) {
+        if (TextUtils.isEmpty(sno)){
+            showSuccessState();
+            return ;
+        }
         showLoadingState();
         addSubscription(api.getAmmeter3Data(sno, date), new BaseSubscriber<Ameter3Entity>(getActivity()) {
             @Override

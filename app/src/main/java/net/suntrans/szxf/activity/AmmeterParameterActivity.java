@@ -30,6 +30,7 @@ import java.util.Map;
  */
 
 public class AmmeterParameterActivity extends BasedActivity {
+
     private String sno;
     private String id;
     private SwipeRefreshLayout refreshLayout;

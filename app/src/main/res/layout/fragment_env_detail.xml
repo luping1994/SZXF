@@ -40,7 +40,7 @@
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
                             android:gravity="center|right"
-                            android:text="2017年7月18日 14:27"
+                            android:text="1970年1月1日"
                             android:textSize="17sp" />
                     </RelativeLayout>
 

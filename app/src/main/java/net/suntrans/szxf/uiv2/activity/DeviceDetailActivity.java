@@ -72,10 +72,13 @@ public class DeviceDetailActivity extends BasedActivity {
         myadapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (App.ROLE_ID== ROLE.STAFF){
+                    return;
+                }
                 Intent intent = new Intent(DeviceDetailActivity.this, ChannelEditActivity.class);
                 intent.putExtra("id", datas.get(position).id+"");
                 intent.putExtra("title", datas.get(position).title);
-                intent.putExtra("channel_type", datas.get(position).device_type+"");
+                intent.putExtra("channel_type", datas.get(position).channel_type+"");
                 intent.putExtra("used", datas.get(position).used);
                 startActivity(intent);
             }

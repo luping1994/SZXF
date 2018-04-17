@@ -10,7 +10,7 @@ public class SharedPreferencesHepler {
 
     //house_type 0是办公室 1是宿舍
     public static String getOfficeHouseId() {
-        return App.getSharedPreferences().getString("office_id", "-1");
+        return App.getSharedPreferences().getString("office_id", "");
     }
 
     public static void setOfficeHouseId(String office_id) {
@@ -18,7 +18,7 @@ public class SharedPreferencesHepler {
     }
 
     public static String getDormHouseId() {
-        return App.getSharedPreferences().getString("dorm_id", "-1");
+        return App.getSharedPreferences().getString("dorm_id", "");
     }
 
     public static void setDormHouseId(String dorm_id) {

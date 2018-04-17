@@ -73,7 +73,7 @@ public class App extends MultiDexApplication {
 //                }
 //            }
 //        }.start();\
-        JPushInterface.setDebugMode(true);
+        JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
 
         if (!DEBUG){

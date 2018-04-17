@@ -41,7 +41,7 @@ class EnergyMoniFragment : BasedFragment() {
 
         refreshLayout = view!!.findViewById(R.id.refreshlayout) as ScrollChildSwipeRefreshLayout
         refreshLayout?.setOnRefreshListener { getAreaData(1) }
-
+        refreshLayout!!.setColorSchemeColors(context.resources.getColor(R.color.colorPrimary))
         datas = ArrayList<AreaEntity.AreaFloor>()
         expandableListView = view!!.findViewById(R.id.recyclerview) as ExpandableListView
         expandableListView!!.divider = null

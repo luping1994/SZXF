@@ -13,6 +13,7 @@
         android:id="@+id/statusbar"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
+
     <RelativeLayout
         android:visibility="gone"
         android:id="@+id/toolbar"

@@ -175,7 +175,6 @@ public class FloorPlanActivity extends BasedActivity {
         // 被JS调用的方法必须加入@JavascriptInterface注解
         @JavascriptInterface
         public void switchChannel(String control) {
-            System.out.println(control);
             String[] split = control.split(",");
             final String din = split[0];
             final String number = split[1];
@@ -187,17 +186,17 @@ public class FloorPlanActivity extends BasedActivity {
             }else {
                 cmds = "打开";
             }
-//            System.out.println(datapoint + "," + din);
-            new AlertDialog.Builder(FloorPlanActivity.this)
-                    .setMessage("是否" + cmds + title)
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-//                            System.out.println(din+","+number+","+status);
-                            sendCmd(din, status, number);
-                        }
-                    })
-                    .setNegativeButton("取消", null).create().show();
+
+            sendCmd(din, status, number);
+//            new AlertDialog.Builder(FloorPlanActivity.this)
+//                    .setMessage("是否" + cmds + title)
+//                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                        }
+//                    })
+//                    .setNegativeButton("取消", null).create().show();
         }
     }
 

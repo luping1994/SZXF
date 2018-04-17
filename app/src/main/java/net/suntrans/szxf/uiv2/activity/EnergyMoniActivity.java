@@ -33,7 +33,6 @@ public class EnergyMoniActivity extends BasedActivity {
             }
         });
 
-
         EnergyMoniFragment fragment = new EnergyMoniFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content,fragment)

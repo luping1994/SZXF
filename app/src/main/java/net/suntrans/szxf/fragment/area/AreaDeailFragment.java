@@ -237,6 +237,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                         if (datas.get(getAdapterPosition()).channel_type == DeviceType.AIR_CONDITIONER){
                             Intent intent = new Intent();
                             intent.putExtra("channel_id",datas.get(getAdapterPosition()).id);
+                            intent.putExtra("title",datas.get(getAdapterPosition()).title);
                             intent.setClass(getActivity(), KongtiaoActivity.class);
                             startActivity(intent);
                         }

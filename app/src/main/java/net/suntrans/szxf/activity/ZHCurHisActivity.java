@@ -36,10 +36,10 @@ import net.suntrans.szxf.databinding.ActivityZhCurHisBinding;
 import net.suntrans.szxf.fragment.ZhCurHisItemFragment;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.looney.utils.LogUtil;
-import net.suntrans.looney.utils.UiUtils;
 import net.suntrans.looney.widgets.CompatDatePickerDialog;
 
 import net.suntrans.stateview.StateView;
+import net.suntrans.szxf.utils.UiUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

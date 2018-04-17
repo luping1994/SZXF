@@ -21,5 +21,6 @@ public class MonitorEntity {
     public String number;
     public int channel_type;
     public String dev_id;
+    public String id;
     public String current;
 }

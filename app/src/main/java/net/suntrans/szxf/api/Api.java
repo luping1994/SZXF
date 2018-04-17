@@ -272,6 +272,11 @@ public interface Api {
     @FormUrlEncoded
     @POST("sensus/sensusCuv")
     Observable<HisEntity> getEnvHis(@FieldMap Map<String, String> map);
+
+
+    @FormUrlEncoded
+    @POST("monitor/getCuv")
+    Observable<HisEntity> getChannelHis(@FieldMap Map<String, String> map);
     //=========================================================================
     //2018-3-27
 
@@ -452,6 +457,11 @@ public interface Api {
     @FormUrlEncoded
     @POST("sensus/setConfig")
     Observable<RespondBody> setSensusConfig(@Field("dev_id") String dev_id,@Field("field") String field,@Field("type") String type);
+
+
+    @FormUrlEncoded
+    @POST("sensus/setVoiceConfig")
+    Observable<RespondBody> setVoiceConfig(@Field("dev_id") String dev_id,@Field("value") String field,@Field("type") String type);
 
 
     @FormUrlEncoded

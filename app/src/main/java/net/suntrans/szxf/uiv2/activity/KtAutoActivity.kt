@@ -2,6 +2,7 @@ package net.suntrans.szxf.uiv2.activity
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.text.InputType
 import android.widget.TextView
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog
 
@@ -29,19 +30,42 @@ class KtAutoActivity : BasedActivity() {
 
         channel_id = intent.getStringExtra("channel_id")
 
+        binding!!.refreshLayout.setOnRefreshListener { getMaxWendu(channel_id) }
+        binding!!.back.setOnClickListener { finish() }
+        binding!!.title.text = intent.getStringExtra("title")
+        binding!!.refreshLayout.setColorSchemeColors(resources.getColor(R.color.colorPrimary))
         binding!!.rightSubTitle
                 .setOnClickListener({
-
+                    val s = binding!!.wendu.text.toString()
+                    var s2 = "1"
+                    s2 = if (binding!!.wenduSwitch.isChecked){
+                        "1"
+                    }else{
+                        "0"
+                    }
+                    setMaxWendu(channel_id, s, s2)
                 })
 
+        binding!!.wenduSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            val s = binding!!.wendu.text.toString()
+            var s2 = "1"
+            s2 = if (binding!!.wenduSwitch.isChecked){
+                "1"
+            }else{
+                "0"
+            }
+            setMaxWendu(channel_id, s, s2)
+        }
         binding!!.wendu
                 .setOnClickListener {
                     val builder = QMUIDialog.EditTextDialogBuilder(this)
+                    builder.setInputType(InputType.TYPE_CLASS_NUMBER)
                     val editText = builder.editText
                     builder.addAction(R.string.cancel) { dialog,
                                                          index ->
                         dialog.dismiss()
                     }
+                    builder.setTitle("请输入开启温度")
                     builder.addAction(R.string.ok) { dialog,
                                                      index ->
                         val s = editText.text.toString()
@@ -53,8 +77,7 @@ class KtAutoActivity : BasedActivity() {
                         } else {
                             s2 = "0"
                         }
-
-                        val textView = it as  TextView
+                        val textView = it as TextView
                         textView.text = s
                         setMaxWendu(channel_id, s, s2)
                         dialog.dismiss()
@@ -76,10 +99,15 @@ class KtAutoActivity : BasedActivity() {
         addSubscription(api.getMaxWendu(channel_id), object : BaseSubscriber<RespondBody<Map<String, String>>>(this) {
             override fun onNext(mapRespondBody: RespondBody<Map<String, String>>) {
                 super.onNext(mapRespondBody)
+                binding!!.wendu.text = mapRespondBody.data["max_wendu"]
+                binding!!.wenduSwitch.setCheckedImmediately("1" == mapRespondBody.data["status"])
+                binding!!.refreshLayout.isRefreshing = false
             }
 
             override fun onError(e: Throwable) {
                 super.onError(e)
+                binding!!.refreshLayout.isRefreshing = false
+
             }
         })
     }

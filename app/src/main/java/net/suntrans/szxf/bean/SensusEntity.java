@@ -38,6 +38,7 @@ public class SensusEntity extends RespondBody<SensusEntity.Data>{
 
 
         public String updated_at;
+        public String dev_id;
 
 
         public String pm25Eva;

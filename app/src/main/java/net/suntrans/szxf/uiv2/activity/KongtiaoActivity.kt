@@ -35,7 +35,8 @@ class KongtiaoActivity : BasedActivity() {
         binding!!.back.setOnClickListener { finish() }
 
         val txTitle = findViewById(R.id.title) as TextView
-        txTitle.setText(R.string.title_kt_control)
+        val title = intent.getStringExtra("title")
+        txTitle.text = title
 
         findViewById(R.id.back)
                 .setOnClickListener { finish() }
@@ -50,6 +51,7 @@ class KongtiaoActivity : BasedActivity() {
                 .setOnClickListener {
                     val intent = Intent(this@KongtiaoActivity, KtAutoActivity::class.java)
                     intent.putExtra("channel_id", channel_id)
+                    intent.putExtra("title",title )
                     startActivity(intent)
                 }
 

@@ -99,17 +99,18 @@
     <RelativeLayout
         android:id="@+id/login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginTop="325dp"
-        android:background="@drawable/bg_user_zhuxiao"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:background="@drawable/bg_bt_login"
         android:onClick="changePass"
         android:textColor="@color/white"
         android:textSize="17sp">
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:layout_marginTop="6dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:clickable="false"
             android:text="提  交"

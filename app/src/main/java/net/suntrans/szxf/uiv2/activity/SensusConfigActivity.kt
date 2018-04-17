@@ -79,7 +79,7 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
 
         val map4 = HashMap<String, String>()
         map4["name"] = "烟雾"
-        map4["max"] = "6.0"
+        map4["max"] = "2000"
         map4["min"] = "0.0"
         map4["field"] = "yanwu"
         map4["unit"] = "ug/m³"
@@ -116,13 +116,13 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         }
 
         binding!!.refreshLayout
-                .setOnRefreshListener { getConfig(house_id) }
+                .setOnRefreshListener { getConfig(dev_id) }
     }
 
 
     override fun onResume() {
         super.onResume()
-        getConfig(house_id)
+        getConfig(dev_id)
     }
 
     private fun getConfig(house_id: String?) {
@@ -154,11 +154,11 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         binding!!.yanwuYuzhi.text = config.yanwu
         binding!!.wenduYuzhi.text = config.wendu
 
-        binding!!.jiaquanSwitch.isChecked = values[0] == "1"
-        binding!!.pm25Switch.isChecked = values[1] == "1"
-        binding!!.zhendongSwitch.isChecked = values[2] == "1"
-        binding!!.yanwuSwitch.isChecked = values[3] == "1"
-        binding!!.wenduSwitch.isChecked = values[4] == "1"
+        binding!!.jiaquanSwitch.isChecked = value.substring(0,1) == "1"
+        binding!!.pm25Switch.isChecked =value.substring(1,2) == "1"
+        binding!!.zhendongSwitch.isChecked = value.substring(2,3) == "1"
+        binding!!.yanwuSwitch.isChecked = value.substring(3,4) == "1"
+        binding!!.wenduSwitch.isChecked = value.substring(4,5) == "1"
 
 
     }
@@ -173,8 +173,9 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         val min = tag["min"]!!.toFloat()
         val max = tag["max"]!!.toFloat()
         val unit = tag["unit"]
-        builder.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL)
+        builder.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED)
         builder.setTitle("请输入$name 报警阈值")
+        builder.setPlaceholder("$min~$max")
         builder.addAction(R.string.cancel) { dialog,
                                              index ->
             dialog.dismiss()
@@ -183,7 +184,10 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
                                          index ->
             val s = editText.text.toString()
 
-
+            if (s.toFloat()<min||s.toFloat()>max){
+                UiUtils.showToast("$name 的阈值范围为:$min ~ $max")
+                return@addAction
+            }
 
             setParam(s, field!!)
 
@@ -194,9 +198,9 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
 
     }
 
-    private fun setParam(s: String, field: String) {
+    private fun setParam(s: String, type: String) {
 
-        addSubscription(api.setSensusConfig(dev_id, field, ""), object : BaseSubscriber<RespondBody<*>>(this) {
+        addSubscription(api.setSensusConfig(dev_id, s, type), object : BaseSubscriber<RespondBody<*>>(this) {
             override fun onError(e: Throwable?) {
                 super.onError(e)
             }
@@ -204,12 +208,29 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
             override fun onNext(t: RespondBody<*>?) {
                 super.onNext(t)
                 UiUtils.showToast(t!!.msg)
+                getConfig(dev_id)
             }
         })
 
     }
 
     private fun setSwitchParam(isChecked:Boolean,field: String){
+        var value ="1"
+        if (isChecked){
+            value = "1"
+        }else{
+            value = "0"
+        }
+        addSubscription(api.setVoiceConfig(dev_id, value, field), object : BaseSubscriber<RespondBody<*>>(this) {
+            override fun onError(e: Throwable?) {
+                super.onError(e)
+            }
 
+            override fun onNext(t: RespondBody<*>?) {
+                super.onNext(t)
+                UiUtils.showToast(t!!.msg)
+                getConfig(dev_id)
+            }
+        })
     }
 }

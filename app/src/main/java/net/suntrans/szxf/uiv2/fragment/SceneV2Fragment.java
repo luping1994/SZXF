@@ -50,6 +50,8 @@ public class SceneV2Fragment extends BasedFragment2 {
 
     public static final int LINEARLAYOUT = 0;
     public static final int GRIDELAYOUT = 1;
+    private int layoutType;
+
     public static SceneV2Fragment newInstance(int layoutType) {
 
         Bundle args = new Bundle();
@@ -79,7 +81,7 @@ public class SceneV2Fragment extends BasedFragment2 {
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
 
 
-        int layoutType = getArguments().getInt("layoutType");
+        layoutType = getArguments().getInt("layoutType");
         if (layoutType == LINEARLAYOUT) {
             adapter = new SceneAdapter(R.layout.item_scene_v2_staff, datas, getContext());
             binding.recyclerView.setAdapter(adapter);
@@ -133,7 +135,7 @@ public class SceneV2Fragment extends BasedFragment2 {
     }
 
 
-    static class SceneAdapter extends BaseQuickAdapter<SceneInfo, BaseViewHolder> {
+     class SceneAdapter extends BaseQuickAdapter<SceneInfo, BaseViewHolder> {
 
         private Context context;
 

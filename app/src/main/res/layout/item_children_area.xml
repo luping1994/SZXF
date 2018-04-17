@@ -90,14 +90,15 @@
                         android:textSize="12sp" />
                 </RelativeLayout>
 
-                <TextView
+                <ImageView
+                    android:tint="@color/grey"
                     android:id="@+id/arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
-                    android:background="@drawable/ic_arrow_right" />
+                    android:src="@drawable/ic_arrow_right" />
             </RelativeLayout>
 
         </LinearLayout>

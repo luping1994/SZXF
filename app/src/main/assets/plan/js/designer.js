@@ -5,8 +5,6 @@ if ($("#openType").val() == "alarm") {
 }
 
 
-
-
 function openConfirmDialog(d) {
 //    console.log(d.href);
     sendCommand(d)
@@ -44,13 +42,13 @@ function openConfirmDialog(d) {
 
 function sendCommand(d) {
 //    console.log('channel_id为：' + d.channel_id);
-    if(d.din==null||d.din==""){
-        d.din ="-1"
+    if (d.din == null || d.din == "") {
+        d.din = "-1"
     }
-      if(d.datapoint==null||d.datapoint==""){
-            d.datapoint ="-1"
-        }
-    control.switchChannel(d.din + "," + d.number + "," + d.status+","+d.title );
+    if (d.datapoint == null || d.datapoint == "") {
+        d.datapoint = "-1"
+    }
+    control.switchChannel(d.din + "," + d.number + "," + d.status + "," + d.title);
 }
 
 //加载容器属性和元件
@@ -60,17 +58,18 @@ function sendCommand(d) {
 
 var tokens;
 var house_ids;
-var timer =null
+var timer = null
+
 function init(token, house_id) {
     tokens = token;
     house_ids = house_id;
     floor = house_id;
     //加载容器属性和元件
     initContainerByToken(tokens, floor);
-    if (timer!=null){
+    if (timer != null) {
         clearInterval(timer);
     }
-    timer =setInterval("refreshContainerByToken(tokens,house_ids)", 8000);
+    timer = setInterval("refreshContainerByToken(tokens,house_ids)", 8000);
 }
 
 
@@ -85,39 +84,45 @@ function refreshContainerByToken(token, house_id) {
             var bgImage = "";
             if (floor == 4) {
                 bgImage = "img/floor1.png";
-            }else if (floor==5){
+            } else if (floor == 5) {
                 bgImage = "img/floor2.png";
 
-            }else if (floor == 8){
+            } else if (floor == 8) {
                 bgImage = "img/floor2.png";
 
-            }else {
+            } else {
                 bgImage = "img/floor2.png";
 
             }
             var con = json.data.container;
             if (con) {
-                   var width = 1385;
-                                     var height = 625;
-               var  scale = $("body").width() / width;
+                var width = 1385;
+                var height = 625;
+                var scale = $("body").width() / width;
                 $("div.full-wrapper").css("height", height * scale);
                 $("svg.designer").css("transform", "scale(" + scale + ")");
                 $("svg.designer").css("width", width);
                 $("svg.designer").css("height", height);
                 $("svg.designer").css("background-color", "transparent");
-                $("svg.designer").css("background-image", "url(" + bgImage+ ")");
+                $("svg.designer").css("background-image", "url(" + bgImage + ")");
                 $("svg.designer").empty();
                 $("body").css("background-color", "#feece6");
             }
 
             json.data.elements.map(createElement);
             createScrollBarElements();
+            createTips();
         }
     });
 }
 
+
+
+
 function createScrollBarElements() {
     floor1ScrollBar.map(createScrollbar);
+
+
 }
 
 //初始化容器
@@ -133,27 +138,27 @@ function initContainerByToken(token, house_id) {
             var bgImage = "";
             if (floor == '4') {
                 bgImage = "img/floor1.png";
-            }else if (floor=='5'){
+            } else if (floor == '5') {
                 bgImage = "img/floor2.png";
 
-            }else if (floor == '8'){
+            } else if (floor == '8') {
                 bgImage = "img/floor2.png";
 
-            }else {
+            } else {
                 bgImage = "img/floor2.png";
 
             }
             var con = json.data.container;
             if (con) {
-                  var width = 1385;
-                      var height = 625;
+                var width = 1385;
+                var height = 625;
                 scale = $("body").width() / width;
                 $("div.full-wrapper").css("height", height * scale);
                 $("svg.designer").css("transform", "scale(" + scale + ")");
                 $("svg.designer").css("width", width);
                 $("svg.designer").css("height", height);
                 $("svg.designer").css("background-color", "transparent");
-                $("svg.designer").css("background-image", "url(" + bgImage+ ")");
+                $("svg.designer").css("background-image", "url(" + bgImage + ")");
                 $("svg.designer").empty();
                 $("body").css("background-color", "#feece6");
             }
@@ -164,7 +169,9 @@ function initContainerByToken(token, house_id) {
             // });
 
             json.data.elements.map(createElement);
-                createScrollBarElements();
+            createScrollBarElements();
+            createTips();
+
         }
     });
 }
@@ -216,18 +223,18 @@ function createImage(data) {
             }
         })
         .attr("xlink:href", function (d) {
-             if (d.status) {
-                           if (d.vtype == 1)
-                               return 'img/light_on2.png';
-                           else
-                               return 'img/socket_on2.png';
+            if (d.status) {
+                if (d.vtype == 1)
+                    return 'img/light_on2.png';
+                else
+                    return 'img/socket_on2.png';
 
-                       } else {
-                           if (d.vtype == 1)
-                               return 'img/light_off2.png';
-                           else
-                               return 'img/socket_off2.png';
-                       }
+            } else {
+                if (d.vtype == 1)
+                    return 'img/light_off2.png';
+                else
+                    return 'img/socket_off2.png';
+            }
         });
     imageGroup.on("click", openConfirmDialog);
 
@@ -235,16 +242,16 @@ function createImage(data) {
 
 function createScrollBarElements() {
 
-  if (floor == 4) {
-               floor1ScrollBar.map(createScrollbar);
-            }else if (floor==5){
-                floor2ScrollBar.map(createScrollbar);
+    if (floor == 4) {
+        floor1ScrollBar.map(createScrollbar);
+    } else if (floor == 5) {
+        floor2ScrollBar.map(createScrollbar);
 
-            }else if (floor == 8){
+    } else if (floor == 8) {
 
-            }else {
+    } else {
 
-            }
+    }
 
 }
 
@@ -277,12 +284,12 @@ function createScrollbar(data) {
         try {
             // var result = eval(runScript);
             // if (result) {
-                scrollbarGroup.select("line.scrollbar-line")
-                    .style("stroke-dashoffset", 0)
-                    .transition()
-                    .duration(data.radius)
-                    .ease("linear")
-                    .style("stroke-dashoffset", data.strokeLinecap);
+            scrollbarGroup.select("line.scrollbar-line")
+                .style("stroke-dashoffset", 0)
+                .transition()
+                .duration(data.radius)
+                .ease("linear")
+                .style("stroke-dashoffset", data.strokeLinecap);
             // }
         } catch (e) {
             console.log("流动条公式计算异常" + runScript);
@@ -319,6 +326,30 @@ function createScrollbar(data) {
     function calcScrollbarDasharray(data) {
         return data.strokeWidth + " " + data.strokeDasharray;
     }
+}
+
+function createTips() {
+    var imageGroup = d3.select("#floorPlanSvg")
+        .append("g");
+
+    imageGroup.append("image")
+        .classed("control-image", true)
+        .attr("x", function (d) {
+            return 837
+        })
+        .attr("y", function (d) {
+            return 565
+        })
+        .attr("width", function (d) {
+           return 406
+        })
+        .attr("height", function (d) {
+            return 48
+        })
+        .attr("xlink:href", function (d) {
+
+            return 'img/tips.png'
+        });
 }
 
 

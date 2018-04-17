@@ -1,5 +1,6 @@
 package net.suntrans.szxf.uiv2.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -80,9 +81,19 @@ public class MoniDetailActivity extends BasedActivity implements View.OnClickLis
         myadapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                //...
+
+                Intent intent = new Intent(MoniDetailActivity.this,ChannelHisActivity.class);
+                intent.putExtra("channel_id",datas.get(position).id);
+                intent.putExtra("name","电流");
+                intent.putExtra("field","i");
+                intent.putExtra("unit","A");
+                intent.putExtra("title",datas.get(position).title);
+                startActivity(intent);
+
+
             }
         });
+
 
 
 
