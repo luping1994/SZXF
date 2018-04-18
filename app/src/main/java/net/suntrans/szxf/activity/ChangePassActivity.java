@@ -54,6 +54,7 @@ public class ChangePassActivity extends BasedActivity {
                 finish();
             }
         });
+//        setActionBarTitle(getString(R.string.title_modify_password));
         touxiang = (ImageView) findViewById(R.id.img);
         TextView name = (TextView) findViewById(R.id.name);
         String name1 = App.getSharedPreferences().getString("nikename","TIT餐厅");

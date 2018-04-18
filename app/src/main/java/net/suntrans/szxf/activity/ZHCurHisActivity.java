@@ -97,10 +97,11 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
             }
         });
         setSupportActionBar(binding.toolbar);
+        String title = getIntent().getStringExtra("title");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        actionBar.setTitle(title);
         initChart();
 
 
@@ -187,11 +188,11 @@ public class ZHCurHisActivity extends BasedActivity implements View.OnClickListe
 //                threeLine = true;
 //            }
 //        }
-        if (threeLine) {
-            binding.toolbar.setTitle("");
-        } else {
-            binding.toolbar.setTitle(paramName);
-        }
+//        if (threeLine) {
+//            binding.toolbar.setTitle("");
+//        } else {
+//            binding.toolbar.setTitle(paramName);
+//        }
         if (paramName != null) {
             String name = paramName;
 //            if (name.contains("A")) {

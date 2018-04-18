@@ -42,6 +42,7 @@ import net.suntrans.szxf.fragment.din.UpLoadImageFragment;
 import net.suntrans.szxf.rx.BaseSubscriber;
 import net.suntrans.szxf.uiv2.activity.ConLogsActivity;
 import net.suntrans.szxf.uiv2.activity.ControlLogsActivity;
+import net.suntrans.szxf.uiv2.activity.MessageActivity;
 import net.suntrans.szxf.uiv2.bean.Image;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.StatusBarCompat;
@@ -92,6 +93,13 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
         avatar = (ImageView) view.findViewById(R.id.img);
         bagde = (TextView) view.findViewById(R.id.bagde);
         glideRequest = Glide.with(this);
+        if(App.ROLE_ID == ROLE.STAFF){
+            view.findViewById(R.id.gonggao)
+            .setVisibility(View.VISIBLE);
+        }else {
+            view.findViewById(R.id.gonggao)
+                    .setVisibility(View.GONE);
+        }
 
     }
 
@@ -105,6 +113,7 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
         view.findViewById(R.id.titleHeader).setOnClickListener(this);
         view.findViewById(R.id.RLtishi).setOnClickListener(this);
         view.findViewById(R.id.conLogs).setOnClickListener(this);
+        view.findViewById(R.id.gonggao).setOnClickListener(this);
 
         name = (TextView) view.findViewById(R.id.name);
     }
@@ -139,6 +148,7 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                 startActivity(intent);
 
                 break;
+
             case R.id.loginOut:
                 new AlertDialog.Builder(getContext())
                         .setMessage("是否退出当前账号?")
@@ -176,6 +186,12 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                 intent4.putExtra("title", "控制日志");
                 startActivity(intent4);
 
+                break;
+
+            case R.id.gonggao:
+                Intent intent5 = new Intent(getActivity(), MessageActivity.class);
+                intent5.putExtra("title", "公告消息");
+                startActivity(intent5);
                 break;
         }
     }

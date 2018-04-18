@@ -69,6 +69,7 @@ public class Ammeter3Activity2 extends BasedActivity{
                 Intent intent = new Intent();
                 intent.putExtra("sno",sno);
                 intent.putExtra("id",id);
+                intent.putExtra("name",getIntent().getStringExtra("name"));
                 intent.setClass(Ammeter3Activity2.this, AmmeterParameterActivity.class);
                 startActivity(intent);
             }

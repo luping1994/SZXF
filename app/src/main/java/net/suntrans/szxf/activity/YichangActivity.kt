@@ -86,10 +86,7 @@ class YichangActivity : BasedActivity() {
         //            }
         //        });
         adapter!!.setOnLoadMoreListener(BaseQuickAdapter.RequestLoadMoreListener {
-            if (currentPage > totalPage) {
-                adapter!!.loadMoreEnd()
-                return@RequestLoadMoreListener
-            }
+
             getdata(loadMore)
         }, recyclerView)
         recyclerView!!.adapter = adapter

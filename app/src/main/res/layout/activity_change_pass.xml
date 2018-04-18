@@ -12,6 +12,7 @@
 
 
     <RelativeLayout
+
         android:id="@+id/fanhui"
         android:layout_width="60dp"
         android:layout_height="56dp">
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="修改密码"
         android:textColor="@color/white"

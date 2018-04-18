@@ -43,6 +43,7 @@ public class EnergyConFragment2 extends Fragment {
         stateView = StateView.inject(view.findViewById(R.id.content));
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle("能耗");
+
         View statusBar = view.findViewById(R.id.statusbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int statusBarHeight = StatusBarCompat.getStatusBarHeight(getContext());

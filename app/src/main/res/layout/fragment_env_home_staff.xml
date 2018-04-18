@@ -67,6 +67,7 @@
             android:background="?attr/selectableItemBackground">
 
             <TextView
+                android:id="@+id/subTitle"
                 android:textSize="14sp"
                 android:gravity="center"
                 android:textColor="@color/white"

@@ -33,7 +33,7 @@
         <RelativeLayout
             android:id="@+id/titleHeader"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="71dp"
             android:layout_marginTop="56dp"
             android:background="@drawable/bg_card">
 
@@ -87,8 +87,7 @@
                <LinearLayout
                    android:id="@+id/content"
                    android:layout_width="match_parent"
-                   android:layout_height="305dp"
-
+                   android:layout_height="wrap_content"
                    android:orientation="vertical">
 
                    <RelativeLayout
@@ -128,13 +127,13 @@
 
                    <View
                        android:layout_width="match_parent"
-                       android:layout_height="2dp"
+                       android:layout_height="1dp"
                        android:background="@color/devisionColor" />
 
                    <RelativeLayout
                        android:id="@+id/RLQues"
                        android:layout_width="match_parent"
-                       android:layout_height="48dp"
+                       android:layout_height="@dimen/per_item_count"
                        android:background="?attr/selectableItemBackground"
                        android:gravity="center_vertical">
 
@@ -154,16 +153,43 @@
                            android:textColor="@color/textColor"
                            android:textSize="16sp" />
                    </RelativeLayout>
-
                    <View
                        android:layout_width="match_parent"
-                       android:layout_height="2dp"
+                       android:layout_height="1dp"
+                       android:background="@color/devisionColor" />
+
+
+                   <RelativeLayout
+                       android:id="@+id/gonggao"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/per_item_count"
+                       android:background="?attr/selectableItemBackground"
+                       android:gravity="center_vertical">
+
+                       <ImageView
+                           android:tint="@color/colorPrimary"
+                           android:layout_width="18dp"
+                           android:layout_height="18dp"
+                           android:layout_marginLeft="18dp"
+                           android:src="@drawable/ic_rizhi" />
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="53dp"
+                           android:text="@string/gonggao"
+                           android:textColor="@color/textColor"
+                           android:textSize="16sp" />
+                   </RelativeLayout>
+                   <View
+                       android:layout_width="match_parent"
+                       android:layout_height="1dp"
                        android:background="@color/devisionColor" />
 
                    <RelativeLayout
                        android:id="@+id/RLModify"
                        android:layout_width="match_parent"
-                       android:layout_height="48dp"
+                       android:layout_height="@dimen/per_item_count"
                        android:background="?attr/selectableItemBackground"
                        android:gravity="center_vertical">
 
@@ -186,13 +212,13 @@
 
                    <View
                        android:layout_width="match_parent"
-                       android:layout_height="2dp"
+                       android:layout_height="1dp"
                        android:background="@color/devisionColor" />
 
                    <RelativeLayout
                        android:id="@+id/RLDevice"
                        android:layout_width="match_parent"
-                       android:layout_height="48dp"
+                       android:layout_height="@dimen/per_item_count"
                        android:background="?attr/selectableItemBackground"
                        android:gravity="center_vertical">
 
@@ -214,14 +240,14 @@
                    </RelativeLayout>
                    <View
                        android:layout_width="match_parent"
-                       android:layout_height="2dp"
+                       android:layout_height="1dp"
                        android:background="@color/devisionColor" />
 
 
                    <RelativeLayout
                        android:id="@+id/conLogs"
                        android:layout_width="match_parent"
-                       android:layout_height="48dp"
+                       android:layout_height="@dimen/per_item_count"
                        android:background="?attr/selectableItemBackground"
                        android:gravity="center_vertical">
 
@@ -242,14 +268,14 @@
                    </RelativeLayout>
                    <View
                        android:layout_width="match_parent"
-                       android:layout_height="2dp"
+                       android:layout_height="1dp"
                        android:background="@color/devisionColor" />
 
 
                    <RelativeLayout
                        android:id="@+id/RLAbout"
                        android:layout_width="match_parent"
-                       android:layout_height="48dp"
+                       android:layout_height="@dimen/per_item_count"
                        android:background="?attr/selectableItemBackground"
                        android:gravity="center_vertical">
 

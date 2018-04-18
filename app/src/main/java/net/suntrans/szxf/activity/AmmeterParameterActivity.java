@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class AmmeterParameterActivity extends BasedActivity {
     private RecyclerView recyclerView;
     private Map<String, String> dictionary = null;
     private Myadapter adapter;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +52,7 @@ public class AmmeterParameterActivity extends BasedActivity {
         adapter = new Myadapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,1));
-        findViewById(R.id.fanhui).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
         recyclerView.addItemDecoration(new OffsetDecoration(UiUtils.dip2px(2)));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -67,6 +65,16 @@ public class AmmeterParameterActivity extends BasedActivity {
     private void initData() {
         sno = getIntent().getStringExtra("sno");
         id = getIntent().getStringExtra("id");
+        name = getIntent().getStringExtra("name");
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(name +"-"+getString(R.string.meter_shishicanshu));
+
 
         LogUtil.e("id="+id);
         dictionary = new HashMap<>();
@@ -207,6 +215,7 @@ public class AmmeterParameterActivity extends BasedActivity {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+
             holder.setData(position);
         }
 
@@ -217,24 +226,26 @@ public class AmmeterParameterActivity extends BasedActivity {
 
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView name;
+            private TextView name1;
             private TextView value;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                name = (TextView) itemView.findViewById(R.id.name);
+                name1 = (TextView) itemView.findViewById(R.id.name);
                 value = (TextView) itemView.findViewById(R.id.value);
                 itemView.findViewById(R.id.dianliull).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(mActivity, HistroyDataActivity.class);
-//                        intent.putExtra("sno", sno);
-//                        intent.putExtra("vtype", "3");
-//                        intent.putExtra("name",getIntent().getStringExtra("name") );
-//                        intent.putExtra("data_type", datas.get(getAdapterPosition()).name);
-//                        intent.putExtra("shuoming", dictionary.get(datas.get(getAdapterPosition()).name));
-//                        startActivity(intent);
+//              Intent intent = new Intent(mActivity, HistroyDataActivity.class);
+//              intent.putExtra("sno", sno);
+//              intent.putExtra("vtype", "3");
+//              intent.putExtra("name",getIntent().getStringExtra("name") );
+//              intent.putExtra("data_type", datas.get(getAdapterPosition()).name);
+//              intent.putExtra("shuoming", dictionary.get(datas.get(getAdapterPosition()).name));
+//              startActivity(intent);
+
                         if("更新时间".equals(datas.get(getAdapterPosition()).nameCH)){
+
                             return;
                         }
                         Intent intent = new Intent(AmmeterParameterActivity.this, ZHCurHisActivity.class);
@@ -243,7 +254,7 @@ public class AmmeterParameterActivity extends BasedActivity {
                         intent.putExtra("unit",datas.get(getAdapterPosition()).unit);
                         intent.putExtra("sno",sno);
                         intent.putExtra("id",id);
-                        intent.putExtra("title",datas.get(getAdapterPosition()).name+"历史记录");
+                        intent.putExtra("title",name+"-"+datas.get(getAdapterPosition()).nameCH+"历史");
                         startActivity(intent);
 
                     }
@@ -251,7 +262,7 @@ public class AmmeterParameterActivity extends BasedActivity {
             }
 
             public void setData(int position) {
-                name.setText(datas.get(position).nameCH);
+                name1.setText(datas.get(position).nameCH);
                 value.setText(datas.get(position).value + datas.get(position).unit);
             }
         }

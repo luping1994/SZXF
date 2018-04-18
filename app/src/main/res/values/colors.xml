@@ -28,6 +28,8 @@
     <color name="enenry_value_textcolr">#fb5629</color>
     <color name="divider_color">#f3f4f5</color>
     <color name="online_color">#0b9d2f</color>
+    <color name="staff_channel_open_color">#10afbb</color>
+    <color name="staff_channel_close_color">#d73800</color>
 
 
 </resources>

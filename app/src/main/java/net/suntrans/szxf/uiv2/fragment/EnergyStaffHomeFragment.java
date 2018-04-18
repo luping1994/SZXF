@@ -1,5 +1,6 @@
 package net.suntrans.szxf.uiv2.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import net.suntrans.looney.widgets.SegmentedGroup;
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.activity.Ammeter3Activity2;
+import net.suntrans.szxf.activity.AmmeterParameterActivity;
 import net.suntrans.szxf.adapter.FragmentAdapter;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.SharedPreferencesHepler;
@@ -26,10 +30,11 @@ import net.suntrans.szxf.utils.StatusBarCompat;
 
 public class EnergyStaffHomeFragment extends RxFragment {
     private final String TAG = this.getClass().getSimpleName();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_env_home_staff,container,false);
+        View view = inflater.inflate(R.layout.fragment_env_home_staff, container, false);
         View statusBar = view.findViewById(R.id.statusbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int statusBarHeight = StatusBarCompat.getStatusBarHeight(getContext());
@@ -46,18 +51,18 @@ public class EnergyStaffHomeFragment extends RxFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        String officeHouseId = SharedPreferencesHepler.getOfficeHouseId();
-        String dormHouseId = SharedPreferencesHepler.getDormHouseId();
-        LogUtil.i(TAG,officeHouseId);
-        LogUtil.i(TAG,dormHouseId);
-        EnergyDetailFragment fragment = EnergyDetailFragment.newInstance(officeHouseId,officeHouseId);
-        EnergyDetailFragment fragment2 = EnergyDetailFragment.newInstance(dormHouseId,dormHouseId);
+        final String officeHouseId = SharedPreferencesHepler.getOfficeHouseId();
+        final String dormHouseId = SharedPreferencesHepler.getDormHouseId();
+        LogUtil.i(TAG, officeHouseId);
+        LogUtil.i(TAG, dormHouseId);
+        EnergyDetailFragment fragment = EnergyDetailFragment.newInstance(officeHouseId, officeHouseId);
+        EnergyDetailFragment fragment2 = EnergyDetailFragment.newInstance(dormHouseId, dormHouseId);
         FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager());
-        adapter.addFragment(fragment,"office");
-        adapter.addFragment(fragment2,"dorm");
+        adapter.addFragment(fragment, "office");
+        adapter.addFragment(fragment2, "dorm");
 
-        view.findViewById(R.id.menu)
-                .setVisibility(View.INVISIBLE);
+
+
 
         final RadioButton button0 = (RadioButton) view.findViewById(R.id.radio0);
         final RadioButton button1 = (RadioButton) view.findViewById(R.id.radio1);
@@ -71,9 +76,9 @@ public class EnergyStaffHomeFragment extends RxFragment {
 
             @Override
             public void onPageSelected(int position) {
-                if (position==0){
+                if (position == 0) {
                     button0.setChecked(true);
-                }else if (position == 1){
+                } else if (position == 1) {
                     button1.setChecked(true);
                 }
             }
@@ -88,12 +93,37 @@ public class EnergyStaffHomeFragment extends RxFragment {
         segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId==R.id.radio0){
+                if (checkedId == R.id.radio0) {
                     pager.setCurrentItem(0);
-                }else if (checkedId == R.id.radio1){
+                } else if (checkedId == R.id.radio1) {
                     pager.setCurrentItem(1);
                 }
             }
         });
+
+        TextView subtitle = (TextView) view.findViewById(R.id.subTitle);
+        subtitle.setText("详细");
+        view.findViewById(R.id.menu)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String house_id = officeHouseId;
+                        String name = "办公室";
+                        if (pager.getCurrentItem()==0){
+                            house_id =officeHouseId;
+                            name = "办公室";
+                        }else if (pager.getCurrentItem()==1){
+                            house_id =dormHouseId;
+                            name = "宿舍";
+
+                        }
+                        Intent intent = new Intent();
+                        intent.putExtra("sno",house_id);
+                        intent.putExtra("id",house_id);
+                        intent.putExtra("name",name);
+                        intent.setClass(getContext(), AmmeterParameterActivity.class);
+                        startActivity(intent);
+                    }
+                });
     }
 }

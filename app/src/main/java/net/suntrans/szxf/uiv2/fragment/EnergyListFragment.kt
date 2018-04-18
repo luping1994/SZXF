@@ -58,7 +58,7 @@ class EnergyListFragment : BasedFragment() {
             intent.setClass(activity, Ammeter3Activity2::class.java)
             intent.putExtra("sno", datas!![groupPosition].sub[childPosition].id)
             intent.putExtra("id", datas!![groupPosition].sub[childPosition].id)
-            intent.putExtra("name", datas!![groupPosition].sub[childPosition].name)
+            intent.putExtra("name",datas!![groupPosition].sub[childPosition].house_number+"-"+ datas!![groupPosition].sub[childPosition].name)
             startActivity(intent)
 
             true

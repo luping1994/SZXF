@@ -6,36 +6,8 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_size"
-        android:background="@color/colorPrimary">
 
-        <RelativeLayout
-            android:id="@+id/fanhui"
-            android:layout_width="60dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
-                android:src="@drawable/ic_back" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="详细参数"
-            android:textColor="@color/white"
-            android:textSize="@dimen/actionBarTitleSize" />
-
-    </RelativeLayout>
-
+    <include layout="@layout/toolbar" />
 
 
     <android.support.v4.widget.SwipeRefreshLayout

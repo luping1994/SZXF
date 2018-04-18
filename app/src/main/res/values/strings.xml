@@ -85,5 +85,8 @@
     <string name="title_kt_control">空调控制</string>
     <string name="sub_title_liandong">联动设置</string>
     <string name="tips_kt_unsported">不支持的空调类型...</string>
+    <string name="meter_shishicanshu">电表实时参数</string>
+    <string name="title_modify_password">修改密码</string>
+    <string name="gonggao">公告消息</string>
 
 </resources>

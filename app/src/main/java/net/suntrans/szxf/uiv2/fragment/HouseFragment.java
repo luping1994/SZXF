@@ -124,7 +124,7 @@ public class HouseFragment extends BasedFragment2 {
         protected void convert(BaseViewHolder helper, ChannelInfo item) {
             helper.setText(R.id.name, item.title);
             helper.setText(R.id.status, item.status == 1 ? "(已打开)" : "(已关闭)");
-            helper.setTextColor(R.id.status, item.status == 1 ? context.getResources().getColor(R.color.online_color)
+            helper.setTextColor(R.id.status, item.status == 1 ? context.getResources().getColor(R.color.staff_channel_close_color)
                     : context.getResources().getColor(R.color.grey));
             helper.addOnClickListener(R.id.close)
                     .addOnClickListener(R.id.open);

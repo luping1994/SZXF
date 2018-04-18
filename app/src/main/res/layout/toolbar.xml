@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_size"
         android:background="?attr/colorPrimary"
+        app:paddingStart="0dp"
+        app:navigationIcon="@drawable/ic_back"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/Toolbar"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-    </android.support.v7.widget.Toolbar>
+        app:titleTextAppearance="@style/Toolbar.TitleText" />
 </android.support.design.widget.AppBarLayout>

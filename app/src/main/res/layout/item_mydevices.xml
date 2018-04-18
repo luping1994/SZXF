@@ -43,16 +43,16 @@
             android:layout_marginLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider_color" />
+            android:background="@color/staff_channel_close_color" />
 
         <LinearLayout
+            android:gravity="bottom"
             android:paddingRight="16dp"
             android:paddingLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp">
 
             <TextView
@@ -61,10 +61,10 @@
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_open"
+                android:background="@drawable/bg_open1"
                 android:gravity="center"
                 android:text="@string/text_open"
-                android:textColor="@color/open_text_color" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:textSize="12sp"
@@ -73,10 +73,10 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="16dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_close"
+                android:background="@drawable/bg_close1"
                 android:gravity="center"
                 android:text="@string/text_close"
-                android:textColor="@color/close_text_color" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>
