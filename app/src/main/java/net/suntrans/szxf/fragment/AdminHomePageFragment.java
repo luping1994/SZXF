@@ -397,14 +397,14 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
 //                                        .append("\u3000\u3000\u3000\u3000\u3000");
                                 strings.add(d.house_number + "-" + d.message);
                             }
-                            nomal.resIndex = 0;
+                            nomal.reset();
                             nomal.setResource(strings);
                             nomal.setTextColor(Color.parseColor("#ff0000"));
 
                         } else {
                             strings.clear();
                             strings.add("一切正常");
-                            nomal.resIndex = 0;
+                            nomal.reset();
                             nomal.setResource(strings);
                             nomal.setTextColor(Color.parseColor("#0b9d2f"));
                         }

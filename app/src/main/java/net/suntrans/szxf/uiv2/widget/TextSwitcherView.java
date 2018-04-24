@@ -31,7 +31,7 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
     private int timerStartAgainCount = 0;
     private Context mContext;
     private Timer timer;
-    private TextView tView;
+
 
     public TextSwitcherView(Context context) {
 
@@ -53,7 +53,6 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
         this.setInAnimation(getContext(), R.anim.vertical_in);
         this.setOutAnimation(getContext(), R.anim.vertical_out);
         timer = new Timer();
-
         timer.scheduleAtFixedRate(timerTask, 1, 3000);
     }
 
@@ -107,15 +106,16 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
 
     public void updateTextSwitcher() {
         if (this.reArrayList != null && this.reArrayList.size() > 0) {
-            tView.setTextColor(textColor);
-            this.setCurrentText(this.reArrayList.get(resIndex++));
-            if (this.reArrayList.size() != 1) {
+            ((TextView)getCurrentView()).setTextColor(textColor);
+            resIndex+=1;
+            if (this.reArrayList.size() > 1) {
                 if (resIndex > this.reArrayList.size() - 1) {
                     resIndex = 0;
                 }
             } else {
 
             }
+            this.setCurrentText(this.reArrayList.get(resIndex));
         }
 
     }
@@ -123,7 +123,7 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
     @Override
     public View makeView() {
         // TODO Auto-generated method stub
-        tView = new TextView(getContext());
+        TextView   tView = new TextView(getContext());
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, UiUtils.dip2px(30));
         tView.setLayoutParams(params);
         tView.setGravity(Gravity.CENTER);
@@ -136,7 +136,7 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
 
     public void setTextColor(int color) {
         this.textColor = color;
-        tView.setTextColor(color);
+
     }
 
 }
