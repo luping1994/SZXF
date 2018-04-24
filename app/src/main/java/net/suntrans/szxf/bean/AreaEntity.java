@@ -58,6 +58,7 @@ public class AreaEntity extends RespondBody<List<AreaEntity.AreaFloor>>{
         public String shidu;
         public String wendu;
         public String yanwu;
+        public String zhendong;
         public String isOnline;
 
 

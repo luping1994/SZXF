@@ -51,6 +51,7 @@ import net.suntrans.szxf.uiv2.activity.MessageActivity;
 import net.suntrans.szxf.uiv2.activity.SceneActivity;
 import net.suntrans.szxf.uiv2.adapter.DividerItemDecoration;
 import net.suntrans.szxf.uiv2.bean.SensusAbnormal;
+import net.suntrans.szxf.uiv2.widget.TextSwitcherView;
 import net.suntrans.szxf.utils.StatusBarCompat;
 import net.suntrans.szxf.utils.UiUtils;
 
@@ -82,7 +83,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
     private AdminAdapter adminAdapter;
 
     private View headerView;
-    private TextView nomal;
+    private TextSwitcherView nomal;
     private int widthPixels;
 
     @Nullable
@@ -165,7 +166,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
             }
         }, new Date(), 4000);
 
-        nomal = (TextView) view.findViewById(R.id.abnormal);
+        nomal = (TextSwitcherView) view.findViewById(R.id.abnormal);
 
 
     }
@@ -375,6 +376,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
 
     private Timer timer = new Timer();
 
+    private ArrayList<String> strings = new ArrayList<>();
     private void getWarning() {
         api.getSensusAbnormal()
                 .compose(this.<SensusAbnormal>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
@@ -385,19 +387,25 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
                     public void onNext(SensusAbnormal sensusAbnormalRespondBody) {
                         super.onNext(sensusAbnormalRespondBody);
                         List<SensusAbnormal.Abnormal> data = sensusAbnormalRespondBody.data;
+                        strings.clear();
                         if (data != null && data.size() >= 1) {
+
                             StringBuilder sb = new StringBuilder();
                             for (SensusAbnormal.Abnormal d :
                                     data) {
-                                sb.append(d.house_number + "-" + d.message)
-                                        .append("\u3000\u3000\u3000\u3000");
+//                                sb.append(d.house_number + "-" + d.message)
+//                                        .append("\u3000\u3000\u3000\u3000\u3000");
+                                strings.add(d.house_number + "-" + d.message);
                             }
-                            nomal.setText(sb.toString());
+                            nomal.resIndex = 0;
+                            nomal.setResource(strings);
                             nomal.setTextColor(Color.parseColor("#ff0000"));
 
                         } else {
-                            nomal.setText("一切正常");
-
+                            strings.clear();
+                            strings.add("一切正常");
+                            nomal.resIndex = 0;
+                            nomal.setResource(strings);
                             nomal.setTextColor(Color.parseColor("#0b9d2f"));
                         }
 
@@ -414,6 +422,11 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
     @Override
     public void onDestroy() {
         timer.cancel();
+        try {
+            nomal.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.onDestroy();
     }
 }

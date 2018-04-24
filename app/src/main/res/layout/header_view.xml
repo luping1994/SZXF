@@ -10,7 +10,7 @@
         android:src="@drawable/header_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <net.suntrans.szxf.views.AlwaysMarqueeTextView
+    <net.suntrans.szxf.uiv2.widget.TextSwitcherView
         android:id="@+id/abnormal"
         android:background="#33000000"
         android:textSize="12sp"

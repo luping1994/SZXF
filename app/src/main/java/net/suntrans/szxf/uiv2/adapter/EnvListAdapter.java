@@ -154,11 +154,12 @@ public class EnvListAdapter extends BaseExpandableListAdapter {
             String jiquan = datas.get(groupPosition).sub.get(childPosition).jiaquan;
             String yanwu = datas.get(groupPosition).sub.get(childPosition).yanwu;
             String wendu = datas.get(groupPosition).sub.get(childPosition).wendu;
+            String zhendong = datas.get(groupPosition).sub.get(childPosition).zhendong;
             this.pm25.setText(pm25 == null ? "0.0" : pm25 + UNIT_PM25);
             this.jiaquan.setText(jiquan == null ? "0.0" : jiquan + UNIT_PM25);
             this.yanwu.setText(yanwu == null ? "0.0" : yanwu + UNIT_PM25);
             this.wendu.setText(wendu == null ? "0.0" : wendu + UNIT_WENDU);
-            name.setText(datas.get(groupPosition).sub.get(childPosition).house_number+"-"+datas.get(groupPosition).sub.get(childPosition).name);
+            name.setText(datas.get(groupPosition).sub.get(childPosition).house_number + "-" + datas.get(groupPosition).sub.get(childPosition).name);
 
 
             if (pm25 == null)
@@ -175,30 +176,40 @@ public class EnvListAdapter extends BaseExpandableListAdapter {
 
 
             StringBuilder sb = new StringBuilder();
-
-            if (Float.parseFloat(pm25) > 115) {
-                sb.append("pm2.5超标");
+            if (Float.parseFloat(zhendong) > 1) {
+                sb.append("振动过大,");
+            }
+            if (Float.parseFloat(pm25) > 300) {
+                sb.append("pm2.5,");
             }
 
             if (Float.parseFloat(jiquan) > 0.1) {
-                sb.append("甲醛超标");
+                sb.append("甲醛,");
             }
 
-            if (Float.parseFloat(yanwu) > 750) {
-                sb.append("烟雾超标");
+            if (Float.parseFloat(yanwu) > 5) {
+                sb.append("烟雾,");
             }
 
-            if (Float.parseFloat(pm25) < 115 && Float.parseFloat(jiquan) < 0.1 && Float.parseFloat(yanwu) < 750) {
+            if (Float.parseFloat(wendu) > 40) {
+                sb.append("温度,");
+            }
+
+
+
+            if (Float.parseFloat(pm25) < 300 && Float.parseFloat(jiquan) < 0.1 && Float.parseFloat(yanwu) < 5 && Float.parseFloat(wendu) < 40) {
                 sb.append("正常");
             }
 
+
             String e = sb.toString();
             int color = Color.RED;
+
             if (e.equals("正常")) {
                 color = Color.parseColor("#0b9d2f");
             } else {
-                color =Color.parseColor("#dc4200");
-
+                e = e + "超标";
+                color = Color.parseColor("#dc4200");
             }
 
             isOnline.setText("(" + e + ")");
