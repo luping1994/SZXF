@@ -172,6 +172,7 @@
         <activity android:name=".uiv2.activity.SensusConfigActivity" android:screenOrientation="portrait"/>
         <activity android:name=".uiv2.activity.KtAutoActivity" android:screenOrientation="portrait"/>
         <activity android:name=".uiv2.activity.ChannelHisActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.YichangActivityTotal" />
 
         <service android:name="net.suntrans.szxf.MyService" />
 

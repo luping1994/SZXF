@@ -128,6 +128,10 @@ public class KongtiaoFragment extends BasedFragment2 implements View.OnClickList
                     air.open();
                 }
                 break;
+            case R.id.dingshi:
+                sendCmdToServer("26");
+                binding.dingshiText.setVisibility(View.VISIBLE);
+                break;
         }
 
     }

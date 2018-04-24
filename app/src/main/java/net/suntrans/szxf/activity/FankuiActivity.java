@@ -14,6 +14,8 @@ import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import net.suntrans.stateview.StateView;
 import net.suntrans.szxf.App;
@@ -60,42 +62,37 @@ public class FankuiActivity extends BasedActivity {
         datas = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         adapter = new MyAdapter(R.layout.item_yicahng, datas);
-        ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(adapter);
-        final ItemTouchHelper touchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
-        touchHelper.attachToRecyclerView(recyclerView);
-        adapter.enableSwipeItem();
-//        adapter.setOnItemSwipeListener(new OnItemSwipeListener() {
-//            @Override
-//            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
-//
-//            }
-//
-//            @Override
-//            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-//
-//            }
-//
-//            @Override
-//            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-//                delete(datas.get(pos).log_id);
-//            }
-//
-//            @Override
-//            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-//
-//            }
-//        });
+//        ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(adapter);
+//        final ItemTouchHelper touchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+//        touchHelper.attachToRecyclerView(recyclerView);
+//        adapter.enableSwipeItem();
+
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                if (currentPage>totalPage){
-                    adapter.loadMoreEnd();
-                    return;
-                }
+
                 getdata(loadMore);
             }
         }, recyclerView);
         recyclerView.setAdapter(adapter);
+
+
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                new QMUIDialog.MessageDialogBuilder(FankuiActivity.this)
+                        .setMessage(datas.get(position).contents)
+                        .setContentAreaMaxHeight(UiUtils.getDisplaySize(getApplicationContext())[1])
+                        .addAction(getString(R.string.ok), new QMUIDialogAction.ActionListener() {
+                            @Override
+                            public void onClick(QMUIDialog dialog, int index) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+            }
+        });
+
+
 
     }
 
@@ -118,7 +115,7 @@ public class FankuiActivity extends BasedActivity {
                 if (o.getCode() == 200) {
                     UiUtils.showToast("删除成功!");
                 } else if (o.getCode()==401){
-                    ActivityUtils.showLoginOutDialogFragmentToActivity(getSupportFragmentManager(),"Alert");
+//                    ActivityUtils.showLoginOutDialogFragmentToActivity(getSupportFragmentManager(),"Alert");
                 }else {
                     UiUtils.showToast("删除失败");
                 }
@@ -135,7 +132,7 @@ public class FankuiActivity extends BasedActivity {
         });
 
         TextView txTitle = (TextView) findViewById(R.id.title);
-        txTitle.setText("意见反馈");
+        txTitle.setText("反馈建议");
     }
 
     class MyAdapter extends BaseItemDraggableAdapter<Gustbook, BaseViewHolder> {
@@ -148,6 +145,7 @@ public class FankuiActivity extends BasedActivity {
         protected void convert(BaseViewHolder helper, Gustbook item) {
             helper.setText(R.id.msg, "" + item.contents )
                     .setText(R.id.time, item.username)
+                    .addOnClickListener(R.id.root)
                     .setTextColor(R.id.msg, Color.parseColor("#333333"));
         }
     }
@@ -192,12 +190,15 @@ public class FankuiActivity extends BasedActivity {
             public void onNext(RespondBody<List<Gustbook>> o) {
                 if (o.code == 200) {
                     List<Gustbook> lists = o.data;
+                    if (loadtype==fristLoad){
+                        datas.clear();
+                    }
                     if (lists == null || lists.size() == 0) {
                         if (loadtype==fristLoad){
                             stateView.showEmpty();
                             recyclerView.setVisibility(View.INVISIBLE);
                         }else {
-                            adapter.loadMoreFail();
+                            adapter.loadMoreEnd();
                         }
 
                     } else {
@@ -222,7 +223,6 @@ public class FankuiActivity extends BasedActivity {
 
     @Override
     protected void onStop() {
-        App.getSharedPreferences().edit().putInt("yichangCount", datas.size()).commit();
         super.onStop();
     }
 }

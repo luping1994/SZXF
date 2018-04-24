@@ -32,6 +32,7 @@ import net.suntrans.szxf.activity.FankuiActivity;
 import net.suntrans.szxf.activity.LoginActivity;
 import net.suntrans.szxf.activity.QuestionActivity;
 import net.suntrans.szxf.activity.YichangActivity;
+import net.suntrans.szxf.activity.YichangActivityTotal;
 import net.suntrans.szxf.api.Api;
 import net.suntrans.szxf.api.RetrofitHelper;
 import net.suntrans.szxf.bean.SampleResult;
@@ -122,12 +123,11 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.RLQues:
-                if (App.ROLE_ID == ROLE.STAFF) {
-                    startActivity(new Intent(getActivity(), QuestionActivity.class));
-                } else {
-                    startActivity(new Intent(getActivity(), FankuiActivity.class));
-
-                }
+//                if (App.ROLE_ID == ROLE.STAFF) {
+//                    ;
+//                } else {
+//                }
+                startActivity(new Intent(getActivity(), QuestionActivity.class));
                 break;
             case R.id.RLModify:
                 startActivity(new Intent(getActivity(), ChangePassActivity.class));
@@ -143,7 +143,7 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
 
                 break;
             case R.id.RLtishi:
-                Intent intent = new Intent(getActivity(), YichangActivity.class);
+                Intent intent = new Intent(getActivity(), YichangActivityTotal.class);
                 intent.putExtra("title", "异常提示");
                 startActivity(intent);
 
@@ -255,14 +255,11 @@ public class PerCenFragment extends LazyLoadFragment implements View.OnClickList
                                         .load(info.data.avatar_url)
                                         .asBitmap()
                                         .override(UiUtils.dip2px(33), UiUtils.dip2px(33))
-                                        .transform(new GlideRoundTransform(getActivity(), UiUtils.dip2px(16)))
                                         .placeholder(R.drawable.user_white)
                                         .into(new SimpleTarget<Bitmap>() {
                                             @Override
                                             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-
                                                 if (resource != null){
-
                                                     avatar.setImageBitmap(resource);
                                                 }
                                                 else {

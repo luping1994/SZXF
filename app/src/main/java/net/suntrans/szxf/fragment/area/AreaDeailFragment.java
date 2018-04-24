@@ -189,6 +189,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
         class ViewHolder extends RecyclerView.ViewHolder {
 
             ImageView arrow;
+            ImageView imageView;
             TextView area;
             TextView name;
             RelativeLayout root;
@@ -199,6 +200,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                 root = (RelativeLayout) itemView.findViewById(R.id.root);
                 name = (TextView) itemView.findViewById(R.id.name);
                 arrow = (ImageView) itemView.findViewById(R.id.arrow);
+                imageView = (ImageView) itemView.findViewById(R.id.imageView);
                 checkbox = (SwitchButton) itemView.findViewById(R.id.checkbox);
                 checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -237,7 +239,7 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                         if (datas.get(getAdapterPosition()).channel_type == DeviceType.AIR_CONDITIONER){
                             Intent intent = new Intent();
                             intent.putExtra("channel_id",datas.get(getAdapterPosition()).id);
-                            intent.putExtra("title",datas.get(getAdapterPosition()).title);
+                            intent.putExtra("title",getActivity().getIntent().getStringExtra("name"));
                             intent.setClass(getActivity(), KongtiaoActivity.class);
                             startActivity(intent);
                         }
@@ -257,6 +259,11 @@ public class AreaDeailFragment extends RxFragment implements ChangeNameDialogFra
                 } else {
                     arrow.setVisibility(View.INVISIBLE);
 
+                }
+                try {
+                    imageView.setImageResource(DeviceType.deviceIcons.get(datas.get(position).channel_type));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 checkbox.setCheckedImmediately(datas.get(position).status.equals("1") ? true : false);
 //                checkbox.setChecked();

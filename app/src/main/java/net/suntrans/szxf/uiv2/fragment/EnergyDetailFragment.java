@@ -233,6 +233,7 @@ public class EnergyDetailFragment extends BasedFragment2 implements OnChartValue
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
+        mChart.setNoDataText("暂无数据");
         // l.setExtra(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
         // "def", "ghj", "ikl", "mno" });
         // l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",

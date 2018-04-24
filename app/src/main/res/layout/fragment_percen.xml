@@ -37,8 +37,7 @@
             android:layout_marginTop="56dp"
             android:background="@drawable/bg_card">
 
-            <ImageView
-
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:src="@drawable/user_white"
                 android:id="@+id/img"
                 android:layout_width="33dp"

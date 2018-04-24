@@ -56,7 +56,7 @@ public class QuestionActivity extends BasedActivity {
         name.setText(name1);
         String imgurl = App.getSharedPreferences().getString("touxiang","-1");
         Glide.with(this)
-                .load(RetrofitHelper.BASE_URL2+imgurl)
+                .load(imgurl)
                 .asBitmap()
                 .override(UiUtils.dip2px(33), UiUtils.dip2px(33))
                 .placeholder(R.drawable.user_white)

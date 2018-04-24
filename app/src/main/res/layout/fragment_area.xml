@@ -53,13 +53,13 @@
              android:layout_height="match_parent">
              <LinearLayout
                  android:layout_width="match_parent"
-                 android:layout_height="150dp"
+                 android:layout_height="250dp"
                  android:orientation="vertical">
 
                  <LinearLayout
                      android:background="@drawable/item_selector"
                      android:layout_width="match_parent"
-                     android:layout_height="150dp"
+                     android:layout_height="250dp"
                      android:orientation="vertical"
                     >
 
@@ -209,6 +209,93 @@
                          android:background="@color/divider_color"
                          android:layout_width="match_parent"
                          android:layout_height="1dp"/>
+
+                     <RelativeLayout
+                         android:layout_weight="1"
+                         android:layout_width="match_parent"
+                         android:layout_height="0dp"
+                         android:gravity="center"
+                         android:orientation="horizontal">
+
+                         <TextView
+                             android:drawableLeft="@drawable/ic_home"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="16dp"
+                             android:gravity="center|right"
+                             android:text="整栋楼插座"
+                             android:textColor="@color/black" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_toLeftOf="@+id/socketClose"
+                             android:id="@+id/socketOpen"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:background="@drawable/bg_open"
+                             android:gravity="center"
+                             android:text="全开"
+                             android:textColor="@color/open_text_color" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_alignParentRight="true"
+                             android:id="@+id/socketClose"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:layout_marginLeft="16dp"
+                             android:layout_marginRight="16dp"
+                             android:background="@drawable/bg_close"
+                             android:gravity="center"
+                             android:text="全关"
+                             android:textColor="@color/close_text_color" />
+                     </RelativeLayout>
+
+                     <View
+                         android:background="@color/divider_color"
+                         android:layout_width="match_parent"
+                         android:layout_height="1dp"/>
+
+                     <RelativeLayout
+                         android:layout_weight="1"
+                         android:layout_width="match_parent"
+                         android:layout_height="0dp"
+                         android:gravity="center"
+                         android:orientation="horizontal">
+
+                         <TextView
+                             android:drawableLeft="@drawable/ic_home"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginLeft="16dp"
+                             android:gravity="center|right"
+                             android:text="整栋楼照明"
+                             android:textColor="@color/black" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_toLeftOf="@+id/zhaomingClose"
+                             android:id="@+id/zhaomingOpen"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:background="@drawable/bg_open"
+                             android:gravity="center"
+                             android:text="全开"
+                             android:textColor="@color/open_text_color" />
+
+                         <TextView
+                             android:layout_centerVertical="true"
+                             android:layout_alignParentRight="true"
+                             android:id="@+id/zhaomingClose"
+                             android:layout_width="50dp"
+                             android:layout_height="25dp"
+                             android:layout_marginLeft="16dp"
+                             android:layout_marginRight="16dp"
+                             android:background="@drawable/bg_close"
+                             android:gravity="center"
+                             android:text="全关"
+                             android:textColor="@color/close_text_color" />
+                     </RelativeLayout>
                  </LinearLayout>
 
                  <net.suntrans.szxf.views.NestedExpandaleListView

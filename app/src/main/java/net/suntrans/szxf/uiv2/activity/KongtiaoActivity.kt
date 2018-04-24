@@ -35,7 +35,7 @@ class KongtiaoActivity : BasedActivity() {
         binding!!.back.setOnClickListener { finish() }
 
         val txTitle = findViewById(R.id.title) as TextView
-        val title = intent.getStringExtra("title")
+        val title = intent.getStringExtra("title")+"空调"
         txTitle.text = title
 
         findViewById(R.id.back)

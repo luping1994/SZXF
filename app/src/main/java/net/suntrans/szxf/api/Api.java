@@ -257,6 +257,7 @@ public interface Api {
     Observable<ChannelEditorInfo> getChannelEditor(@Field("channel_id") String channel_id);
 
     //2018-4/16
+
     /**
      * 查询电表实时历史数据
      *
@@ -341,22 +342,28 @@ public interface Api {
     @POST("scene/delete")
     Observable<RespondBody> deleteSceneV2(@Field("ids") String id);
 
+    //删除场景通道
     @FormUrlEncoded
     @POST("scene/channel/delete")
     Observable<RespondBody> deleteSceneChannel(@FieldMap Map<String, String> map);
 
+    //创建场景
     @FormUrlEncoded
     @POST("scene/store")
     Observable<RespondBody> createScene(@FieldMap Map<String, String> map);
 
+    //控制场景
     @FormUrlEncoded
     @POST("switch/slcScene")
     Observable<RespondBody> switchSceneV2(@Field("scene_id") String id);
 
 
+    //获取区域列表
     @POST("houseList")
     Observable<AreaEntity> getHomeHouse();
 
+
+    //获取场景列表
     @POST("sensus/sensusList")
     Observable<AreaEntity> getSensusList();
 
@@ -374,6 +381,11 @@ public interface Api {
     @FormUrlEncoded
     @POST("switch/officeCtrl")
     Observable<RespondBody> switchOffice(@Field("cmd") String cmd, @Field("type") String type);
+
+    //控制整栋楼插座、照明请求参数 type 【1 照明 2 插座】 cmd【1 开 0 关】
+    @FormUrlEncoded
+    @POST("switch/classifyCtrl")
+    Observable<RespondBody> classifyCtrl(@Field("cmd") String cmd, @Field("type") String type);
 
     //控制房间
     @FormUrlEncoded
@@ -412,7 +424,7 @@ public interface Api {
     //获取我的设备
     @FormUrlEncoded
     @POST("user/getGuestbook")
-    Observable<RespondBody<List<Gustbook>>> getGustbook(@Field("current_page") String page);
+    Observable<RespondBody<List<Gustbook>>> getGustbook(@Field("page") String page);
 
 
     @FormUrlEncoded
@@ -444,10 +456,9 @@ public interface Api {
     Observable<RespondBody<List<AirCmd>>> getTotalCmd(@Field("channel_id") String channel_id);
 
 
-
     @FormUrlEncoded
     @POST("device/electrical/send")
-    Observable<RespondBody> sendAirCmd(@Field("channel_id") String channel_id,@Field("id") String id);
+    Observable<RespondBody> sendAirCmd(@Field("channel_id") String channel_id, @Field("id") String id);
 
     //http://stsz119.suntrans-cloud.com/api/v1/sensus/getConfig
     @FormUrlEncoded
@@ -456,21 +467,32 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("sensus/setConfig")
-    Observable<RespondBody> setSensusConfig(@Field("dev_id") String dev_id,@Field("field") String field,@Field("type") String type);
+    Observable<RespondBody> setSensusConfig(@Field("dev_id") String dev_id, @Field("field") String field, @Field("type") String type);
 
 
     @FormUrlEncoded
     @POST("sensus/setVoiceConfig")
-    Observable<RespondBody> setVoiceConfig(@Field("dev_id") String dev_id,@Field("value") String field,@Field("type") String type);
+    Observable<RespondBody> setVoiceConfig(@Field("dev_id") String dev_id, @Field("value") String field, @Field("type") String type);
 
 
     @FormUrlEncoded
     @POST("device/electrical/getMaxWendu")
-    Observable<RespondBody<Map<String,String>>> getMaxWendu(@Field("channel_id") String channel_id);
+    Observable<RespondBody<Map<String, String>>> getMaxWendu(@Field("channel_id") String channel_id);
 
+    //设置温度
     @FormUrlEncoded
     @POST("device/electrical/setMaxWendu")
     Observable<RespondBody> setMaxWendu(@Field("channel_id") String channel_id,
                                         @Field("max_wendu") String max_wendu,
                                         @Field("status") String status);
+
+//    http://stsz119.suntrans-cloud.com/api/v1/device/deviceAlarmHistory
+
+    @FormUrlEncoded
+    @POST("device/deviceAlarmHistory")
+    Observable<YichangEntity> getYichangTotal(@Field("type") String type,
+                                            @Field("page") String page,
+                                            @Field("startTime") String startTime,
+                                            @Field("endTime") String endTime);
 }
+

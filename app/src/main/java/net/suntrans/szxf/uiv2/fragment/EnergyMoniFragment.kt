@@ -28,6 +28,7 @@ import java.util.*
  */
 
 class EnergyMoniFragment : BasedFragment() {
+
     override fun getLayoutRes(): Int {
         return R.layout.fragment_moni
     }

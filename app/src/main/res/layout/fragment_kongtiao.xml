@@ -86,6 +86,17 @@
                         android:gravity="center"
                         android:text=""
                         android:textSize="14sp" />
+                    <TextView
+                        android:visibility="gone"
+                        android:minWidth="50dp"
+                        android:id="@+id/dingshiText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="定时0.5小时"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </RelativeLayout>

@@ -14,12 +14,14 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import net.suntrans.looney.widgets.IosAlertDialog;
 import net.suntrans.looney.widgets.LoadingDialog;
 import net.suntrans.szxf.App;
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.ROLE;
 import net.suntrans.szxf.activity.AddSceneChannelActivity;
 import net.suntrans.szxf.activity.BasedActivity;
+import net.suntrans.szxf.activity.SceneDetailActivity;
 import net.suntrans.szxf.activity.SceneTimingActivity;
 import net.suntrans.szxf.bean.RespondBody;
 import net.suntrans.szxf.databinding.ActivitySceneDetailV2Binding;
@@ -58,7 +60,7 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
     private SceneItemAdapter adapter;
     private LoadingDialog dialog;
     private PicChooseFragment fragment;
-    private String imgId = "1";
+    private String imgId = "-1";
     private AllChannelFragment allChannelFragment;
     private String sceneName;
 
@@ -81,20 +83,20 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
         binding.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!sceneName.equals(binding.sceneName.getText().toString())){
+                if (!sceneName.equals(binding.sceneName.getText().toString())) {
                     new AlertDialog.Builder(SceneDetailActivityV2.this)
-                            .setNegativeButton(R.string.cancel,null)
+                            .setNegativeButton(R.string.cancel, null)
                             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();
-                                    setResult(3,new Intent());
+                                    setResult(3, new Intent());
 
                                 }
                             })
                             .setMessage(R.string.warning_not_save)
                             .create().show();
-                }else {
+                } else {
                     finish();
                 }
 
@@ -122,13 +124,13 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
         binding.addDevices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (App.ROLE_ID == ROLE.STAFF){
+                if (App.ROLE_ID == ROLE.STAFF) {
                     allChannelFragment = new AllChannelFragment();
                     allChannelFragment.setOnChannelSelectedListener(SceneDetailActivityV2.this);
                     allChannelFragment.show(getSupportFragmentManager(), "allChannel");
-                }else {
+                } else {
                     Intent intent = new Intent(SceneDetailActivityV2.this, AddSceneChannelActivity.class);
-                    intent.putExtra("showType",AddSceneChannelActivity.MODIFY);
+                    intent.putExtra("showType", AddSceneChannelActivity.MODIFY);
                     intent.putExtra("scene_id", sceneID);
                     startActivity(intent);
                 }
@@ -170,20 +172,20 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
 
     @Override
     public void onBackPressed() {
-        if (!sceneName.equals(binding.sceneName.getText().toString())){
+        if (!sceneName.equals(binding.sceneName.getText().toString())) {
             new AlertDialog.Builder(SceneDetailActivityV2.this)
-                    .setNegativeButton(R.string.cancel,null)
+                    .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
-                            setResult(3,new Intent());
+                            setResult(3, new Intent());
 
                         }
                     })
                     .setMessage(R.string.warning_not_save)
                     .create().show();
-        }else {
+        } else {
             finish();
         }
     }
@@ -220,7 +222,6 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
     }
 
 
-
     private void updateScene() {
         String name = binding.sceneName.getText().toString();
         if (TextUtils.isEmpty(name)) {
@@ -236,13 +237,28 @@ public class SceneDetailActivityV2 extends BasedActivity implements PicChooseFra
         Map<String, String> map = new HashMap<>();
         map.put("id", sceneID);
         map.put("name", name);
-        map.put("image", imgId);
+        if (!"-1".equals(imgId)) {
+            map.put("image", imgId);
+        }
 
         addSubscription(api.updateSceneInfo(map), new BaseSubscriber<RespondBody>(getApplicationContext()) {
             @Override
             public void onNext(RespondBody resultBody) {
                 super.onNext(resultBody);
-                UiUtils.showToast(resultBody.msg);
+                if (resultBody.code==200){
+                    new IosAlertDialog(SceneDetailActivityV2.this)
+                            .builder()
+                            .setCancelable(false)
+                            .setMsg("修改成功!")
+                            .setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                }
+                            }).show();
+                }else {
+                    UiUtils.showToast(resultBody.msg);
+                }
                 sceneName = binding.sceneName.getText().toString();
                 dialog.dismiss();
             }

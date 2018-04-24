@@ -61,13 +61,14 @@
         android:orientation="vertical">
 
         <net.suntrans.szxf.views.EditView
+            android:maxLength="18"
             android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@null"
             android:hint="请输入账号"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:digits="@string/abcd123"
             android:maxLines="1"
             android:paddingLeft="16dp"
             android:textSize="@dimen/textNormalSize" />
@@ -87,6 +88,7 @@
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:maxLength="18"
             android:paddingLeft="16dp"
             android:textSize="@dimen/textNormalSize" />
 

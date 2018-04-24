@@ -23,6 +23,7 @@ import net.suntrans.szxf.adapter.FragmentAdapter;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.SharedPreferencesHepler;
 import net.suntrans.szxf.utils.StatusBarCompat;
+import net.suntrans.szxf.utils.UiUtils;
 
 /**
  * Created by Administrator on 2017/8/14.
@@ -97,6 +98,7 @@ public class EnergyStaffHomeFragment extends RxFragment {
                     pager.setCurrentItem(0);
                 } else if (checkedId == R.id.radio1) {
                     pager.setCurrentItem(1);
+                    UiUtils.showToast("该房间不存在电表!");
                 }
             }
         });

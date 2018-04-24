@@ -81,6 +81,19 @@ class AreaFragment : BasedFragment(), View.OnClickListener {
         view.findViewById(R.id.susheOpen)
                 .setOnClickListener(this)
 
+        view.findViewById(R.id.zhaomingOpen)
+                .setOnClickListener(this)
+
+        view.findViewById(R.id.zhaomingClose)
+                .setOnClickListener(this)
+
+        view.findViewById(R.id.socketOpen)
+                .setOnClickListener(this)
+
+        view.findViewById(R.id.socketClose)
+                .setOnClickListener(this)
+
+
         refreshLayout = view.findViewById(R.id.refreshlayout) as ScrollChildSwipeRefreshLayout
         refreshLayout?.setOnRefreshListener { getAreaData(1) }
         refreshLayout?.setColorSchemeColors(context.resources.getColor(R.color.colorPrimary))
@@ -362,6 +375,25 @@ class AreaFragment : BasedFragment(), View.OnClickListener {
             R.id.susheClose -> {
                 msg = "是否关闭宿舍区的所有的开关"
                 observable = api.switchOffice("0","1")
+            }
+
+            R.id.zhaomingClose -> {
+                msg = "是否关闭所有照明"
+                observable = api.classifyCtrl("0","1")
+            }
+            R.id.zhaomingOpen -> {
+                msg = "是否打开所有照明"
+                observable = api.classifyCtrl("1","1")
+            }
+
+            R.id.socketClose -> {
+                msg = "是否关闭所有插座"
+                observable = api.classifyCtrl("0","2")
+            }
+
+            R.id.socketOpen -> {
+                msg = "是否打开所有插座"
+                observable = api.classifyCtrl("1","2")
             }
         }
 

@@ -8,7 +8,15 @@
     android:orientation="vertical">
 
 
+    <ImageView
+        android:src="@drawable/ic_socket"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/imageView"
+        android:layout_width="36dp"
+        android:layout_height="36dp" />
      <TextView
+         android:layout_toRightOf="@+id/imageView"
          android:maxLines="1"
          android:maxLength="10"
          android:gravity="center"
@@ -16,7 +24,7 @@
          android:id="@+id/name"
          android:layout_width="wrap_content"
          android:layout_height="match_parent"
-         android:layout_marginLeft="20dp"
+         android:layout_marginLeft="8dp"
          android:text="大厅灯"
          android:textColor="@color/textColor"
          android:textSize="16sp" />

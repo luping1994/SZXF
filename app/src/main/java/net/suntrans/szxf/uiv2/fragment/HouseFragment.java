@@ -93,7 +93,7 @@ public class HouseFragment extends BasedFragment2 {
                 if (datas.get(position).channel_type == DeviceType.AIR_CONDITIONER){
                     Intent intent = new Intent();
                     intent.putExtra("channel_id",datas.get(position).id);
-                    intent.putExtra("title",datas.get(position).title);
+                    intent.putExtra("title","我的");
 
                     intent.setClass(getActivity(), KongtiaoActivity.class);
                     startActivity(intent);

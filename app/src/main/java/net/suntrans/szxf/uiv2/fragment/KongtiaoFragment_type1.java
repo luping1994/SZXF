@@ -15,6 +15,7 @@ import net.suntrans.szxf.uiv2.BasedFragment2;
 import net.suntrans.szxf.uiv2.air.Air0;
 import net.suntrans.szxf.uiv2.air.Air1;
 import net.suntrans.szxf.uiv2.bean.AirCmd;
+import net.suntrans.szxf.utils.UiUtils;
 
 import java.util.List;
 
@@ -126,6 +127,10 @@ public class KongtiaoFragment_type1 extends BasedFragment2 implements View.OnCli
                     binding.feng.setVisibility(View.VISIBLE);
                     air.open();
                 }
+                break;
+
+            case R.id.dingshi:
+                UiUtils.showToast("此类型空调暂不支持定时功能！");
                 break;
         }
 

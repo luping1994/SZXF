@@ -24,6 +24,7 @@ import net.suntrans.szxf.uiv2.activity.EnvYichangActivity;
 import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.SharedPreferencesHepler;
 import net.suntrans.szxf.utils.StatusBarCompat;
+import net.suntrans.szxf.utils.UiUtils;
 
 /**
  * Created by Administrator on 2017/8/14.
@@ -78,6 +79,7 @@ public class EnvStaffHomeFragment extends RxFragment {
                 if (position == 0) {
                     button0.setChecked(true);
                 } else if (position == 1) {
+                    UiUtils.showToast("该房间不存在第六感设备!");
                     button1.setChecked(true);
                 }
             }

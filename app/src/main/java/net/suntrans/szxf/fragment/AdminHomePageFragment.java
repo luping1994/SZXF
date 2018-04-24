@@ -390,7 +390,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
                             for (SensusAbnormal.Abnormal d :
                                     data) {
                                 sb.append(d.house_number + "-" + d.message)
-                                        .append("  ");
+                                        .append("\u3000\u3000\u3000\u3000");
                             }
                             nomal.setText(sb.toString());
                             nomal.setTextColor(Color.parseColor("#ff0000"));

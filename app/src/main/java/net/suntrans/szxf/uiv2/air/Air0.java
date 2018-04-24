@@ -45,6 +45,7 @@ public final class Air0 implements Air {
     public static final Map<String, String> SONG_FENG = new HashMap<>();
     public static final Map<String, String> SHUI_MIN = new HashMap<>();
 
+    public static final String  TIMER_ID ="26";
 
     public static final Map<String, String> DING_SHI = new HashMap<>();
     public static final List<Map<String, String>> FENG_SU = new ArrayList<>();

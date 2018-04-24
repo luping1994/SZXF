@@ -82,13 +82,11 @@ class ControlLogsActivity : BasedActivity() {
         //            }
         //        });
         adapter!!.setOnLoadMoreListener(BaseQuickAdapter.RequestLoadMoreListener {
-            if (currentPage > totalPage) {
-                adapter!!.loadMoreEnd()
-                return@RequestLoadMoreListener
-            }
+            adapter!!.loadMoreEnd()
             getdata(loadMore)
         }, recyclerView)
         recyclerView!!.adapter = adapter
+        getdata(fristLoad)
 
     }
 
@@ -146,13 +144,13 @@ class ControlLogsActivity : BasedActivity() {
 
     override fun onResume() {
         super.onResume()
-        getdata(fristLoad)
     }
 
     private fun getdata(loadtype: Int) {
         if (loadtype == fristLoad) {
             recyclerView!!.visibility = View.INVISIBLE
             stateView!!.showLoading()
+            currentPage =0
         }
         addSubscription(api.getConLog(currentPage.toString() + ""), object : BaseSubscriber<RespondBody<ConLog>>(this) {
             override fun onCompleted() {
@@ -174,20 +172,22 @@ class ControlLogsActivity : BasedActivity() {
 
             override fun onNext(o: RespondBody<ConLog>) {
                 if (o.code == 200) {
+
                     val lists = o.data.list
+
                     if (lists == null || lists.size == 0) {
                         if (loadtype == fristLoad) {
                             stateView!!.showEmpty()
                             recyclerView!!.visibility = View.INVISIBLE
                         } else {
-                            adapter!!.loadMoreFail()
+                            adapter!!.loadMoreEnd()
                         }
 
                     } else {
                         if (loadtype == loadMore) {
                             adapter!!.loadMoreComplete()
                         } else {
-
+                            datas!!.clear()
                         }
                         currentPage++
                         stateView!!.showContent()

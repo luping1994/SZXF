@@ -62,7 +62,7 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         binding!!.jiaquanYuzhi.setTag(R.id.jiaquanYuzhi, map1)
 
         val map2 = HashMap<String, String>()
-        map2["name"] = "PM25"
+        map2["name"] = "PM2.5"
         map2["max"] = "6000.0"
         map2["min"] = "0.0"
         map2["field"] = "pm25"
@@ -90,7 +90,7 @@ class SensusConfigActivity : BasedActivity(), View.OnClickListener {
         map5["name"] = "温度"
         map5["max"] = "120"
         map5["min"] = "-40"
-        map5["field"] = "yanwu"
+        map5["field"] = "wendu"
         map5["unit"] = "℃"
         binding!!.wenduYuzhi.setTag(R.id.wenduYuzhi, map5)
 
