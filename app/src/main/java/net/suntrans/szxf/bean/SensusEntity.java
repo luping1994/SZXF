@@ -186,14 +186,27 @@ public class SensusEntity extends RespondBody<SensusEntity.Data>{
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
-                if (aFloat < 750) {
-                    yanwuEva = "清洁";
-                    yanwuPro = (int) (aFloat / 750 * 100 / 6);
-                } else {
+                if (aFloat>5){
                     yanwuEva = "污染";
-                    yanwuPro = (int) (100 / 6 + (aFloat - 750) * 500 / 9250 / 6);
+//                    yanwuPro = (int) (100 / 6 + aFloat / 5*100/6);
 
+                }else {
+                    yanwuEva = "清洁";
+//                    yanwuPro = (int) (aFloat / 5*100/6);
                 }
+                yanwuPro = (int) (aFloat / 17*100+3);
+
+                if (yanwuPro>90){
+                    yanwuPro = 90;
+                }
+//                if (aFloat < 750) {
+//                    yanwuEva = "清洁";
+//                    yanwuPro = (int) (aFloat / 750 * 100 / 6);
+//                } else {
+//                    yanwuEva = "污染";
+//                    yanwuPro = (int) (100 / 6 + (aFloat - 750) * 500 / 9250 / 6);
+//
+//                }
             }
             if (getJiaquan() != null) {
                 float jiaquanF = 0;
@@ -212,6 +225,7 @@ public class SensusEntity extends RespondBody<SensusEntity.Data>{
                     if (jiaquanPro >= 80)
                         jiaquanPro = 80;
                 }
+
             }
 
             if (getWendu() != null) {

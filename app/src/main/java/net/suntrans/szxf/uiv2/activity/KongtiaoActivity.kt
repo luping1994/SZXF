@@ -7,17 +7,13 @@ import android.view.View
 import android.widget.TextView
 
 import net.suntrans.looney.widgets.IosAlertDialog
-import net.suntrans.szxf.App
 import net.suntrans.szxf.R
 import net.suntrans.szxf.activity.BasedActivity
 import net.suntrans.szxf.bean.RespondBody
 import net.suntrans.szxf.databinding.ActivityEnergyMoniBinding
 import net.suntrans.szxf.rx.BaseSubscriber
 import net.suntrans.szxf.uiv2.bean.AirCmd
-import net.suntrans.szxf.uiv2.bean.Monitor
-import net.suntrans.szxf.uiv2.fragment.EnvListFragment
 import net.suntrans.szxf.uiv2.fragment.KongtiaoFragment
-import net.suntrans.szxf.uiv2.fragment.KongtiaoFragment_type1
 
 /**
  * Created by Looney on 2017/11/22.
@@ -35,7 +31,7 @@ class KongtiaoActivity : BasedActivity() {
         binding!!.back.setOnClickListener { finish() }
 
         val txTitle = findViewById(R.id.title) as TextView
-        val title = intent.getStringExtra("title")+"空调"
+        val title = intent.getStringExtra("title") + "空调"
         txTitle.text = title
 
         findViewById(R.id.back)
@@ -51,11 +47,14 @@ class KongtiaoActivity : BasedActivity() {
                 .setOnClickListener {
                     val intent = Intent(this@KongtiaoActivity, KtAutoActivity::class.java)
                     intent.putExtra("channel_id", channel_id)
-                    intent.putExtra("title",title )
+                    intent.putExtra("title", title)
                     startActivity(intent)
                 }
 
-        getData(channel_id)
+        val fragment = KongtiaoFragment.newInstance(channel_id)
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.content, fragment)
+                .commit()
 
     }
 
@@ -65,24 +64,7 @@ class KongtiaoActivity : BasedActivity() {
             override fun onNext(body: RespondBody<List<AirCmd>>) {
 
                 if (body.data != null && body.data.size > 1) {
-                    if ("0" == body.data[0].air_type) {
-                        val fragment = KongtiaoFragment.newInstance(channel_id)
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.content, fragment)
-                                .commit()
-                    } else if ("1" == body.data[0].air_type) {
 
-                        val fragment = KongtiaoFragment_type1.newInstance(channel_id)
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.content, fragment)
-                                .commit()
-                    } else {
-                        IosAlertDialog(this@KongtiaoActivity)
-                                .builder()
-                                .setCancelable(false)
-                                .setMsg(getString(R.string.tips_kt_unsported))
-                                .setPositiveButton(resources.getString(R.string.close)) { finish() }.show()
-                    }
 
                 } else {
                     IosAlertDialog(this@KongtiaoActivity)

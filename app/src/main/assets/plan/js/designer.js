@@ -110,7 +110,7 @@ function refreshContainerByToken(token, house_id) {
             }
 
             json.data.elements.map(createElement);
-            createScrollBarElements();
+//            createScrollBarElements();
             createTips();
         }
     });
@@ -169,7 +169,7 @@ function initContainerByToken(token, house_id) {
             // });
 
             json.data.elements.map(createElement);
-            createScrollBarElements();
+//            createScrollBarElements();
             createTips();
 
         }

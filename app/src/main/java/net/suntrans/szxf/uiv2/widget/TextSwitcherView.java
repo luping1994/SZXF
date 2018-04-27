@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import net.suntrans.szxf.R;
+import net.suntrans.szxf.utils.LogUtil;
 import net.suntrans.szxf.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -31,6 +32,15 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
     private int timerStartAgainCount = 0;
     private Context mContext;
     private Timer timer;
+    private boolean isWarning = false;
+
+    public boolean isWarning() {
+        return isWarning;
+    }
+
+    public void setWarning(boolean warning) {
+        isWarning = warning;
+    }
 
 
     public TextSwitcherView(Context context) {
@@ -52,20 +62,29 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
         this.setFactory(this);
         this.setInAnimation(getContext(), R.anim.vertical_in);
         this.setOutAnimation(getContext(), R.anim.vertical_out);
-        timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 1, 3000);
+        Message msg = new Message();
+        msg.what = UPDATE_TEXTSWITCHER;
+        handler.sendMessage(msg);
     }
 
-    public void start(int time) {
-
-
-
+    public void start() {
+        resIndex =0;
+        setTextColorIfWarning();
+        handler.removeCallbacksAndMessages(null);
+        handler.sendEmptyMessage(UPDATE_TEXTSWITCHER);
     }
 
+    public void startOnce() {
+        resIndex =0;
+        setTextColorIfWarning();
+        handler.removeCallbacksAndMessages(null);
+        this.setCurrentText(this.reArrayList.get(resIndex));
+    }
     public void stop() {
-        if (timer != null) {
-            timer.cancel();
-        }
+//        if (timer != null) {
+//            timer.cancel();
+//        }
+        handler.removeCallbacksAndMessages(null);
     }
 
     TimerTask timerTask = new TimerTask() {
@@ -80,18 +99,9 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
     };
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case UPDATE_TEXTSWITCHER:
-                    updateTextSwitcher();
-
-                    break;
-                default:
-                    break;
-            }
-
+            updateTextSwitcher();
         }
 
-        ;
     };
 
     /**
@@ -104,20 +114,22 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
         this.reArrayList.addAll(reArrayList);
     }
 
+
     public void updateTextSwitcher() {
+
+        setTextColorIfWarning();
         if (this.reArrayList != null && this.reArrayList.size() > 0) {
-            ((TextView)getCurrentView()).setTextColor(textColor);
-            resIndex+=1;
-            if (this.reArrayList.size() > 1) {
+            if (this.reArrayList.size() == 1) {
+                this.setCurrentText(this.reArrayList.get(0));
+            } else {
+                this.setText(this.reArrayList.get(resIndex++));
                 if (resIndex > this.reArrayList.size() - 1) {
                     resIndex = 0;
                 }
-            } else {
-
             }
-            this.setCurrentText(this.reArrayList.get(resIndex));
         }
 
+        handler.sendEmptyMessageDelayed(UPDATE_TEXTSWITCHER,3000);
     }
 
     @Override
@@ -137,6 +149,16 @@ public class TextSwitcherView extends TextSwitcher implements ViewSwitcher.ViewF
     public void setTextColor(int color) {
         this.textColor = color;
 
+    }
+
+    private void setTextColorIfWarning(){
+        if (isWarning){
+            ((TextView) getNextView()).setTextColor(Color.parseColor("#ff0000"));
+            ((TextView) getCurrentView()).setTextColor(Color.parseColor("#ff0000"));
+        }else {
+            ((TextView) getNextView()).setTextColor(Color.parseColor("#0b9d2f"));
+            ((TextView) getCurrentView()).setTextColor(Color.parseColor("#0b9d2f"));
+        }
     }
 
 }

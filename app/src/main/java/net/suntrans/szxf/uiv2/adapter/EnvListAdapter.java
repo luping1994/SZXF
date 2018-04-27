@@ -2,6 +2,7 @@ package net.suntrans.szxf.uiv2.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -176,9 +177,12 @@ public class EnvListAdapter extends BaseExpandableListAdapter {
 
 
             StringBuilder sb = new StringBuilder();
-            if (Float.parseFloat(zhendong) > 1) {
-                sb.append("振动过大,");
+            if (!TextUtils.isEmpty(zhendong)){
+                if (Float.parseFloat(zhendong) > 1) {
+                    sb.append("振动过大,");
+                }
             }
+
             if (Float.parseFloat(pm25) > 300) {
                 sb.append("pm2.5,");
             }

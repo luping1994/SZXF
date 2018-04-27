@@ -2,6 +2,7 @@ package net.suntrans.szxf.api;
 
 import net.suntrans.szxf.R;
 import net.suntrans.szxf.bean.AddSceneChannelResult;
+import net.suntrans.szxf.bean.AirState;
 import net.suntrans.szxf.bean.Ameter3Entity;
 import net.suntrans.szxf.bean.AmmeterInfos;
 import net.suntrans.szxf.bean.ChannelEditorInfo;
@@ -458,7 +459,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("device/electrical/send")
-    Observable<RespondBody> sendAirCmd(@Field("channel_id") String channel_id, @Field("id") String id);
+    Observable<RespondBody<Map<String,String>>> sendAirCmd(@FieldMap Map<String,String> map);
 
     //http://stsz119.suntrans-cloud.com/api/v1/sensus/getConfig
     @FormUrlEncoded
@@ -494,5 +495,8 @@ public interface Api {
                                             @Field("page") String page,
                                             @Field("startTime") String startTime,
                                             @Field("endTime") String endTime);
+    @FormUrlEncoded
+    @POST("device/electrical/getAir")
+    Observable<RespondBody<List<AirState>>> getAir(@Field("channel_id") String channel_id);
 }
 

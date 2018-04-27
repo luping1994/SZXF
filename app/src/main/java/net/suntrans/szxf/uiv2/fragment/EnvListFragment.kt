@@ -30,8 +30,6 @@ import java.util.*
 class EnvListFragment : BasedFragment() {
 
 
-
-
     override fun getLayoutRes(): Int {
         return R.layout.fragment_moni
     }

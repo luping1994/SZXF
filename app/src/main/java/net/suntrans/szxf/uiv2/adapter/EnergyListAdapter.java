@@ -150,8 +150,8 @@ public class EnergyListAdapter extends BaseExpandableListAdapter {
             }if (electricity==null){
                 electricity ="0";
             }
-            fuzai.setText("负载:"+power+UNIT_P);
-            zong.setText("总:"+electricity+UNIT_ENERGY);
+            fuzai.setText("动态载荷:"+power+UNIT_P);
+            zong.setText("总用电:"+electricity+UNIT_ENERGY);
             name.setText(datas.get(groupPosition).sub.get(childPosition).house_number+"-"+datas.get(groupPosition).sub.get(childPosition).name);
 //            Glide.with(mContext)
 //                    .load(datas.get(groupPosition).sub.get(childPosition).img_url)

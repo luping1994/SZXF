@@ -155,7 +155,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
             }
         });
         View viewById = view.findViewById(R.id.header);
-        viewById.getLayoutParams().height = (int) (widthPixels/1.9);
+        viewById.getLayoutParams().height = (int) (widthPixels / 1.9);
 //        headerView = LayoutInflater.from(getContext().getApplicationContext())
 //                .inflate(R.layout.header_view, recyclerView, false);
 //        adminAdapter.addHeaderView(headerView);
@@ -164,7 +164,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
             public void run() {
                 getWarning();
             }
-        }, new Date(), 4000);
+        }, new Date(), 10000);
 
         nomal = (TextSwitcherView) view.findViewById(R.id.abnormal);
 
@@ -377,6 +377,7 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
     private Timer timer = new Timer();
 
     private ArrayList<String> strings = new ArrayList<>();
+
     private void getWarning() {
         api.getSensusAbnormal()
                 .compose(this.<SensusAbnormal>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
@@ -397,16 +398,22 @@ public class AdminHomePageFragment extends RxFragment implements View.OnClickLis
 //                                        .append("\u3000\u3000\u3000\u3000\u3000");
                                 strings.add(d.house_number + "-" + d.message);
                             }
-                            nomal.reset();
                             nomal.setResource(strings);
-                            nomal.setTextColor(Color.parseColor("#ff0000"));
+                            nomal.setWarning(true);
 
+                            if (data.size() == 1) {
+                                nomal.startOnce();
+                            }else {
+                                nomal.start();
+                            }
                         } else {
                             strings.clear();
                             strings.add("一切正常");
-                            nomal.reset();
+
+                            nomal.setWarning(false);
                             nomal.setResource(strings);
                             nomal.setTextColor(Color.parseColor("#0b9d2f"));
+                            nomal.startOnce();
                         }
 
                     }

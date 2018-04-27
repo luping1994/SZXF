@@ -248,7 +248,7 @@ class EnvDetailFragment : BasedFragment2(), View.OnClickListener {
                 nameTx.text = "烟雾"
                 standard.setImageResource(R.drawable.ic_pm_progress)
                 if (data != null) {
-                    valueTx.text = data.yanwu + "ug/m³"
+                    valueTx.text = data.yanwu + "级"
                     evaluateTx.text = data.yanwuEva
                     setPading(data.yanwuPro, layout_arrow, valueTx)
                 }

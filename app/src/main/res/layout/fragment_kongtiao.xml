@@ -23,14 +23,14 @@
                     android:src="@drawable/kongtiao_bg" />
 
                 <ImageView
-                    android:visibility="invisible"
                     android:id="@+id/feng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/kt"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="-15dp"
-                    android:src="@drawable/feng" />
+                    android:src="@drawable/feng"
+                    android:visibility="invisible" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -40,16 +40,15 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:textColor="#17f1ec"
                         android:id="@+id/model"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text=""
+                        android:textColor="#17f1ec"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:textColor="#17f1ec"
                         android:id="@+id/wendu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -57,6 +56,7 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center"
                         android:text=""
+                        android:textColor="#17f1ec"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -68,35 +68,36 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:minWidth="50dp"
                         android:id="@+id/fengxiangText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:minWidth="50dp"
                         android:text=""
                         android:textSize="14sp" />
 
                     <TextView
-                        android:minWidth="50dp"
                         android:id="@+id/fengsuText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
                         android:gravity="center"
+                        android:minWidth="50dp"
                         android:text=""
                         android:textSize="14sp" />
+
                     <TextView
-                        android:visibility="gone"
-                        android:minWidth="50dp"
                         android:id="@+id/dingshiText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
                         android:gravity="center"
+                        android:minWidth="50dp"
                         android:text="定时0.5小时"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -104,7 +105,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -113,12 +114,12 @@
                     android:gravity="center_horizontal">
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:layout_width="140dp"
                         android:layout_height="@dimen/item_kt_height"
                         android:background="@drawable/bg_kt_item_long"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
 
@@ -155,90 +156,135 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/modelLL"
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
+                    android:layout_height="45dp"
                     android:layout_marginTop="16dp"
-                    android:gravity="center_horizontal">
+                    android:gravity="center">
 
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/mode_0"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:tag="0"
+                        android:text="自动" />
 
-                        <ImageButton
-                            android:id="@+id/moshi"
-                            android:layout_width="@dimen/item_kt_width"
-                            android:layout_height="@dimen/item_kt_height"
-                            android:background="@drawable/bg_kt_item"
-                            android:src="@drawable/bg_zhileng" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="模式" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/mode_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:tag="1"
+                        android:text="制冷" />
 
-                        <ImageButton
-                            android:id="@+id/fegnxiang"
-                            android:layout_width="@dimen/item_kt_width"
-                            android:layout_height="@dimen/item_kt_height"
-                            android:background="@drawable/bg_kt_item"
-                            android:src="@drawable/src_fengxiang" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="风向" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/mode_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:tag="2"
+                        android:text="制热" />
 
-                        <ImageButton
-                            android:id="@+id/fengsu"
-                            android:layout_width="@dimen/item_kt_width"
-                            android:layout_height="@dimen/item_kt_height"
-                            android:background="@drawable/bg_kt_item"
-                            android:src="@drawable/src_fengsu" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="风速" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <TextView
+                        android:id="@+id/mode_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:tag="3"
+                        android:text="抽湿" />
 
-                        <ImageButton
-                            android:id="@+id/dingshi"
-                            android:layout_width="@dimen/item_kt_width"
-                            android:layout_height="@dimen/item_kt_height"
-                            android:background="@drawable/bg_kt_item"
-                            android:src="@drawable/src_dingshi" />
+                    <TextView
+                        android:layout_marginRight="16dp"
+                        android:id="@+id/mode_4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
+                        android:gravity="center"
+                        android:tag="4"
+                        android:text="送风" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="定时" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/windSLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center">
+
+
+                    <TextView
+                        android:id="@+id/wind_s_0"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
+                        android:gravity="center"
+                        android:tag="0"
+                        android:text="自动风" />
+
+                    <TextView
+                        android:id="@+id/wind_s_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
+                        android:gravity="center"
+                        android:tag="1"
+                        android:text="一级风" />
+
+                    <TextView
+                        android:id="@+id/wind_s_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
+                        android:gravity="center"
+                        android:tag="2"
+                        android:text="二级风" />
+
+                    <TextView
+                        android:id="@+id/wind_s_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
+                        android:gravity="center"
+                        android:tag="3"
+                        android:text="三级风" />
+
+                    <TextView
+                        android:layout_marginRight="16dp"
+                        android:id="@+id/wind_s_4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_edit"
+                        android:gravity="center"
+                        android:tag="4"
+                        android:text="四级风" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -261,6 +307,5 @@
 
             </LinearLayout>
 
-        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
