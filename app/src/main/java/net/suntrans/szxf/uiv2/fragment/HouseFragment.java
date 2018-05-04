@@ -83,16 +83,16 @@ public class HouseFragment extends BasedFragment2 {
                     sendCmd(position,0);
                 } else if (view.getId() == R.id.open) {
                     sendCmd(position,1);
-
                 }
             }
         });
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
                 if (datas.get(position).channel_type == DeviceType.AIR_CONDITIONER){
                     Intent intent = new Intent();
-                    intent.putExtra("channel_id",datas.get(position).id);
+                    intent.putExtra("channel_id",datas.get(position).id+"");
                     intent.putExtra("title","我的");
 
                     intent.setClass(getActivity(), KongtiaoActivity.class);

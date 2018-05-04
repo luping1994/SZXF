@@ -44,7 +44,6 @@ import java.util.*
 
 class YichangActivityTotal : BasedActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
-        println("onclick")
         checkedId = v!!.id
         pickerDialog = CompatDatePickerDialog(this, mDateSetListener, mYear, mMonth - 1, mDay)
         val datePicker = pickerDialog!!.getDatePicker()

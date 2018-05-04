@@ -22,6 +22,7 @@ public class YichangEntity extends RespondBody<List<YichangEntity.Yichang>>{
         public String house_number;
         public String name;
         public String message;
+        public String unit;
         public int number;
         public String value;
         public String created_at;

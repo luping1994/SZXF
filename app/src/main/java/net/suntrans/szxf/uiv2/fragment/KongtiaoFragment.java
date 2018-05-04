@@ -116,6 +116,8 @@ public class KongtiaoFragment extends BasedFragment2 implements View.OnClickList
                     temp = max_temp;
                     return;
                 }
+                sendCmdToServer(id);
+
                 break;
             case R.id.sub:
                 if (!isOpen) {
@@ -136,6 +138,7 @@ public class KongtiaoFragment extends BasedFragment2 implements View.OnClickList
                     temp = min_temp;
                     break;
                 }
+                sendCmdToServer(id);
                 break;
 
             case R.id.close:
@@ -321,7 +324,6 @@ public class KongtiaoFragment extends BasedFragment2 implements View.OnClickList
                 max_temp = Integer.parseInt(listRespondBody.data.get(0).max_temp);
                 min_temp = Integer.parseInt(listRespondBody.data.get(0).min_temp);
                 id = listRespondBody.data.get(0).id;
-
             }
 
             @Override

@@ -38,6 +38,7 @@ class KongtiaoActivity : BasedActivity() {
                 .setOnClickListener { finish() }
 
         channel_id = intent.getStringExtra("channel_id")
+        println("channel_id:"+channel_id)
 
         binding!!.rightSubTitle.visibility = View.VISIBLE
         binding!!.rightSubTitle
@@ -50,6 +51,7 @@ class KongtiaoActivity : BasedActivity() {
                     intent.putExtra("title", title)
                     startActivity(intent)
                 }
+
 
         val fragment = KongtiaoFragment.newInstance(channel_id)
         supportFragmentManager.beginTransaction()

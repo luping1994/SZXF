@@ -141,7 +141,7 @@ class YichangActivity : BasedActivity() {
     internal inner class MyAdapter(@LayoutRes layoutResId: Int, data: List<YichangEntity.Yichang>?) : BaseItemDraggableAdapter<YichangEntity.Yichang, BaseViewHolder>(layoutResId, data) {
 
         override fun convert(helper: BaseViewHolder, item: YichangEntity.Yichang) {
-            helper.setText(R.id.msg, item.house_number + "-" + item.name + "-" + item.message + "(" + item.value + UNIT_I + ")")
+            helper.setText(R.id.msg, item.house_number + "-" + item.name + "-" + item.message + "(" + item.value +item.unit + ")")
                     .setText(R.id.time, item.created_at)
         }
     }
